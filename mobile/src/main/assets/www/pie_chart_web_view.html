@@ -1,0 +1,60 @@
+<script src="./highcharts-custom.js"></script>
+
+<div id="container" style="background: transparent;height:100%;"></div>
+
+<script>
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo:'container',
+            type: 'pie',
+            backgroundColor: null,
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            spacing:[0,0,0,0]
+        },
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: null
+        },
+        labels: {
+            style:{
+                color: '#FFF',
+                fontSize:'18px'
+            }
+        },
+        tooltip: {
+            pointFormat: '{point.percentage:.1f}%'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    center: ['50%', '50%'],
+                    enabled: true,
+                    softConnector:false,
+                    distance: -20,
+                    inside: true,
+                    overflow: 'justify',
+                    format: '{point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Power types',
+            data: [
+                ['', 25.0],
+                ['', 28.0],
+                ['', 26.0],
+                ['', 21.0],
+            ]
+        }]
+    });
+</script>

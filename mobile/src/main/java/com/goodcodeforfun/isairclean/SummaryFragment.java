@@ -1,12 +1,16 @@
 package com.goodcodeforfun.isairclean;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 
 /**
@@ -26,6 +30,7 @@ public class SummaryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private WebView mWebView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,6 +70,16 @@ public class SummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_summary, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mWebView = (WebView) getActivity().findViewById(R.id.pieChartWebView);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+        mWebView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
