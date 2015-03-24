@@ -1,5 +1,6 @@
 package com.goodcodeforfun.isairclean;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -41,8 +42,9 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+            startActivity(startSettingsActivityIntent);
             return true;
         }
 

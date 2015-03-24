@@ -1,5 +1,6 @@
 package com.goodcodeforfun.isairclean;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -40,8 +41,9 @@ public class DetailActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent startSettingsActivityIntent = new Intent(this, SettingsActivity.class);
+            startActivity(startSettingsActivityIntent);
             return true;
         }
 
