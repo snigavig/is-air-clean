@@ -1,12 +1,105 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.goodcodeforfun.isairclean.DetailActivity$PlaceholderFragment">
+    tools:context="com.goodcodeforfun.isairclean.DetailActivity$PlaceholderFragment"
+    android:orientation="vertical">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current:"
+        android:id="@+id/detailCurrentLabelTextView" />
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="183,790,000"
+        android:id="@+id/detailCurrentCarbonTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" tons CO2"
+        android:id="@+id/detailCurrentCarbonLabelTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="181,810,000"
+        android:id="@+id/detailCurrentEnergyTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" MWh energy"
+        android:id="@+id/detailCurrentEnergyLabelTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1,010"
+        android:id="@+id/detailCurrentIntensityTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" kg CO2 per MWh"
+        android:id="@+id/detailCurrentIntensityLabelTextView" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Future:"
+        android:id="@+id/detailFutureLabelTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="243,820,000"
+        android:id="@+id/detailFutureCarbonTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" tons CO2"
+        android:id="@+id/detailFutureCarbonLabelTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="303,769,984"
+        android:id="@+id/detailFutureEnergyTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" MWh energy"
+        android:id="@+id/detailFutureEnergyLabelTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="803"
+        android:id="@+id/detailFutureIntensityTextView"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" kg CO2 per MWh"
+        android:id="@+id/detailFutureIntensityLabelTextView" />
+
+</LinearLayout>

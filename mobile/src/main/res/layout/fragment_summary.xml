@@ -15,25 +15,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Current:"
-            android:id="@+id/textView" />
+            android:id="@+id/summaryCurrentLabelTextView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="229100 tons CO2"
-            android:id="@+id/currentCarbonTextView" />
+            android:text="183,790,000"
+            android:id="@+id/summaryCurrentCarbonTextView"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2206500 MWh energy"
-            android:id="@+id/currentEnergyTextView" />
+            android:text=" tons CO2"
+            android:id="@+id/summaryCurrentCarbonLabelTextView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="104 kg CO2 per MWh"
-            android:id="@+id/currentIntensityTextView" />
+            android:text="181,810,000"
+            android:id="@+id/summaryCurrentEnergyTextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" MWh energy"
+            android:id="@+id/summaryCurrentEnergyLabelTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1,010"
+            android:id="@+id/summaryCurrentIntensityTextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kg CO2 per MWh"
+            android:id="@+id/summaryCurrentIntensityLabelTextView" />
 
         <View
             android:layout_width="fill_parent"
@@ -44,25 +65,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Future:"
-            android:id="@+id/futureLabelTextView" />
+            android:id="@+id/summaryFutureLabelTextView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="499740 tons CO2"
-            android:id="@+id/futureCarbonTextView" />
+            android:text="243,820,000"
+            android:id="@+id/summaryFutureCarbonTextView"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2489900 MWh energy"
-            android:id="@+id/futureEnergyTextView" />
+            android:text=" tons CO2"
+            android:id="@+id/summaryFutureCarbonLabelTextView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="201 kg CO2 per MWh"
-            android:id="@+id/futureIntensityTextView" />
+            android:text="303,769,984"
+            android:id="@+id/summaryFutureEnergyTextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" MWh energy"
+            android:id="@+id/summaryFutureEnergyLabelTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="803"
+            android:id="@+id/summaryFutureIntensityTextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kg CO2 per MWh"
+            android:id="@+id/summaryFutureIntensityLabelTextView" />
     </LinearLayout>
 
     <WebView
@@ -70,6 +112,7 @@
         android:layout_height="match_parent"
         android:id="@+id/pieChartWebView"
         android:layout_gravity="end"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:clickable="true" />
 
 </LinearLayout>
