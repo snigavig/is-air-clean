@@ -129,10 +129,10 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String locationSetting = Util.getPreferredLocation(getActivity());
         String sortOrder = AirContract.ObjectEntry.COLUMN_NAME + " ASC";
-        Uri weatherForLocationUri = AirContract.ObjectEntry.buildObjectLocation(
+        Uri objectForLocationUri = AirContract.ObjectEntry.buildObjectLocation(
                 locationSetting);
         return new CursorLoader(getActivity(),
-                weatherForLocationUri,
+                objectForLocationUri,
                 OBJECT_COLUMNS,
                 null,
                 null,

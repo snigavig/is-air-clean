@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
                     .commit();
         }
         AirSyncAdapter.initializeSyncAdapter(this);
+        AirSyncAdapter.syncImmediately(this);
     }
 
 
