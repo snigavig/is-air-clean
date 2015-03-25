@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     private static final String[] OBJECT_COLUMNS = {
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry._ID,
             AirContract.ObjectEntry.COLUMN_NAME,
-            AirContract.ObjectEntry.COLUMN_INTENSITY_CURRENT,
+            AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_INTENSITY_CURRENT,
             AirContract.ObjectEntry.COLUMN_COORD_LAT,
             AirContract.ObjectEntry.COLUMN_COORD_LONG
     };
@@ -73,7 +74,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_object_list, container, false);
-        arrayAdapterObjects = new ObjectsAdapter(getActivity(), null);
+        arrayAdapterObjects = new ObjectsAdapter(getActivity(), null, 0);
 
         mListView = (ListView) rootView.findViewById(R.id.objectListView);
         mListView.setAdapter(arrayAdapterObjects);
@@ -126,17 +127,26 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+        String locationSetting = Util.getPreferredLocation(getActivity());
+        String sortOrder = AirContract.ObjectEntry.COLUMN_NAME + " ASC";
+        Uri weatherForLocationUri = AirContract.ObjectEntry.buildObjectLocation(
+                locationSetting);
+        return new CursorLoader(getActivity(),
+                weatherForLocationUri,
+                OBJECT_COLUMNS,
+                null,
+                null,
+                sortOrder);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        arrayAdapterObjects.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        arrayAdapterObjects.swapCursor(null);
     }
 
     /**

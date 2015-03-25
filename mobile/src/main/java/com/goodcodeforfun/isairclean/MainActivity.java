@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 
-public class MainActivity extends ActionBarActivity implements SummaryFragment.OnFragmentInteractionListener {
+
+public class MainActivity extends ActionBarActivity implements SummaryFragment.OnFragmentInteractionListener, ObjectListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +24,11 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SummaryFragment())
+                    .add(R.id.summary_fragment, new SummaryFragment())
+                    .add(R.id.list_fragment, new ObjectListFragment())
                     .commit();
         }
+        AirSyncAdapter.initializeSyncAdapter(this);
     }
 
 

@@ -94,7 +94,7 @@ public class AirContract {
 
         public static final String COLUMN_LOC_KEY = "location_id";
 
-        public static final String COLUMN_NAME = "oobject_name";
+        public static final String COLUMN_NAME = "object_name";
 
         public static final String COLUMN_COORD_LAT = "coord_lat";
 
