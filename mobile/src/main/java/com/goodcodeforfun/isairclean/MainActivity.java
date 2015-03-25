@@ -6,17 +6,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 
 public class MainActivity extends ActionBarActivity implements SummaryFragment.OnFragmentInteractionListener, ObjectListFragment.OnFragmentInteractionListener {
+
+
+    private SlidingUpPanelLayout mLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +35,12 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
                     .add(R.id.list_fragment, new ObjectListFragment())
                     .commit();
         }
+
         AirSyncAdapter.initializeSyncAdapter(this);
         AirSyncAdapter.syncImmediately(this);
+
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        //mLayout.setTouchEnabled(false);
     }
 
 

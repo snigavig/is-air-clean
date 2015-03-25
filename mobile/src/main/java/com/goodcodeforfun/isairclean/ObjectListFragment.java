@@ -11,11 +11,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 
@@ -51,6 +54,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public ObjectsAdapter arrayAdapterObjects;
     public ArrayList<String> arrayListObjects;
     public SharedPreferences prefs;
+
 
     public ObjectListFragment() {
         // Required empty public constructor
@@ -90,6 +94,12 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
                                     locationSetting
                             ));
                 }
+            }
+        });
+        mListView.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                return (event.getAction() == MotionEvent.ACTION_MOVE);
             }
         });
         return rootView;
@@ -163,5 +173,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
 
 }
