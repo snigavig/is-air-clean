@@ -3,6 +3,8 @@ package com.goodcodeforfun.isairclean;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by snigavig on 24.03.15.
