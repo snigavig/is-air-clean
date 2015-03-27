@@ -21,10 +21,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -53,13 +56,13 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     static final int COL_OBJECT_COORD_LONG = 4;
 
     private ListView mListView;
+    private TextView mTextView;
     private SlidingUpPanelLayout mLayout;
     private OnFragmentInteractionListener mListener;
     private final SlidingUpPanelLayout.PanelSlideListener inactiveSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
         @Override
         public void onPanelSlide(View panel, float slideOffset) {
             Log.i("PanelSlide2", "onPanelSlide, offset " + slideOffset);
-            if (isClickable) mLayout.setPanelSlideListener(null);
         }
 
 
@@ -67,6 +70,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         public void onPanelExpanded(View panel) {
             Log.i("PanelSlide2", "onPanelExpanded");
             isClickable = true;
+            //mLayout.setDragView(mTextView);
         }
 
 
@@ -74,6 +78,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         public void onPanelCollapsed(View panel) {
             Log.i("PanelSlide2", "onPanelCollapsed");
             isClickable = false;
+            //mLayout.setDragView(null);
         }
 
 
@@ -124,6 +129,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         arrayAdapterObjects = new ObjectsAdapter(getActivity(), null, 0);
 
         mListView = (ListView) rootView.findViewById(R.id.objectListView);
+        mTextView = (TextView) rootView.findViewById(R.id.cityNameTextView);
         mListView.setAdapter(arrayAdapterObjects);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -167,7 +173,8 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         //mLayout.setEnableDragViewTouchEvents(false);
         mLayout = (SlidingUpPanelLayout) getActivity().findViewById(R.id.sliding_layout);
         mLayout.setPanelSlideListener(inactiveSlideListener);
-
+        //mLayout.setDragView(null);
+        mLayout.setDragView(mTextView);
         return rootView;
     }
 
