@@ -1,42 +1,36 @@
 package com.goodcodeforfun.isairclean;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.util.List;
+import java.util.Vector;
 
-public class MainActivity extends ActionBarActivity implements SummaryFragment.OnFragmentInteractionListener, ObjectListFragment.OnFragmentInteractionListener {
+
+public class MainActivity extends ActionBarActivity implements SummaryFragmentCurrent.OnFragmentInteractionListener, SummaryFragmentFuture.OnFragmentInteractionListener, ObjectListFragment.OnFragmentInteractionListener {
 
 
     private SlidingUpPanelLayout mLayout;
+
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.initialisePaging();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.summary_fragment, new SummaryFragment())
+                    //.add(R.id.summary_fragment, new SummaryFragment())
                     .add(R.id.list_fragment, new ObjectListFragment())
                     .commit();
         }
@@ -45,40 +39,6 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
         AirSyncAdapter.syncImmediately(this);
 
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-//        mLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-//            @Override
-//            public void onPanelSlide(View panel, float slideOffset) {
-//                Log.i("PanelSlide", "onPanelSlide, offset " + slideOffset);
-//            }
-//
-//
-//            @Override
-//            public void onPanelExpanded(View panel) {
-//                Log.i("PanelSlide", "onPanelExpanded");
-//
-//
-//            }
-//
-//
-//            @Override
-//            public void onPanelCollapsed(View panel) {
-//                Log.i("PanelSlide", "onPanelCollapsed");
-//
-//
-//            }
-//
-//
-//            @Override
-//            public void onPanelAnchored(View panel) {
-//                Log.i("PanelSlide", "onPanelAnchored");
-//            }
-//
-//
-//            @Override
-//            public void onPanelHidden(View panel) {
-//                Log.i("PanelSlide", "onPanelHidden");
-//            }
-//        });
     }
 
     @Override
@@ -113,5 +73,14 @@ public class MainActivity extends ActionBarActivity implements SummaryFragment.O
     public void onFragmentInteraction(Uri uri) {
         //fragment interaction stab,  not needed at this point
     }
+    private void initialisePaging() {
 
+        List<Fragment> fragments = new Vector<Fragment>();
+        fragments.add(Fragment.instantiate(this, SummaryFragmentCurrent.class.getName()));
+        fragments.add(Fragment.instantiate(this, SummaryFragmentFuture.class.getName()));
+        this.mPagerAdapter  = new PagerAdapter(super.getSupportFragmentManager(), fragments);
+        //
+        ViewPager pager = (ViewPager)super.findViewById(R.id.viewPager);
+        pager.setAdapter(this.mPagerAdapter);
+    }
 }

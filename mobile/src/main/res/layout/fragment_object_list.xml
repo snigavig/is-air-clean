@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.goodcodeforfun.isairclean.ObjectListFragment"
+    android:id="@+id/listViewWrapLinearLayout"
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
@@ -9,12 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="City Name"
-        android:textSize="28sp"
+        android:textSize="48sp"
         android:id="@+id/cityNameTextView" />
 
     <ListView
         android:id="@+id/objectListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null" />
+        android:divider="@android:drawable/divider_horizontal_bright" />
 </LinearLayout>

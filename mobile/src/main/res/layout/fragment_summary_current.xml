@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.goodcodeforfun.isairclean.SummaryFragment"
+    android:orientation="horizontal"
+    tools:ignore="WebViewLayout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/summaryCurrentWrapLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current:"
+            android:id="@+id/summaryCurrentLabelTextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="183,790,000"
+            android:id="@+id/summaryCurrentCarbonTextView"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" tons CO2"
+            android:id="@+id/summaryCurrentCarbonLabelTextView"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="181,810,000"
+            android:id="@+id/summaryCurrentEnergyTextView"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" MWh energy"
+            android:id="@+id/summaryCurrentEnergyLabelTextView"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1,010"
+            android:id="@+id/summaryCurrentIntensityTextView"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kg CO2 per MWh"
+            android:id="@+id/summaryCurrentIntensityLabelTextView" />
+
+    </LinearLayout>
+
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pieChartCurrentWebView"
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout"
+        android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout"
+        android:nestedScrollingEnabled="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

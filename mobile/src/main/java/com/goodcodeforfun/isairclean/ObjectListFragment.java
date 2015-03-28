@@ -11,23 +11,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SlidingPaneLayout;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -57,40 +52,39 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
     private ListView mListView;
     private TextView mTextView;
+    private LinearLayout mLinearLayout;
     private SlidingUpPanelLayout mLayout;
     private OnFragmentInteractionListener mListener;
     private final SlidingUpPanelLayout.PanelSlideListener inactiveSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
         @Override
         public void onPanelSlide(View panel, float slideOffset) {
-            Log.i("PanelSlide2", "onPanelSlide, offset " + slideOffset);
+            if(slideOffset == 1){
+                isClickable = true;
+                mLayout.setDragView(mTextView);
+            } else if (slideOffset == 0){
+                isClickable = false;
+                mLayout.setDragView(mLinearLayout);
+            }
         }
 
 
         @Override
         public void onPanelExpanded(View panel) {
-            Log.i("PanelSlide2", "onPanelExpanded");
-            isClickable = true;
-            //mLayout.setDragView(mTextView);
         }
 
 
         @Override
         public void onPanelCollapsed(View panel) {
-            Log.i("PanelSlide2", "onPanelCollapsed");
-            isClickable = false;
-            //mLayout.setDragView(null);
         }
 
 
         @Override
         public void onPanelAnchored(View panel) {
-            Log.i("PanelSlide2", "onPanelAnchored");
         }
 
 
         @Override
         public void onPanelHidden(View panel) {
-            Log.i("PanelSlide2", "onPanelHidden");
         }
     };
 
@@ -130,6 +124,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
         mListView = (ListView) rootView.findViewById(R.id.objectListView);
         mTextView = (TextView) rootView.findViewById(R.id.cityNameTextView);
+        mLinearLayout = (LinearLayout) rootView.findViewById(R.id.listViewWrapLinearLayout);
         mListView.setAdapter(arrayAdapterObjects);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -145,36 +140,33 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
                 }
             }
         });
-        //mListView.setVerticalScrollBarEnabled(false);
+
         mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.d("++--++--++--++","Cant touch this!");
                 return !isClickable;
             }
         });
 
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                // TODO Auto-generated method stub
+                //Auto-generated method stub
             }
 
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                // TODO Auto-generated method stub
-                if (scrollState == 0 && view.getChildAt(0).getTop() == 0) {
+                if (view.getChildAt(0).getTop() == 0 && scrollState == 0) {
+                    mLayout.setDragView(mLinearLayout);
                     isClickable = false;
-                    mLayout.setPanelSlideListener(inactiveSlideListener);
+                } else {
+                    mLayout.setDragView(mTextView);
+                    isClickable = true;
                 }
             }
         });
 
-        //mLayout = (SlidingUpPanelLayout) getActivity().findViewById(R.id.sliding_layout);
-        //mLayout.setDragView(rootView.findViewById(R.id.objectListViewWrapper));
-        //mLayout.setEnableDragViewTouchEvents(false);
         mLayout = (SlidingUpPanelLayout) getActivity().findViewById(R.id.sliding_layout);
         mLayout.setPanelSlideListener(inactiveSlideListener);
-        //mLayout.setDragView(null);
-        mLayout.setDragView(mTextView);
+        mLayout.setDragView(mLinearLayout);
         return rootView;
     }
 

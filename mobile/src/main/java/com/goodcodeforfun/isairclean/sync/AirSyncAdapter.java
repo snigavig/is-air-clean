@@ -14,12 +14,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 
+import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.data.AirContract;
-import com.goodcodeforfun.isairclean.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

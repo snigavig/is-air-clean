@@ -9,17 +9,14 @@
     android:orientation="vertical"
     android:gravity="bottom"
     sothree:umanoShadowHeight="10dp"
-    sothree:umanoPanelHeight="150dp"
+    sothree:umanoPanelHeight="250dp"
     sothree:umanoDragView="@+id/cityNameTextView"
     sothree:umanoParalaxOffset="200dp">
 
-
-    <FrameLayout
-        android:id="@+id/summary_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-    </FrameLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/list_fragment"

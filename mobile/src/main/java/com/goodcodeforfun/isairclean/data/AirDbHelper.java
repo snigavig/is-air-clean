@@ -4,14 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.goodcodeforfun.isairclean.data.AirContract.CityEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.LocationEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.ObjectEntry;
-import com.goodcodeforfun.isairclean.data.AirContract.CityEntry;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class AirDbHelper extends SQLiteOpenHelper {
 

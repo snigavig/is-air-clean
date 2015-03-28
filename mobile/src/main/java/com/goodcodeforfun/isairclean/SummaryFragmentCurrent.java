@@ -1,24 +1,27 @@
 package com.goodcodeforfun.isairclean;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SummaryFragment.OnFragmentInteractionListener} interface
+ * {@link SummaryFragmentCurrent.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SummaryFragment#newInstance} factory method to
+ * Use the {@link SummaryFragmentCurrent#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SummaryFragment extends Fragment {
+public class SummaryFragmentCurrent extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,11 +40,11 @@ public class SummaryFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SummaryFragment.
+     * @return A new instance of fragment SummaryFragmentCurrent.
      */
     // TODO: Rename and change types and number of parameters
-    public static SummaryFragment newInstance(String param1, String param2) {
-        SummaryFragment fragment = new SummaryFragment();
+    public static SummaryFragmentCurrent newInstance(String param1, String param2) {
+        SummaryFragmentCurrent fragment = new SummaryFragmentCurrent();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,7 +52,7 @@ public class SummaryFragment extends Fragment {
         return fragment;
     }
 
-    public SummaryFragment() {
+    public SummaryFragmentCurrent() {
         // Required empty public constructor
     }
 
@@ -63,10 +66,19 @@ public class SummaryFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mWebView = (WebView) getActivity().findViewById(R.id.pieChartCurrentWebView);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+        mWebView.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_summary, container, false);
+        return inflater.inflate(R.layout.fragment_summary_current, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
