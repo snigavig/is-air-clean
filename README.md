@@ -8,8 +8,8 @@ Data from CARMA (www.carma.org).
 Uses:
  HighchartsJS (www.highcharts.com)
  <br>
- AndroidSlidingUpPanel <a href="https://github.com/umano/AndroidSlidingUpPanel" title="Go to AndroidSlidingUpPanel"></a>
+ AndroidSlidingUpPanel (www.github.com/umano/AndroidSlidingUpPanel)
  <br>
- ViewPagerIndicator <a href="http://viewpagerindicator.com/" title="ViewPagerIndicator"></a>
+ ViewPagerIndicator (www.viewpagerindicator.com)
  <br>
  Icon by Taras Lototskiy
