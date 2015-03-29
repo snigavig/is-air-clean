@@ -12,4 +12,4 @@ Uses:
  <br>
  ViewPagerIndicator (www.viewpagerindicator.com)
  <br>
- Icon by Taras Lototskiy
+ Icon by Taras Lototskiy (https://twitter.com/torasko)
