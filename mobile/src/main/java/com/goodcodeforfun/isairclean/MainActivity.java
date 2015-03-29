@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;
 import java.util.Vector;
@@ -22,6 +23,7 @@ public class MainActivity extends ActionBarActivity implements SummaryFragmentCu
     private SlidingUpPanelLayout mLayout;
 
     private PagerAdapter mPagerAdapter;
+    private CirclePageIndicator mIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,5 +84,7 @@ public class MainActivity extends ActionBarActivity implements SummaryFragmentCu
         //
         ViewPager pager = (ViewPager)super.findViewById(R.id.viewPager);
         pager.setAdapter(this.mPagerAdapter);
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(pager);
     }
 }

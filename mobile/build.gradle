@@ -26,4 +26,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.0.0'
     compile 'com.android.support:support-v4:22.0.0'
     compile 'com.sothree.slidinguppanel:library:3.0.0'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 }

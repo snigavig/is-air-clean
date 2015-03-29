@@ -50,7 +50,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     static final int COL_OBJECT_COORD_LAT = 3;
     static final int COL_OBJECT_COORD_LONG = 4;
 
-    private ListView mListView;
     private TextView mTextView;
     private LinearLayout mLinearLayout;
     private SlidingUpPanelLayout mLayout;
@@ -70,11 +69,15 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
         @Override
         public void onPanelExpanded(View panel) {
+            isClickable = true;
+            mLayout.setDragView(mTextView);
         }
 
 
         @Override
         public void onPanelCollapsed(View panel) {
+            isClickable = false;
+            mLayout.setDragView(mLinearLayout);
         }
 
 
@@ -122,7 +125,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         View rootView = inflater.inflate(R.layout.fragment_object_list, container, false);
         arrayAdapterObjects = new ObjectsAdapter(getActivity(), null, 0);
 
-        mListView = (ListView) rootView.findViewById(R.id.objectListView);
+        ListView mListView = (ListView) rootView.findViewById(R.id.objectListView);
         mTextView = (TextView) rootView.findViewById(R.id.cityNameTextView);
         mLinearLayout = (LinearLayout) rootView.findViewById(R.id.listViewWrapLinearLayout);
         mListView.setAdapter(arrayAdapterObjects);

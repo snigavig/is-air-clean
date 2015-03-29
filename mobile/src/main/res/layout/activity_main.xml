@@ -5,18 +5,29 @@
     android:layout_height="match_parent"
     android:id="@+id/sliding_layout"
     tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame"
     android:orientation="vertical"
     android:gravity="bottom"
     sothree:umanoShadowHeight="10dp"
-    sothree:umanoPanelHeight="250dp"
-    sothree:umanoDragView="@+id/cityNameTextView"
+    sothree:umanoPanelHeight="200dp"
     sothree:umanoParalaxOffset="200dp">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="top">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:padding="10dip"
+            android:layout_width="fill_parent"
+            android:layout_gravity="top"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/list_fragment"

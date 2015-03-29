@@ -1,16 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.goodcodeforfun.isairclean.SummaryFragment"
-    android:orientation="horizontal"
-    tools:ignore="WebViewLayout">
+    android:layout_height="match_parent"
+    tools:context="com.goodcodeforfun.isairclean.SummaryFragmentCurrent"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/summaryCurrentWrapLinearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="183,790,000"
+            android:text="183,790"
             android:id="@+id/summaryCurrentCarbonTextView"
             android:textSize="34sp" />
 
@@ -36,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="181,810,000"
+            android:text="181,810"
             android:id="@+id/summaryCurrentEnergyTextView"
             android:textSize="34sp" />
 
@@ -64,14 +62,19 @@
 
     <WebView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:id="@+id/pieChartCurrentWebView"
-        android:layout_gravity="end"
-        android:clickable="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout"
+        android:layout_alignBottom="@+id/summaryCurrentWrapLinearLayout"
         android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout"
-        android:nestedScrollingEnabled="true"
-        android:layout_centerVertical="true" />
+        android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/summaryCurrentWrapLinearLayout"
+        android:layout_alignRight="@+id/pieChartCurrentWebView"
+        android:layout_alignEnd="@+id/pieChartCurrentWebView"
+        android:id="@+id/frameLayout">
+    </FrameLayout>
 
 </RelativeLayout>
