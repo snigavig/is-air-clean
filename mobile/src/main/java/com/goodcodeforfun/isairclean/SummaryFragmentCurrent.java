@@ -1,6 +1,7 @@
 package com.goodcodeforfun.isairclean;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,7 +72,11 @@ public class SummaryFragmentCurrent extends Fragment {
         mWebView = (WebView) getActivity().findViewById(R.id.pieChartCurrentWebView);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+        if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
+            mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+        } else if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE) {
+            mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+        }
         mWebView.setBackgroundColor(Color.TRANSPARENT);
     }
 

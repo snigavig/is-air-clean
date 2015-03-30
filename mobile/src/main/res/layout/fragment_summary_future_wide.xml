@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.goodcodeforfun.isairclean.SummaryFragmentFuture"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/summaryFutureWrapLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Future:"
+            android:id="@+id/summaryFutureLabelTextView"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="223,790,000"
+                android:id="@+id/summaryFutureCarbonTextView"
+                android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" tons CO2"
+                android:id="@+id/summaryFutureCarbonLabelTextView"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="192,230,000"
+                android:id="@+id/summaryFutureEnergyTextView"
+                android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" MWh energy"
+                android:id="@+id/summaryFutureEnergyLabelTextView"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,210"
+                android:id="@+id/summaryFutureIntensityTextView"
+                android:textSize="34sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" kg CO2 per MWh"
+                android:id="@+id/summaryFutureIntensityLabelTextView" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/pieChartFutureWebView"
+        android:layout_alignBottom="@+id/summaryFutureWrapLinearLayout"
+        android:layout_toEndOf="@+id/summaryFutureWrapLinearLayout"
+        android:layout_toRightOf="@+id/summaryFutureWrapLinearLayout" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/summaryFutureWrapLinearLayout"
+        android:layout_alignRight="@+id/pieChartFutureWebView"
+        android:layout_alignEnd="@+id/pieChartFutureWebView"
+        android:id="@+id/frameLayout">
+    </FrameLayout>
+
+</RelativeLayout>
