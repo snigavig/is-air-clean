@@ -7,68 +7,71 @@
     </body>
 
     <script>
-        var chart = new Highcharts.Chart({
-            chart: {
-                renderTo:'container',
-                type: 'pie',
-                backgroundColor: null,
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                spacing:[0,0,0,0]
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: null
-            },
-            labels: {
-                style:{
-                    color: '#FFF',
-                    fontSize:'18px'
-                }
-            },
-            legend: {
-                itemStyle: {
-                    color: '#FFFFFF'
+        window.initChart = function (fossil, nuclear, hydro, renewable) {
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo:'container',
+                    type: 'pie',
+                    backgroundColor: null,
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    spacing:[0,0,0,0]
                 },
-                margin:0
-            },
-            tooltip: {
-                enabled: true,
-                animation: true,
-                pointFormat: '{point.percentage:.1f}%'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    showInLegend: true,
-                    dataLabels: {
-                        center: ['50%', '50%'],
-                        enabled: true,
-                        softConnector:false,
-                        distance: -20,
-                        inside: true,
-                        overflow: 'justify',
-                        format: '{point.percentage:.1f} %',
-                        style: {
-                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                },
+                labels: {
+                    style:{
+                        color: '#FFF',
+                        fontSize:'18px'
+                    }
+                },
+                legend: {
+                    itemStyle: {
+                        color: '#FFFFFF'
+                    },
+                    margin:0
+                },
+                tooltip: {
+                    enabled: true,
+                    animation: true,
+                    pointFormat: '{point.percentage:.1f}%'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        showInLegend: true,
+                        dataLabels: {
+                            center: ['50%', '50%'],
+                            enabled: true,
+                            softConnector:false,
+                            distance: -20,
+                            inside: true,
+                            overflow: 'justify',
+                            format: '{point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
                         }
                     }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Power types',
-                data: [
-                    ['Fossil', 25.0],
-                    ['Nuclear', 28.0],
-                    ['Hydro', 26.0],
-                    ['Other renewable', 21.0],
-                ]
-            }]
-        });
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Power types',
+                    data: [
+                        ['Fossil', fossil],
+                        ['Nuclear', nuclear],
+                        ['Hydro', hydro],
+                        ['Other renewable', renewable],
+                    ]
+                }]
+            });
+        };
+        window.initChart(20.0, 20.0, 20.0, 40.0);
     </script>
 </html>

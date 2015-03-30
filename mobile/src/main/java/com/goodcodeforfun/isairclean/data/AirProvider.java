@@ -18,9 +18,11 @@ public class AirProvider extends ContentProvider {
     static final int OBJECTS_WITH_LOCATION = 101;
     static final int OBJECTS_WITH_LOCATION_AND_ID = 102;
     static final int LOCATION = 300;
+    static final int LOCATION_BY_SETTING = 301;
 
     private static final SQLiteQueryBuilder sObjectsByLocationSettingQueryBuilder;
     private static final SQLiteQueryBuilder sObjectsByLocationSettingAndIdQueryBuilder;
+    private static final SQLiteQueryBuilder sLocationByLocationSettingQueryBuilder;
 
     static{
         sObjectsByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
@@ -35,6 +37,10 @@ public class AirProvider extends ContentProvider {
         sObjectsByLocationSettingAndIdQueryBuilder = new SQLiteQueryBuilder();
         sObjectsByLocationSettingAndIdQueryBuilder.setTables(
                 AirContract.ObjectEntry.TABLE_NAME);
+
+        sLocationByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
+        sLocationByLocationSettingQueryBuilder.setTables(
+                AirContract.LocationEntry.TABLE_NAME);
     }
 
     private static final String sIdSelection =
@@ -85,6 +91,20 @@ public class AirProvider extends ContentProvider {
         );
     }
 
+    private Cursor getLocationByLocationSetting(
+            Uri uri, String[] projection, String sortOrder) {
+        String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
+
+        return sLocationByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sLocationSettingSelection,
+                new String[]{locationSetting},
+                null,
+                null,
+                null
+        );
+    }
+
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = AirContract.CONTENT_AUTHORITY;
@@ -97,6 +117,9 @@ public class AirProvider extends ContentProvider {
         matcher.addURI(authority, AirContract.PATH_OBJECT + "/*/*", OBJECTS_WITH_LOCATION_AND_ID);
 
         matcher.addURI(authority, AirContract.PATH_LOCATION, LOCATION);
+
+        matcher.addURI(authority, AirContract.PATH_LOCATION + "/*", LOCATION_BY_SETTING);
+
         return matcher;
     }
 
@@ -120,6 +143,8 @@ public class AirProvider extends ContentProvider {
                 return AirContract.ObjectEntry.CONTENT_ITEM_TYPE;
             case LOCATION:
                 return AirContract.LocationEntry.CONTENT_TYPE;
+            case LOCATION_BY_SETTING:
+                return AirContract.LocationEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -152,6 +177,11 @@ public class AirProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
+            }
+            // "location/*"
+            case LOCATION_BY_SETTING: {
+                retCursor = getLocationByLocationSetting(uri, projection, sortOrder);
                 break;
             }
             // "location"
