@@ -120,8 +120,16 @@ public class AirContract {
             return CONTENT_URI.buildUpon().appendPath(locationSetting).build();
         }
 
+        public static Uri buildObjectLocationId(String locationSetting, int id) {
+            return CONTENT_URI.buildUpon().appendPath(locationSetting).appendPath(String.valueOf(id)).build();
+        }
+
         public static String getLocationSettingFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
+        }
+
+        public static int getIdFromUri(Uri uri) {
+            return Integer.parseInt(uri.getPathSegments().get(2));
         }
     }
 }

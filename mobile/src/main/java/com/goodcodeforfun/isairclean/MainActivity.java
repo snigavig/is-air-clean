@@ -75,9 +75,9 @@ public class MainActivity extends
 
     @Override
     public void onItemSelected(Uri contentUri) {
-            Intent intent = new Intent(this, DetailActivity.class)
-                    .setData(contentUri);
-            startActivity(intent);
+        Intent intent = new Intent(this, DetailActivity.class)
+            .setData(contentUri);
+        startActivity(intent);
     }
 
     @Override

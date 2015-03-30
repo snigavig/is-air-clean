@@ -16,9 +16,11 @@ public class AirProvider extends ContentProvider {
 
     static final int OBJECTS = 100;
     static final int OBJECTS_WITH_LOCATION = 101;
+    static final int OBJECTS_WITH_LOCATION_AND_ID = 102;
     static final int LOCATION = 300;
 
     private static final SQLiteQueryBuilder sObjectsByLocationSettingQueryBuilder;
+    private static final SQLiteQueryBuilder sObjectsByLocationSettingAndIdQueryBuilder;
 
     static{
         sObjectsByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
@@ -29,11 +31,23 @@ public class AirProvider extends ContentProvider {
                         "." + AirContract.ObjectEntry.COLUMN_LOC_KEY +
                         " = " + AirContract.LocationEntry.TABLE_NAME +
                         "." + AirContract.LocationEntry._ID);
+
+        sObjectsByLocationSettingAndIdQueryBuilder = new SQLiteQueryBuilder();
+        sObjectsByLocationSettingAndIdQueryBuilder.setTables(
+                AirContract.ObjectEntry.TABLE_NAME);
     }
+
+    private static final String sIdSelection =
+            AirContract.LocationEntry.TABLE_NAME +
+                    "." + AirContract.LocationEntry._ID + " = ? ";
 
     private static final String sLocationSettingSelection =
             AirContract.LocationEntry.TABLE_NAME+
                     "." + AirContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
+
+    private static final String sLocationSettingAndIdSelection =
+                    AirContract.ObjectEntry.TABLE_NAME +
+                    "." + AirContract.ObjectEntry._ID + " = ? ";
 
     private Cursor getObjectsByLocationSetting(Uri uri, String[] projection, String sortOrder) {
         String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
@@ -43,6 +57,8 @@ public class AirProvider extends ContentProvider {
 
         selection = sLocationSettingSelection;
         selectionArgs = new String[]{locationSetting};
+
+
 
         return sObjectsByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
@@ -54,12 +70,31 @@ public class AirProvider extends ContentProvider {
         );
     }
 
+    private Cursor getObjectsByLocationSettingAndId(
+            Uri uri, String[] projection, String sortOrder) {
+        String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
+        int id = AirContract.ObjectEntry.getIdFromUri(uri);
+
+        return sObjectsByLocationSettingAndIdQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                sLocationSettingAndIdSelection,
+                new String[]{Integer.toString(id)},
+                null,
+                null,
+                null
+        );
+    }
+
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = AirContract.CONTENT_AUTHORITY;
 
+
         matcher.addURI(authority, AirContract.PATH_OBJECT, OBJECTS);
+
         matcher.addURI(authority, AirContract.PATH_OBJECT + "/*", OBJECTS_WITH_LOCATION);
+
+        matcher.addURI(authority, AirContract.PATH_OBJECT + "/*/*", OBJECTS_WITH_LOCATION_AND_ID);
 
         matcher.addURI(authority, AirContract.PATH_LOCATION, LOCATION);
         return matcher;
@@ -79,8 +114,10 @@ public class AirProvider extends ContentProvider {
         switch (match) {
             case OBJECTS_WITH_LOCATION:
                 return AirContract.ObjectEntry.CONTENT_TYPE;
+            case OBJECTS_WITH_LOCATION_AND_ID:
+                return AirContract.ObjectEntry.CONTENT_ITEM_TYPE;
             case OBJECTS:
-                return AirContract.ObjectEntry.CONTENT_TYPE;
+                return AirContract.ObjectEntry.CONTENT_ITEM_TYPE;
             case LOCATION:
                 return AirContract.LocationEntry.CONTENT_TYPE;
             default:
@@ -92,10 +129,16 @@ public class AirProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         Cursor retCursor;
+
         switch (sUriMatcher.match(uri)) {
             // "objects/*"
             case OBJECTS_WITH_LOCATION: {
                 retCursor = getObjectsByLocationSetting(uri, projection, sortOrder);
+                break;
+            }
+            // "objects/*/*"
+            case OBJECTS_WITH_LOCATION_AND_ID: {
+                retCursor = getObjectsByLocationSettingAndId(uri, projection, sortOrder);
                 break;
             }
             // "objects"

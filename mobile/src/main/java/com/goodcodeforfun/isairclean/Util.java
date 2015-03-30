@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -22,14 +21,6 @@ public class Util {
         int panelHeight;
         int height = (int) (view.getBottom() / displayMetrics.density);
         panelHeight = (int) (dpHeight - height - 80);//maaaagic...(
-//        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            panelHeight = (int) (dpHeight - height);
-//        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            panelHeight = (int) (dpWidth - height);
-//        }
-//        Log.d("+++++",String.valueOf(dpWidth));
-//        Log.d("+++++",String.valueOf(dpHeight));
-        Log.d("+++++", String.valueOf(panelHeight));
         return panelHeight;
     }
     public static int getOrientation(Context context){

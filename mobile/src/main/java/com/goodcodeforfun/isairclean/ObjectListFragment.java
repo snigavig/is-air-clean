@@ -46,6 +46,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
             AirContract.ObjectEntry.COLUMN_COORD_LONG
     };
 
+    static final int COL_OBJECT_ID = 0;
     static final int COL_OBJECT_NAME = 1;
     static final int COL_OBJECT_INTENSITY_CURRENT = 2;
     static final int COL_OBJECT_COORD_LAT = 3;
@@ -117,7 +118,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri dateUri);
+        public void onItemSelected(Uri objectUri);
     }
 
     @Override
@@ -138,8 +139,8 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
                 if (cursor != null) {
                     String locationSetting = Util.getPreferredLocation(getActivity());
                     ((Callback) getActivity())
-                            .onItemSelected(AirContract.ObjectEntry.buildObjectLocation(
-                                    locationSetting
+                            .onItemSelected(AirContract.ObjectEntry.buildObjectLocationId(
+                                    locationSetting, cursor.getInt(COL_OBJECT_ID)
                             ));
                 }
             }
@@ -213,6 +214,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         String sortOrder = AirContract.ObjectEntry.COLUMN_NAME + " ASC";
         Uri objectForLocationUri = AirContract.ObjectEntry.buildObjectLocation(
                 locationSetting);
+
         return new CursorLoader(getActivity(),
                 objectForLocationUri,
                 OBJECT_COLUMNS,

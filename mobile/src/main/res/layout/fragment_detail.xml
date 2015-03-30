@@ -20,7 +20,6 @@
         android:id="@+id/detailCurrentCarbonTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="183,790,000"
         android:textSize="34sp" />
 
     <TextView
@@ -34,7 +33,6 @@
         android:id="@+id/detailCurrentEnergyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="181,810,000"
         android:textSize="34sp" />
 
     <TextView
@@ -48,7 +46,6 @@
         android:id="@+id/detailCurrentIntensityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1,010"
         android:textSize="34sp" />
 
     <TextView
@@ -74,7 +71,6 @@
         android:id="@+id/detailFutureCarbonTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="243,820,000"
         android:textSize="34sp" />
 
     <TextView
@@ -88,7 +84,6 @@
         android:id="@+id/detailFutureEnergyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="303,769,984"
         android:textSize="34sp" />
 
     <TextView
@@ -102,7 +97,6 @@
         android:id="@+id/detailFutureIntensityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="803"
         android:textSize="34sp" />
 
     <TextView
