@@ -2,7 +2,33 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
+        <item name="colorPrimary">@color/air_light_blue</item>
+        <item name="colorPrimaryDark">@color/air_light_grey</item>
+    </style>
+
+    <!-- Main theme. -->
+    <style name="AirTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/ActionBar.Solid.Air.NoTitle</item>
+    </style>
+
+    <!-- Settings activity theme. -->
+    <style name="SettingsTheme" parent="AppTheme">
+    </style>
+
+    <!-- main activity action bar styles -->
+    <style name="ActionBar.Solid.Air.NoTitle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="displayOptions">useLogo|showHome</item>
+        <item name="logo">@drawable/ic_logo</item>
+    </style>
+
+    <!-- Style for object list  -->
+    <style name="ObjectListStyle">
+        <item name="android:background">@color/air_light_grey</item>
+    </style>
+
+    <!-- Style for summary list  -->
+    <style name="SummaryStyle">
+        <item name="android:background">@color/air_light_blue</item>
     </style>
 
     <style name="StyledIndicators" parent="@android:style/Theme.Light">

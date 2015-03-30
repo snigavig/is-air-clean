@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class MainActivity extends ActionBarActivity implements SummaryFragmentCurrent.OnFragmentInteractionListener, SummaryFragmentFuture.OnFragmentInteractionListener, ObjectListFragment.OnFragmentInteractionListener {
-
+public class MainActivity extends
+        ActionBarActivity implements
+        SummaryFragmentCurrent.OnFragmentInteractionListener, SummaryFragmentFuture.OnFragmentInteractionListener,
+        ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback {
 
     private SlidingUpPanelLayout mLayout;
 
@@ -69,6 +71,13 @@ public class MainActivity extends ActionBarActivity implements SummaryFragmentCu
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+            Intent intent = new Intent(this, DetailActivity.class)
+                    .setData(contentUri);
+            startActivity(intent);
     }
 
     @Override

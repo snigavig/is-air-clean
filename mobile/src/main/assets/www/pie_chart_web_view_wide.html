@@ -1,4 +1,4 @@
-<html style="height:91%">
+<html style="height:90%">
     <head>
         <script src="./highcharts-custom.js"></script>
     </head>
@@ -32,7 +32,11 @@
             legend: {
                 align: 'right',
                 verticalAlign: 'top',
-                layout: 'vertical'
+                layout: 'vertical',
+                itemStyle: {
+                    color: '#FFFFFF'
+                },
+                margin:0
             },
             tooltip: {
                 pointFormat: '{point.percentage:.1f}%'

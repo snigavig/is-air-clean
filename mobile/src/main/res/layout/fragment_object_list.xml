@@ -4,12 +4,12 @@
     tools:context="com.goodcodeforfun.isairclean.ObjectListFragment"
     android:id="@+id/listViewWrapLinearLayout"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    style="@style/ObjectListStyle">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="City Name"
         android:textSize="48sp"
         android:id="@+id/cityNameTextView" />
 

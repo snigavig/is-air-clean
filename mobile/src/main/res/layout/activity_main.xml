@@ -7,10 +7,11 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="bottom"
-    sothree:umanoShadowHeight="10dp"
+    sothree:umanoShadowHeight="5dp"
     sothree:umanoParalaxOffset="200dp">
 
     <LinearLayout
+        style="@style/SummaryStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/viewPagerWrap"
@@ -23,7 +24,7 @@
             android:layout_weight="1" />
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
-            android:padding="10dip"
+            android:padding="10dp"
             android:layout_width="fill_parent"
             android:layout_gravity="top"
             android:layout_height="wrap_content"/>
@@ -32,5 +33,5 @@
     <FrameLayout
         android:id="@+id/list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="fill_parent"/>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -224,6 +224,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         arrayAdapterObjects.swapCursor(data);
+        mTextView.setText(Util.getPreferredLocation(getActivity()));
     }
 
     @Override

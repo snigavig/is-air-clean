@@ -10,8 +10,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AirTheme">
         <provider
             android:authorities="@string/content_authority"
             android:name=".data.AirProvider"
@@ -58,6 +57,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -16,6 +16,7 @@
             android:layout_height="fill_parent"
             android:text="Current:"
             android:id="@+id/summaryCurrentLabelTextView"
+            android:textColor="@color/white"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -28,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="183,790"
                 android:id="@+id/summaryCurrentCarbonTextView"
+                android:textColor="@color/white"
                 android:textSize="34sp" />
 
             <TextView
@@ -35,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text=" tons CO2"
                 android:id="@+id/summaryCurrentCarbonLabelTextView"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -48,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="181,810"
                 android:id="@+id/summaryCurrentEnergyTextView"
+                android:textColor="@color/white"
                 android:textSize="34sp" />
 
             <TextView
@@ -55,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text=" MWh energy"
                 android:id="@+id/summaryCurrentEnergyLabelTextView"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -68,13 +73,15 @@
                 android:layout_height="wrap_content"
                 android:text="1,010"
                 android:id="@+id/summaryCurrentIntensityTextView"
+                android:textColor="@color/white"
                 android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" kg CO2 per MWh"
-                android:id="@+id/summaryCurrentIntensityLabelTextView" />
+                android:id="@+id/summaryCurrentIntensityLabelTextView"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>
