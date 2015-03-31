@@ -1,6 +1,12 @@
 <html style="height:91%">
     <head>
         <script src="./highcharts-custom.js"></script>
+        <style>
+            .highcharts-legend-item rect {
+                stroke-width: 0.5;
+                stroke: rgb(255,255,255);
+            }
+        </style>
     </head>
     <body style="height:100%">
         <div id="container" style="background: transparent;height:100%"></div>
@@ -8,6 +14,13 @@
 
     <script>
         window.initChart = function (fossil, nuclear, hydro, renewable) {
+            var data = [];
+
+            hydro > 0.5 && data.push(['Hydro', hydro]);
+            fossil > 0.5 && data.push(['Fossil', fossil]);
+            nuclear > 0.5 && data.push(['Nuclear', nuclear]);
+            renewable > 0.5 && data.push(['Other renewable', renewable]);
+
             var chart = new Highcharts.Chart({
                 chart: {
                     renderTo:'container',
@@ -34,7 +47,9 @@
                     itemStyle: {
                         color: '#FFFFFF'
                     },
-                    margin:0
+                    margin:0,
+                    padding:0,
+                    y:-10
                 },
                 tooltip: {
                     enabled: true,
@@ -45,33 +60,27 @@
                     pie: {
                         allowPointSelect: true,
                         cursor: 'pointer',
+                        borderWidth: '2px',
                         showInLegend: true,
+                        colors: ['#673ab7','#009688','#ffab40','#40c4ff'],
+                        center: ['50%', '50%'],
                         dataLabels: {
-                            center: ['50%', '50%'],
                             enabled: true,
-                            softConnector:false,
-                            distance: -20,
-                            inside: true,
-                            overflow: 'justify',
-                            format: '{point.percentage:.1f} %',
+                            distance: -30,
                             style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            }
+                                fontWeight: 'bold',
+                                fontSize: '0.8rem',
+                                color: 'white',
+                                textShadow: '0px 1px 2px black'
+                            },
+                            format: '{point.percentage:.0f}%',
                         }
                     }
                 },
                 series: [{
-                    type: 'pie',
-                    name: 'Power types',
-                    data: [
-                        ['Fossil', fossil],
-                        ['Nuclear', nuclear],
-                        ['Hydro', hydro],
-                        ['Other renewable', renewable],
-                    ]
+                    data: data
                 }]
             });
         };
-        window.initChart(20.0, 20.0, 20.0, 40.0);
     </script>
 </html>
