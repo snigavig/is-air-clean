@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * {@link ObjectListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class ObjectListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ObjectListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = 0;
 
@@ -135,6 +136,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.d("booooooo", "im here");
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Util.getPreferredLocation(getActivity());
@@ -248,6 +250,5 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 
 }

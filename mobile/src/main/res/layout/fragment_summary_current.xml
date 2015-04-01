@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Current:"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentLabelTextView"
             android:textColor="@color/white"
             android:textSize="24sp" />
@@ -22,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="183,790"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentCarbonTextView"
             android:textColor="@color/white"
             android:textSize="34sp" />
@@ -30,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" tons CO2"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentCarbonLabelTextView"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -38,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="181,810"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentEnergyTextView"
             android:textColor="@color/white"
             android:textSize="34sp" />
@@ -46,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" MWh energy"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentEnergyLabelTextView"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -54,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1,010"
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryCurrentIntensityTextView"
             android:textColor="@color/white"
             android:textSize="34sp" />
@@ -62,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" kg CO2 per MWh"
+            android:fontFamily="sans-serif-condensed"
             android:textColor="@color/white"
             android:id="@+id/summaryCurrentIntensityLabelTextView" />
 
