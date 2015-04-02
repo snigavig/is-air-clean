@@ -212,4 +212,8 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
         public void onFragmentInteraction(Uri uri);
     }
 
+    void onLocationChanged() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
 }

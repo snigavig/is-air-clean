@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:gravity="bottom"
-    sothree:umanoShadowHeight="5dp"
+    sothree:umanoShadowHeight="8dp"
     sothree:umanoParalaxOffset="200dp">
 
     <LinearLayout

@@ -12,7 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,10 +58,13 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     private TextView mTextView;
     private LinearLayout mLinearLayout;
     private SlidingUpPanelLayout mLayout;
+    private ActionBar mActionBar;
     private OnFragmentInteractionListener mListener;
     private final SlidingUpPanelLayout.PanelSlideListener inactiveSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
         @Override
         public void onPanelSlide(View panel, float slideOffset) {
+            mActionBar.setElevation(displayMetrics.density * (8 - (slideOffset*8)));
+
             if(slideOffset == 1){
                 isClickable = true;
                 mLayout.setDragView(mTextView);
@@ -99,7 +104,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public ObjectsAdapter arrayAdapterObjects;
     public ArrayList<String> arrayListObjects;
     public SharedPreferences prefs;
-
+    public DisplayMetrics displayMetrics;
 
 
     public ObjectListFragment() {
@@ -113,6 +118,8 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         arrayListObjects = new ArrayList<>();
+        displayMetrics = getActivity().getResources().getDisplayMetrics();
+        mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
     }
 
     public interface Callback {
@@ -136,7 +143,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("booooooo", "im here");
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Util.getPreferredLocation(getActivity());
@@ -177,6 +183,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
             mLayout.setPanelHeight(Util.getPanelHeight(getActivity(), getActivity().findViewById(R.id.indicator)));
         }
+
         return rootView;
     }
 
@@ -249,6 +256,10 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    void onLocationChanged() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
 }

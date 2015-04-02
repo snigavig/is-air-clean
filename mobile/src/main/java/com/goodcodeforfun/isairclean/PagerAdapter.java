@@ -2,14 +2,14 @@ package com.goodcodeforfun.isairclean;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
 /**
  * Created by snigavig on 28.03.15.
  */
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> fragments;
     /**
@@ -34,5 +34,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return this.fragments.size();
+    }
+
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }

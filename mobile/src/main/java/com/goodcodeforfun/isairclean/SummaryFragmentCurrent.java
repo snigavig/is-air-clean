@@ -214,4 +214,8 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         public void onFragmentInteraction(Uri uri);
     }
 
+    void onLocationChanged() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
 }
