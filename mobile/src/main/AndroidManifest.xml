@@ -3,26 +3,58 @@
     package="com.goodcodeforfun.isairclean" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
+        android:name=".IsAirCleanApplication"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/AirTheme">
+        android:theme="@style/AirTheme" >
+        <service android:name="com.littlefluffytoys.littlefluffylocationlibrary.LocationBroadcastService" />
+
+        <receiver
+            android:name="com.littlefluffytoys.littlefluffylocationlibrary.StartupBroadcastReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.littlefluffytoys.littlefluffylocationlibrary.PassiveLocationChangedReceiver"
+            android:exported="true" />
+        <receiver android:name=".LocationChangedReceiver">
+            <intent-filter>
+                <action android:name="com.goodcodeforfun.isairclean.littlefluffylocationlibrary.LOCATION_CHANGED" android:exported="false"/>
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <provider
-            android:authorities="@string/content_authority"
             android:name=".data.AirProvider"
+            android:authorities="@string/content_authority"
             android:exported="false"
             android:syncable="true" />
         <!-- SyncAdapter's dummy authentication service -->
-        <service android:name=".sync.AirAuthenticatorService"
-            android:exported="false">
+        <service
+            android:name=".sync.AirAuthenticatorService"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
@@ -30,14 +62,16 @@
         <service
             android:name=".sync.AirSyncService"
             android:exported="true"
-            android:permission="">
+            android:permission="" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
+
             <meta-data
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -58,8 +92,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/SettingsTheme"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/SettingsTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goodcodeforfun.isairclean.MainActivity" />

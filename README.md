@@ -15,4 +15,6 @@ Uses:
 <br>
 	android-circlebutton (https://github.com/markushi/android-circlebutton)
 <br>
+	Little Fluffy Location Library for Android (https://code.google.com/p/little-fluffy-location-library)
+<br>
 	Icon by Taras Lototskiy (https://twitter.com/torasko)

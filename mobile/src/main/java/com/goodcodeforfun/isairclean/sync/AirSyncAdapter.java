@@ -66,7 +66,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         String locationJsonStr;
         String objectsJsonStr;
 
-        Log.d(LOG_TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         //http://carma.org/api/1.1/searchLocations?name=Kiev
         try {
             final String CARMA_BASE_LOCATION_URL =
@@ -102,7 +101,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             locationJsonStr = buffer.toString();
-            Log.d(LOG_TAG, locationJsonStr);
 
             int[] locationIds = getLocationDataFromJson(locationJsonStr, locationQuery);
             if (locationIds[1] != 0) {
@@ -126,7 +124,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
                 }
 
                 objectsJsonStr = buffer.toString();
-                Log.d(LOG_TAG, objectsJsonStr);
 
                 getObjectsDataFromJson(objectsJsonStr, locationIds[1]);
             }
@@ -242,8 +239,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
             inserted = mContentResolver.bulkInsert(AirContract.ObjectEntry.CONTENT_URI, cvArray);
-            Log.d(LOG_TAG,"+++++++++++++++++++++++++++++++++++++++++++++++");
-            Log.d(LOG_TAG, String.valueOf(inserted));
 //            getContext().getContentResolver().delete(AirContract.ObjectEntry.CONTENT_URI,
 //                    AirContract.ObjectEntry.COLUMN_DATE + " <= ?",
 //                    new String[] {Long.toString(dayTime.setJulianDay(julianStartDay-1))});
@@ -382,7 +377,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             }
 
             locationCursor.close();
-            Log.d(LOG_TAG, "Data Fetch Complete.");
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
