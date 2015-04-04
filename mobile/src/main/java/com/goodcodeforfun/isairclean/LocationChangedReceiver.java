@@ -51,7 +51,7 @@ public class LocationChangedReceiver extends BroadcastReceiver {
                 String lastNotificationKey = context.getString(R.string.pref_last_notification);
                 long lastSync = prefs.getLong(lastNotificationKey, 0);
 
-                if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
+                if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
 
                     Uri locationUri = AirContract.LocationEntry.buildLocationBySetting(locationQuery);
                     Cursor cursor = context.getContentResolver().query(locationUri, NOTIFY_LOCATION_PROJECTION, null, null, null);
@@ -69,6 +69,7 @@ public class LocationChangedReceiver extends BroadcastReceiver {
                                 new NotificationCompat.Builder(context)
                                         .setSmallIcon(R.drawable.ic_notification_icon)
                                         .setContentTitle(title)
+                                        .setAutoCancel(true)
                                         .setContentText(contentText);
 
                         Intent resultIntent = new Intent(context, MainActivity.class);

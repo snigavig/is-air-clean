@@ -24,11 +24,11 @@ public class IsAirCleanApplication extends Application {
                 Boolean.parseBoolean(this.getString(R.string.pref_enable_location_updates_default)));
         if (locationUpdates) {
             // output debug to LogCat, with tag LittleFluffyLocationLibrary
-            LocationLibrary.showDebugOutput(true);
+            //LocationLibrary.showDebugOutput(true);
 
             try {
-                // LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
-                LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
+                LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
+                //LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
             }
             catch (UnsupportedOperationException ex) {
                 Log.d("IsAirClean", "UnsupportedOperationException thrown - the device doesn't have any location providers");

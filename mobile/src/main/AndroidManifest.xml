@@ -61,8 +61,7 @@
         </service>
         <service
             android:name=".sync.AirSyncService"
-            android:exported="true"
-            android:permission="" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>

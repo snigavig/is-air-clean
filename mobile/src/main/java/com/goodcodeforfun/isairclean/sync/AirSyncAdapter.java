@@ -35,20 +35,8 @@ import java.util.Vector;
 public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = AirSyncAdapter.class.getSimpleName();
     // 60 seconds (1 minute) * 180 = 3 hours
-    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_INTERVAL = 4 * 60 * 180; //12 hours
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
-    private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-    private static final String[] NOTIFY_LOCATION_PROJECTION = new String[] {
-        AirContract.LocationEntry.COLUMN_CITY_NAME,
-        AirContract.LocationEntry.COLUMN_CARBON_CURRENT,
-        AirContract.LocationEntry.COLUMN_ENERGY_CURRENT,
-        AirContract.LocationEntry.COLUMN_INTENSITY_CURRENT
-    };
-    private static final int INDEX_CITY_NAME = 0;
-    private static final int INDEX_CARBON_CURRENT = 1;
-    private static final int INDEX_ENERGY_CURRENT = 2;
-    private static final int INDEX_INTENSITY_CURRENT = 3;
-
     private ContentResolver mContentResolver;
 
     public AirSyncAdapter(Context context, boolean autoInitialize) {
@@ -234,14 +222,15 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             }
         }
 
-        int inserted;
+        //int inserted;
         if ( cVVector != null && cVVector.size() > 0 ) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            inserted = mContentResolver.bulkInsert(AirContract.ObjectEntry.CONTENT_URI, cvArray);
-//            getContext().getContentResolver().delete(AirContract.ObjectEntry.CONTENT_URI,
-//                    AirContract.ObjectEntry.COLUMN_DATE + " <= ?",
-//                    new String[] {Long.toString(dayTime.setJulianDay(julianStartDay-1))});
+            mContentResolver.bulkInsert(AirContract.ObjectEntry.CONTENT_URI, cvArray);
+            //inserted = mContentResolver.bulkInsert(AirContract.ObjectEntry.CONTENT_URI, cvArray);
+            //getContext().getContentResolver().delete(AirContract.ObjectEntry.CONTENT_URI,
+            //AirContract.ObjectEntry.COLUMN_DATE + " <= ?",
+            //new String[] {Long.toString(dayTime.setJulianDay(julianStartDay-1))});
         }
 
     }
@@ -254,7 +243,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         int locationId = 0;
         int locationDbId = 0;
         // Location information
-        final String CARMA_CITY_ID = "id";
         final String CARMA_CITY_NAME = "name";
         final String CARMA_AREA = "province";
         final String CARMA_AREA_ID = "id";
@@ -300,7 +288,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
 
 
             String cityName = locationJson.getString(CARMA_CITY_NAME);
-            int cityId = locationJson.getInt(CARMA_CITY_ID);
             
             JSONObject area = locationJson.getJSONObject(CARMA_AREA);
             int areaId = area.getInt(CARMA_AREA_ID);

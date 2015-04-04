@@ -4,15 +4,17 @@
     tools:context="com.goodcodeforfun.isairclean.ObjectListFragment"
     android:id="@+id/listViewWrapLinearLayout"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:gravity="center_vertical|center|center_horizontal"
     style="@style/ObjectListStyle">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="48sp"
         android:fontFamily="sans-serif-condensed"
-        android:id="@+id/cityNameTextView" />
+        android:id="@+id/cityNameTextView"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center|center_horizontal" />
 
     <ListView
         android:id="@+id/objectListView"
@@ -21,5 +23,5 @@
         android:divider="@android:drawable/divider_horizontal_bright"
         android:requiresFadingEdge="horizontal"
         android:fadingEdgeLength="50dp"
-        android:layout_gravity="right" />
+        android:layout_gravity="end" />
 </LinearLayout>

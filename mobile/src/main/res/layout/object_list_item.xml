@@ -8,7 +8,7 @@
     android:baselineAligned="false"
     android:background="@drawable/touch_selector"
     android:descendantFocusability="blocksDescendants"
-    android:gravity="right">
+    android:gravity="end">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -26,8 +26,8 @@
             android:textSize="20sp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:gravity="left|center_horizontal"
-            android:layout_gravity="left" />
+            android:gravity="start|center_horizontal"
+            android:layout_gravity="start" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                 android:id="@+id/listItemIntensityLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" kgCO2/MWh"
+                android:text="@string/kg_co2_short"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="?android:textAppearanceSmall"/>
 

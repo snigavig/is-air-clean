@@ -43,10 +43,6 @@ public class AirProvider extends ContentProvider {
                 AirContract.LocationEntry.TABLE_NAME);
     }
 
-    private static final String sIdSelection =
-            AirContract.LocationEntry.TABLE_NAME +
-                    "." + AirContract.LocationEntry._ID + " = ? ";
-
     private static final String sLocationSettingSelection =
             AirContract.LocationEntry.TABLE_NAME+
                     "." + AirContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
@@ -77,8 +73,7 @@ public class AirProvider extends ContentProvider {
     }
 
     private Cursor getObjectsByLocationSettingAndId(
-            Uri uri, String[] projection, String sortOrder) {
-        String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
+            Uri uri, String[] projection) {
         int id = AirContract.ObjectEntry.getIdFromUri(uri);
 
         return sObjectsByLocationSettingAndIdQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -92,7 +87,7 @@ public class AirProvider extends ContentProvider {
     }
 
     private Cursor getLocationByLocationSetting(
-            Uri uri, String[] projection, String sortOrder) {
+            Uri uri, String[] projection) {
         String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
 
         return sLocationByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -163,7 +158,7 @@ public class AirProvider extends ContentProvider {
             }
             // "objects/*/*"
             case OBJECTS_WITH_LOCATION_AND_ID: {
-                retCursor = getObjectsByLocationSettingAndId(uri, projection, sortOrder);
+                retCursor = getObjectsByLocationSettingAndId(uri, projection);
                 break;
             }
             // "objects"
@@ -181,7 +176,7 @@ public class AirProvider extends ContentProvider {
             }
             // "location/*"
             case LOCATION_BY_SETTING: {
-                retCursor = getLocationByLocationSetting(uri, projection, sortOrder);
+                retCursor = getLocationByLocationSetting(uri, projection);
                 break;
             }
             // "location"

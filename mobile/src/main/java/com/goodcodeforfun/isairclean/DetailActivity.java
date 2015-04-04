@@ -1,7 +1,6 @@
 package com.goodcodeforfun.isairclean;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -9,8 +8,7 @@ import android.view.MenuItem;
 
 
 public class DetailActivity extends
-        ActionBarActivity implements
-        DetailFragment.OnFragmentInteractionListener{
+        ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +50,4 @@ public class DetailActivity extends
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        //dummy
-    }
 }

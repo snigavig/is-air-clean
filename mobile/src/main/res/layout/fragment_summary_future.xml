@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Future:"
+            android:text="@string/future_label"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureLabelTextView"
             android:textColor="@color/white"
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
+            android:text="@string/no_data"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureCarbonTextView"
             android:textColor="@color/white"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" tons CO2"
+            android:text="@string/tonns_co2"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureCarbonLabelTextView"
             android:textColor="@color/white"
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
+            android:text="@string/no_data"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureEnergyTextView"
             android:textColor="@color/white"
@@ -49,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" MWh energy"
+            android:text="@string/mwh_energy"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureEnergyLabelTextView"
             android:textColor="@color/white"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="..."
+            android:text="@string/no_data"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureIntensityTextView"
             android:textColor="@color/white"
@@ -67,7 +67,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" kg CO2 per MWh"
+            android:text="@string/kg_co2_per_mwh"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureIntensityLabelTextView"
             android:textColor="@color/white" />

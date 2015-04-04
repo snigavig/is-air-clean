@@ -23,13 +23,12 @@ import java.util.Vector;
 
 public class MainActivity extends
         ActionBarActivity implements
-        SummaryFragmentCurrent.OnFragmentInteractionListener, SummaryFragmentFuture.OnFragmentInteractionListener,
-        ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback, ShareActionProvider.OnShareTargetSelectedListener{
+        ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback,
+        ShareActionProvider.OnShareTargetSelectedListener{
 
     private static final String OBJECTLISTFRAGMENT_TAG = "DFTAG";
     private SlidingUpPanelLayout mLayout;
     private PagerAdapter mPagerAdapter;
-    private CirclePageIndicator mIndicator;
     public SharedPreferences prefs;
     public static ShareActionProvider mShareActionProvider;
     public static String mShareString;
@@ -123,13 +122,13 @@ public class MainActivity extends
     }
 
     private void initialisePaging() {
-        List<Fragment> fragments = new Vector<Fragment>();
+        List<Fragment> fragments = new Vector<>();
         fragments.add(Fragment.instantiate(this, SummaryFragmentCurrent.class.getName()));
         fragments.add(Fragment.instantiate(this, SummaryFragmentFuture.class.getName()));
         this.mPagerAdapter = new PagerAdapter(super.getSupportFragmentManager(), fragments);
         ViewPager pager = (ViewPager)super.findViewById(R.id.viewPager);
         pager.setAdapter(this.mPagerAdapter);
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(pager);
     }
 

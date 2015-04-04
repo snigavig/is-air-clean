@@ -18,7 +18,7 @@
             android:id="@+id/detailCurrentLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current:"
+            android:text="@string/current_label"
             android:textSize="24sp" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:id="@+id/detailCurrentCarbonLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" tons CO2"
+            android:text="@string/tonns_co2"
             android:textSize="16sp" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:id="@+id/detailCurrentEnergyLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" MWh energy"
+            android:text="@string/mwh_energy"
             android:textSize="16sp" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:id="@+id/detailCurrentIntensityLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" kg CO2 per MWh"
+            android:text="@string/kg_co2_per_mwh"
             android:textSize="16sp" />
 
         <View
@@ -69,7 +69,7 @@
             android:id="@+id/detailFutureLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Future:"
+            android:text="@string/future_label"
             android:textSize="24sp" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:id="@+id/detailFutureCarbonLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" tons CO2"
+            android:text="@string/tonns_co2"
             android:textSize="16sp" />
 
         <TextView
@@ -95,7 +95,7 @@
             android:id="@+id/detailFutureEnergyLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" MWh energy"
+            android:text="@string/mwh_energy"
             android:textSize="16sp" />
 
         <TextView
@@ -108,7 +108,7 @@
             android:id="@+id/detailFutureIntensityLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" kg CO2 per MWh"
+            android:text="@string/kg_co2_per_mwh"
             android:textSize="16sp" />
 
     </LinearLayout>
