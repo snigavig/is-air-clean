@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="223,790,000"
+            android:text="..."
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureCarbonTextView"
             android:textColor="@color/white"
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="192,230,000"
+            android:text="..."
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureEnergyTextView"
             android:textColor="@color/white"
@@ -58,7 +58,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1,210"
+            android:text="..."
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureIntensityTextView"
             android:textColor="@color/white"
