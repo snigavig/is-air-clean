@@ -188,8 +188,9 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
                 data.getFloat(COL_SUMMARY_HYDRO_FUTURE)*100,
                 data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE)*100);
 
-        mWebView.setWebViewClient(new WebViewClient() {
 
+        mWebView.loadUrl(initChartString);
+        mWebView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
                 mWebView.loadUrl(initChartString); //
             }
