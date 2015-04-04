@@ -15,6 +15,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -55,6 +56,8 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     static final int COL_OBJECT_COORD_LAT = 3;
     static final int COL_OBJECT_COORD_LONG = 4;
 
+    static final int MIN_DISTANCE = 100;
+    private float downX, downY, upX, upY;
     private TextView mTextView;
     private LinearLayout mLinearLayout;
     private SlidingUpPanelLayout mLayout;
@@ -155,7 +158,25 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return !isClickable;
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN: {
+                        downX = event.getX();
+                        downY = event.getY();
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        upY = event.getY();
+
+                        float deltaY = downY - upY;
+
+                        if(Math.abs(deltaY) > MIN_DISTANCE){
+                            if(deltaY < 0) { return !isClickable; }
+                            if(deltaY > 0) { return !isClickable; }
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+               return !isClickable;
             }
         });
 
