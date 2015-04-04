@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/sliding_layout"
     tools:context=".MainActivity"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:gravity="bottom"
     sothree:umanoShadowHeight="8dp"
     sothree:umanoParalaxOffset="200dp">

@@ -67,7 +67,7 @@ public class LocationChangedReceiver extends BroadcastReceiver {
                         int notifyID = 1;
                         NotificationCompat.Builder mBuilder =
                                 new NotificationCompat.Builder(context)
-                                        .setSmallIcon(R.drawable.ic_logo)
+                                        .setSmallIcon(R.drawable.ic_notification_icon)
                                         .setContentTitle(title)
                                         .setContentText(contentText);
 
