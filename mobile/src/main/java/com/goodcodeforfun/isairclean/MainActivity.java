@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,15 +24,16 @@ import java.util.Vector;
 public class MainActivity extends
         ActionBarActivity implements
         SummaryFragmentCurrent.OnFragmentInteractionListener, SummaryFragmentFuture.OnFragmentInteractionListener,
-        ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback{
+        ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback, ShareActionProvider.OnShareTargetSelectedListener{
 
     private static final String OBJECTLISTFRAGMENT_TAG = "DFTAG";
     private SlidingUpPanelLayout mLayout;
-    private String mLocationString;
-    private String mShareString;
     private PagerAdapter mPagerAdapter;
     private CirclePageIndicator mIndicator;
     public SharedPreferences prefs;
+    public static ShareActionProvider mShareActionProvider;
+    public static String mShareString;
+    public static String mLocationString;
 
     @Override
     protected void onPause() {
@@ -61,6 +64,11 @@ public class MainActivity extends
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_share);
+
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShareActionProvider.setOnShareTargetSelectedListener(this);
         return true;
     }
 
@@ -104,6 +112,14 @@ public class MainActivity extends
     @Override
     public void onFragmentInteraction(Uri uri) {
         //fragment interaction stab,  not needed at this point
+    }
+
+
+    @Override
+    public boolean onShareTargetSelected(ShareActionProvider source,
+                                         Intent intent) {
+        this.startActivity(intent);
+        return true;
     }
 
     private void initialisePaging() {

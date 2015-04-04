@@ -47,9 +47,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     private String mParam2;
     private WebView mWebView;
 
-    private static ShareActionProvider mShareActionProvider;
-    private String mShareString;
-    private String mLocationString;
     private Float mLat;
     private Float mLon;
 
@@ -107,10 +104,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem item = menu.findItem(R.id.action_share);
-
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        mShareActionProvider.setShareIntent(getShareIntent());
     }
 
     @Override
@@ -121,7 +114,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        mLocationString = Util.getPreferredLocation(getActivity());
         mLat = Util.getLat(getActivity());
         mLon = Util.getLon(getActivity());
         setHasOptionsMenu(true);
@@ -210,7 +202,8 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         carbonCurrentView.setText(carbonCurrentString);
         energyCurrentView.setText(energyCurrentString);
         intensityCurrentView.setText(intensityCurrentString);
-        mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
+        MainActivity.mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
+        MainActivity.mShareActionProvider.setShareIntent(getShareIntent());
         initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
                 data.getFloat(COL_SUMMARY_FOSSIL_CURRENT)*100,
                 data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT)*100,
@@ -249,7 +242,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     private Intent getShareIntent(){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        String shareString = mShareString + " #IsAirClean in " + mLocationString + "?";
+        String shareString = MainActivity.mShareString + " #IsAirClean in " + MainActivity.mLocationString + "?";
         intent.putExtra(Intent.EXTRA_TEXT, shareString);
 
         //noinspection deprecation

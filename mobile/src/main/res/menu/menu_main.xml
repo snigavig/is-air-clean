@@ -7,7 +7,8 @@
 
     <item
         android:id="@+id/action_share"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/action_share_title"
-        bwq:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
+        bwq:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        tools:ignore="AlwaysShowAction" />
 </menu>
