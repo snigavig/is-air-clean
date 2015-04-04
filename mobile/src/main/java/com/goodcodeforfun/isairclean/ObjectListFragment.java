@@ -178,7 +178,11 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         mLayout = (SlidingUpPanelLayout) getActivity().findViewById(R.id.sliding_layout);
         mLayout.setPanelSlideListener(inactiveSlideListener);
         mLayout.setDragView(mLinearLayout);
-        if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
+        if (!getResources().getBoolean(R.bool.is_tablet)) {
+            if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
+                mLayout.setPanelHeight(Util.getPanelHeight(getActivity(), getActivity().findViewById(R.id.indicator)));
+            }
+        } else {
             mLayout.setPanelHeight(Util.getPanelHeight(getActivity(), getActivity().findViewById(R.id.indicator)));
         }
 
