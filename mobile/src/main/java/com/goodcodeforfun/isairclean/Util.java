@@ -24,6 +24,18 @@ public class Util {
                 context.getString(R.string.pref_location_default));
     }
 
+    public static float getLat(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat(context.getString(R.string.pref_lat_key),
+                Float.parseFloat(context.getString(R.string.pref_lat_default)));
+    }
+
+    public static float getLon(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat(context.getString(R.string.pref_lon_key),
+                Float.parseFloat(context.getString(R.string.pref_lon_default)));
+    }
+
     public static int getPanelHeight(Context context, View view){
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;

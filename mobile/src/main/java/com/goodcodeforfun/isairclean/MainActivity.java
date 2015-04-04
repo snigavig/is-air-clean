@@ -27,6 +27,7 @@ public class MainActivity extends
     private static final String OBJECTLISTFRAGMENT_TAG = "DFTAG";
     private SlidingUpPanelLayout mLayout;
     private String mLocationString;
+    private String mShareString;
     private PagerAdapter mPagerAdapter;
     private CirclePageIndicator mIndicator;
     public SharedPreferences prefs;
@@ -104,6 +105,7 @@ public class MainActivity extends
     public void onFragmentInteraction(Uri uri) {
         //fragment interaction stab,  not needed at this point
     }
+
     private void initialisePaging() {
         List<Fragment> fragments = new Vector<Fragment>();
         fragments.add(Fragment.instantiate(this, SummaryFragmentCurrent.class.getName()));
@@ -114,4 +116,5 @@ public class MainActivity extends
         mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
         mIndicator.setViewPager(pager);
     }
+
 }

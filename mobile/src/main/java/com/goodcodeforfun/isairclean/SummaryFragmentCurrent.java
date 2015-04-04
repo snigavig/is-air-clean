@@ -1,6 +1,7 @@
 package com.goodcodeforfun.isairclean;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -11,7 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -40,6 +46,12 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     private String mParam1;
     private String mParam2;
     private WebView mWebView;
+
+    private static ShareActionProvider mShareActionProvider;
+    private String mShareString;
+    private String mLocationString;
+    private Float mLat;
+    private Float mLon;
 
     public TextView carbonCurrentView;
     public TextView energyCurrentView;
@@ -94,12 +106,25 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem item = menu.findItem(R.id.action_share);
+
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        mShareActionProvider.setShareIntent(getShareIntent());
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mLocationString = Util.getPreferredLocation(getActivity());
+        mLat = Util.getLat(getActivity());
+        mLon = Util.getLon(getActivity());
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -180,6 +205,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         carbonCurrentView.setText(carbonCurrentString);
         energyCurrentView.setText(energyCurrentString);
         intensityCurrentView.setText(intensityCurrentString);
+        mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
         initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
                 data.getFloat(COL_SUMMARY_FOSSIL_CURRENT)*100,
                 data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT)*100,
@@ -214,8 +240,14 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         public void onFragmentInteraction(Uri uri);
     }
 
-    void onLocationChanged() {
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
+    private Intent getShareIntent(){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        String shareString = mShareString + " #IsAirClean in " + mLocationString + "?";
+        intent.putExtra(Intent.EXTRA_TEXT, shareString);
 
+        //noinspection deprecation
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        return intent;
+    }
 }

@@ -111,8 +111,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,5 +259,4 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     void onLocationChanged() {
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
-
 }

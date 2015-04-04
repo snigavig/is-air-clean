@@ -60,7 +60,7 @@ public class ObjectsAdapter extends CursorAdapter {
                     if (!coordLat.equals("0") && !coordLong.equals("0")) {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         Uri geoLocation = Uri.parse("geo:" + String.valueOf(coordLat) + "," + String.valueOf(coordLong));
-
+                        //String uri = Uri.Builder().scheme("geo").appendPath(lat +","+ lng).appendQueryParameter("q", name).build();
                         intent.setData(geoLocation);
                         if (intent.resolveActivity(context.getPackageManager()) != null) {
                             context.startActivity(intent);

@@ -38,6 +38,11 @@ public class LocationChangedReceiver extends BroadcastReceiver {
         String locationQuery = Util.getPreferredLocation(context);
         String geocodedCityName = Util.getCityName(context, (double) locationInfo.lastLat, (double) locationInfo.lastLong);
 
+        String latKey = context.getString(R.string.pref_lat_key);
+        String lonKey = context.getString(R.string.pref_lon_key);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
         if (geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
             String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
             boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
@@ -81,7 +86,8 @@ public class LocationChangedReceiver extends BroadcastReceiver {
                                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                         mNotificationManager.notify(notifyID, mBuilder.build());
 
-                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putFloat(latKey, locationInfo.lastLat);
+                        editor.putFloat(lonKey, locationInfo.lastLong);
                         editor.putLong(lastNotificationKey, System.currentTimeMillis());
                         editor.apply();
                     }

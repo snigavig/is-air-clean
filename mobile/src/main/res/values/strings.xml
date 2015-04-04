@@ -9,6 +9,11 @@
 
     <string name="format_notification"><xliff:g id="cityName">%1$s</xliff:g> <xliff:g id="intensity">%2$s</xliff:g> kgCO2/MWh</string>
 
+
+    <string name="pref_lat_key" translatable="false">lat</string>
+    <string name="pref_lat_default" translatable="false">64.7488</string>
+    <string name="pref_lon_key" translatable="false">lon</string>
+    <string name="pref_lon_default" translatable="false">-147.353</string>
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_location_default" translatable="false">Mountain View</string>
@@ -20,4 +25,5 @@
     <string name="pref_enable_notifications_true">Enabled</string>
     <string name="pref_enable_notifications_false">Not Enabled</string>
     <string name="pref_enable_notifications_default" translatable="false">true</string>
+    <string name="action_share_title">Share</string>
 </resources>
