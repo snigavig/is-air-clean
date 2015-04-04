@@ -204,9 +204,9 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) { return; }
 
-        String carbonCurrentString = String.valueOf(data.getFloat(COL_LOCATION_CARBON_CURRENT));
-        String energyCurrentString = String.valueOf(data.getFloat(COL_LOCATION_ENERGY_CURRENT));
-        String intensityCurrentString = String.valueOf(data.getFloat(COL_LOCATION_INTENSITY_CURRENT));
+        String carbonCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_CARBON_CURRENT))));
+        String energyCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_ENERGY_CURRENT))));
+        String intensityCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_INTENSITY_CURRENT))));
         carbonCurrentView.setText(carbonCurrentString);
         energyCurrentView.setText(energyCurrentString);
         intensityCurrentView.setText(intensityCurrentString);

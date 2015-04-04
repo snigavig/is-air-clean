@@ -25,12 +25,12 @@ public class AirDbHelper extends SQLiteOpenHelper {
                 LocationEntry.COLUMN_LOCATION_SETTING + " TEXT UNIQUE NOT NULL, " +
                 LocationEntry.COLUMN_CITY_NAME + " TEXT NOT NULL, " +
                 LocationEntry.COLUMN_CARMA_LOCATION_ID + " INTEGER NOT NULL, " +
-                LocationEntry.COLUMN_CARBON_CURRENT + " REAL NOT NULL, " +
-                LocationEntry.COLUMN_CARBON_FUTURE + " REAL NOT NULL, " +
-                LocationEntry.COLUMN_ENERGY_CURRENT + " REAL NOT NULL, " +
-                LocationEntry.COLUMN_ENERGY_FUTURE + " REAL NOT NULL, " +
-                LocationEntry.COLUMN_INTENSITY_CURRENT + " REAL NOT NULL, " +
-                LocationEntry.COLUMN_INTENSITY_FUTURE + " REAL NOT NULL, " +
+                LocationEntry.COLUMN_CARBON_CURRENT + " INTEGER NOT NULL, " +
+                LocationEntry.COLUMN_CARBON_FUTURE + " INTEGER NOT NULL, " +
+                LocationEntry.COLUMN_ENERGY_CURRENT + " INTEGER NOT NULL, " +
+                LocationEntry.COLUMN_ENERGY_FUTURE + " INTEGER NOT NULL, " +
+                LocationEntry.COLUMN_INTENSITY_CURRENT + " INTEGER NOT NULL, " +
+                LocationEntry.COLUMN_INTENSITY_FUTURE + " INTEGER NOT NULL, " +
                 LocationEntry.COLUMN_FOSSIL_CURRENT + " REAL NOT NULL, " +
                 LocationEntry.COLUMN_FOSSIL_FUTURE + " REAL NOT NULL, " +
                 LocationEntry.COLUMN_NUCLEAR_CURRENT + " REAL NOT NULL, " +
@@ -49,13 +49,13 @@ public class AirDbHelper extends SQLiteOpenHelper {
                 ObjectEntry.COLUMN_COORD_LONG + " REAL NOT NULL, " +
                 ObjectEntry.COLUMN_NAME + " TEXT NOT NULL, " +
 
-                ObjectEntry.COLUMN_CARBON_CURRENT + " REAL NOT NULL, " +
-                ObjectEntry.COLUMN_CARBON_FUTURE + " REAL NOT NULL, " +
+                ObjectEntry.COLUMN_CARBON_CURRENT + " INTEGER NOT NULL, " +
+                ObjectEntry.COLUMN_CARBON_FUTURE + " INTEGER NOT NULL, " +
 
-                ObjectEntry.COLUMN_ENERGY_CURRENT + " REAL NOT NULL, " +
-                ObjectEntry.COLUMN_ENERGY_FUTURE + " REAL NOT NULL, " +
-                ObjectEntry.COLUMN_INTENSITY_CURRENT + " REAL NOT NULL, " +
-                ObjectEntry.COLUMN_INTENSITY_FUTURE + " REAL NOT NULL, " +
+                ObjectEntry.COLUMN_ENERGY_CURRENT + " INTEGER NOT NULL, " +
+                ObjectEntry.COLUMN_ENERGY_FUTURE + " INTEGER NOT NULL, " +
+                ObjectEntry.COLUMN_INTENSITY_CURRENT + " INTEGER NOT NULL, " +
+                ObjectEntry.COLUMN_INTENSITY_FUTURE + " INTEGER NOT NULL, " +
                 " FOREIGN KEY (" + ObjectEntry.COLUMN_LOC_KEY + ") REFERENCES " +
                 LocationEntry.TABLE_NAME + " (" + LocationEntry._ID + "), " +
 

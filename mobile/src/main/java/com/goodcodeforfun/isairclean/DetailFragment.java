@@ -171,12 +171,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if (!data.moveToFirst()) { return; }
 
         String nameString = data.getString(COL_OBJECT_NAME);
-        String carbonCurrentString = String.valueOf(data.getFloat(COL_OBJECT_CARBON_CURRENT));
-        String energyCurrentString = String.valueOf(data.getFloat(COL_OBJECT_ENERGY_CURRENT));
-        String intensityCurrentString = String.valueOf(data.getFloat(COL_OBJECT_INTENSITY_CURRENT));
-        String carbonFutureString = String.valueOf(data.getFloat(COL_OBJECT_CARBON_FUTURE));
-        String energyFutureString = String.valueOf(data.getFloat(COL_OBJECT_ENERGY_FUTURE));
-        String intensityFutureString = String.valueOf(data.getFloat(COL_OBJECT_INTENSINTY_FUTURE));
+        String carbonCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_CARBON_CURRENT))));
+        String energyCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_ENERGY_CURRENT))));
+        String intensityCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_INTENSITY_CURRENT))));
+        String carbonFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_CARBON_FUTURE))));
+        String energyFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_ENERGY_FUTURE))));
+        String intensityFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_INTENSINTY_FUTURE))));
         carbonCurrentView.setText(carbonCurrentString);
         energyCurrentView.setText(energyCurrentString);
         intensityCurrentView.setText(intensityCurrentString);

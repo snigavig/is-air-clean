@@ -176,9 +176,9 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) { return; }
 
-        String carbonFutureString = String.valueOf(data.getFloat(COL_LOCATION_CARBON_FUTURE));
-        String energyFutureString = String.valueOf(data.getFloat(COL_LOCATION_ENERGY_FUTURE));
-        String intensityFutureString = String.valueOf(data.getFloat(COL_LOCATION_INTENSITY_FUTURE));
+        String carbonFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_CARBON_FUTURE))));
+        String energyFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_ENERGY_FUTURE))));
+        String intensityFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_INTENSITY_FUTURE))));
         carbonFutureView.setText(carbonFutureString);
         energyFutureView.setText(energyFutureString);
         intensityFutureView.setText(intensityFutureString);
