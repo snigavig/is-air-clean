@@ -15,11 +15,12 @@
 <script>
         window.initChart = function (fossil, nuclear, hydro, renewable) {
             var data = [];
+            var colors = [];
 
-            hydro > 0.5 && data.push(['Hydro', hydro]);
-            fossil > 0.5 && data.push(['Fossil', fossil]);
-            nuclear > 0.5 && data.push(['Nuclear', nuclear]);
-            renewable > 0.5 && data.push(['Other renewable', renewable]);
+            hydro > 0.5 && data.push(['Hydro', hydro]) && colors.push('#95e4c5');
+            fossil > 0.5 && data.push(['Fossil', fossil]) && colors.push('#8e807f');
+            nuclear > 0.5 && data.push(['Nuclear', nuclear]) && colors.push('#eff284');
+            renewable > 0.5 && data.push(['Other renewable', renewable]) && colors.push('#40c4ff');
 
             var chart = new Highcharts.Chart({
                 chart: {
@@ -65,7 +66,7 @@
                         cursor: 'pointer',
                         borderWidth: '2px',
                         showInLegend: true,
-                        colors: ['#673ab7','#009688','#ffab40','#40c4ff'],
+                        colors: colors,
                         dataLabels: {
                             enabled: true,
                             distance: -30,
