@@ -18,5 +18,3 @@ Uses:
 	Little Fluffy Location Library for Android (https://code.google.com/p/little-fluffy-location-library)
 <br>
 	Icon by Taras Lototskiy (https://twitter.com/torasko)
-<br>
-	Logo font by Vanessa Bays @ http://bythebutterfly.com (http://bythebutterfly.com)
