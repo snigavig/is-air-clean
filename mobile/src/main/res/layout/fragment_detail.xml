@@ -1,109 +1,115 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.goodcodeforfun.isairclean.DetailActivity$PlaceholderFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/detailCurrentLabelTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Current:"
-        android:textSize="24sp" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.goodcodeforfun.isairclean.DetailActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/detailCurrentCarbonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailCurrentLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current:"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/detailCurrentCarbonLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" tons CO2"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailCurrentCarbonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-    <TextView
-        android:id="@+id/detailCurrentEnergyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailCurrentCarbonLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" tons CO2"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detailCurrentEnergyLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" MWh energy"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailCurrentEnergyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-    <TextView
-        android:id="@+id/detailCurrentIntensityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailCurrentEnergyLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" MWh energy"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detailCurrentIntensityLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" kg CO2 per MWh"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailCurrentIntensityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/detailCurrentIntensityLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kg CO2 per MWh"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detailFutureLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Future:"
-        android:textSize="24sp" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray" />
 
-    <TextView
-        android:id="@+id/detailFutureCarbonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailFutureLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Future:"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/detailFutureCarbonLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" tons CO2"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailFutureCarbonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-    <TextView
-        android:id="@+id/detailFutureEnergyTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailFutureCarbonLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" tons CO2"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detailFutureEnergyLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" MWh energy"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailFutureEnergyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-    <TextView
-        android:id="@+id/detailFutureIntensityTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/detailFutureEnergyLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" MWh energy"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/detailFutureIntensityLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" kg CO2 per MWh"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/detailFutureIntensityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/detailFutureIntensityLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" kg CO2 per MWh"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>
