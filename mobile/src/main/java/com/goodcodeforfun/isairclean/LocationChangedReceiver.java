@@ -11,8 +11,10 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
+import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 import com.littlefluffytoys.littlefluffylocationlibrary.LocationInfo;
 import com.littlefluffytoys.littlefluffylocationlibrary.LocationLibraryConstants;
 
@@ -43,7 +45,11 @@ public class LocationChangedReceiver extends BroadcastReceiver {
 
         SharedPreferences.Editor editor = prefs.edit();
 
-        if (geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
+        Log.d("LittleFluffy", geocodedCityName);
+        if (!geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
+            editor.putString(context.getString(R.string.pref_location_key), geocodedCityName);
+            editor.commit();
+            AirSyncAdapter.syncImmediately(context);
             String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
             boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
                     Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
@@ -51,9 +57,10 @@ public class LocationChangedReceiver extends BroadcastReceiver {
                 String lastNotificationKey = context.getString(R.string.pref_last_notification);
                 long lastSync = prefs.getLong(lastNotificationKey, 0);
 
-                if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+                //if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+                if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
 
-                    Uri locationUri = AirContract.LocationEntry.buildLocationBySetting(locationQuery);
+                    Uri locationUri = AirContract.LocationEntry.buildLocationBySetting(geocodedCityName);
                     Cursor cursor = context.getContentResolver().query(locationUri, NOTIFY_LOCATION_PROJECTION, null, null, null);
 
                     if (cursor.moveToFirst()) {

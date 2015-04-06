@@ -2,4 +2,5 @@
 <resources>
     <item name="fragment_summary_current" type="layout">@layout/fragment_summary_current_wide</item>
     <item name="fragment_summary_future" type="layout">@layout/fragment_summary_future_wide</item>
+    <item name="fragment_detail" type="layout">@layout/fragment_detail_wide</item>
 </resources>
