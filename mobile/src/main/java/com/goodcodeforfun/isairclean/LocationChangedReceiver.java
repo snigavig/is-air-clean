@@ -22,13 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 public class LocationChangedReceiver extends BroadcastReceiver {
 
-    private static final String[] NOTIFY_LOCATION_PROJECTION = new String[] {
-            AirContract.LocationEntry.COLUMN_CITY_NAME,
-            AirContract.LocationEntry.COLUMN_INTENSITY_CURRENT,
-    };
-    private static final int INDEX_CITY_NAME = 0;
-    private static final int INDEX_INTENSITY_CURRENT = 1;
-
     public LocationChangedReceiver() {
     }
 
@@ -49,59 +42,10 @@ public class LocationChangedReceiver extends BroadcastReceiver {
         if (!geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
             editor.putString(context.getString(R.string.pref_location_key), geocodedCityName);
             editor.commit();
+            editor.putFloat(latKey, locationInfo.lastLat);
+            editor.putFloat(lonKey, locationInfo.lastLong);
+            editor.apply();
             AirSyncAdapter.syncImmediately(context);
-            String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
-            boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
-                    Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
-            if (displayNotifications) {
-                String lastNotificationKey = context.getString(R.string.pref_last_notification);
-                long lastSync = prefs.getLong(lastNotificationKey, 0);
-
-                //if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
-                if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
-
-                    Uri locationUri = AirContract.LocationEntry.buildLocationBySetting(geocodedCityName);
-                    Cursor cursor = context.getContentResolver().query(locationUri, NOTIFY_LOCATION_PROJECTION, null, null, null);
-
-                    if (cursor.moveToFirst()) {
-                        double intensity = cursor.getDouble(INDEX_INTENSITY_CURRENT);
-                        String desc = cursor.getString(INDEX_CITY_NAME);
-                        String title = context.getString(R.string.app_name);
-
-                        String contentText = String.format(context.getString(R.string.format_notification),
-                                desc, intensity);
-
-                        int notifyID = 1;
-                        NotificationCompat.Builder mBuilder =
-                                new NotificationCompat.Builder(context)
-                                        .setSmallIcon(R.drawable.ic_notification_icon)
-                                        .setContentTitle(title)
-                                        .setAutoCancel(true)
-                                        .setContentText(contentText);
-
-                        Intent resultIntent = new Intent(context, MainActivity.class);
-
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(MainActivity.class);
-                        stackBuilder.addNextIntent(resultIntent);
-                        PendingIntent resultPendingIntent =
-                                stackBuilder.getPendingIntent(
-                                        0,
-                                        PendingIntent.FLAG_UPDATE_CURRENT
-                                );
-                        mBuilder.setContentIntent(resultPendingIntent);
-                        NotificationManager mNotificationManager =
-                                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        mNotificationManager.notify(notifyID, mBuilder.build());
-
-                        editor.putFloat(latKey, locationInfo.lastLat);
-                        editor.putFloat(lonKey, locationInfo.lastLong);
-                        editor.putLong(lastNotificationKey, System.currentTimeMillis());
-                        editor.apply();
-                    }
-                    cursor.close();
-                }
-            }
         }
     }
 }

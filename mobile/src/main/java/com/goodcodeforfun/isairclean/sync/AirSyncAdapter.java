@@ -2,20 +2,28 @@ package com.goodcodeforfun.isairclean.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.goodcodeforfun.isairclean.MainActivity;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.data.AirContract;
@@ -31,6 +39,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String LOG_TAG = AirSyncAdapter.class.getSimpleName();
@@ -359,6 +368,8 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
                         AirContract.LocationEntry.CONTENT_URI,
                         locationValues
                 );
+
+                showNotification(getContext(), cityName, intensityPresent);
                 locationId = areaId;
                 locationDbId = (int) ContentUris.parseId(insertedUri);
             }
@@ -438,5 +449,52 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static void initializeSyncAdapter(Context context) {
         getSyncAccount(context);
+    }
+
+    public static void showNotification (Context context, String cityName, double intensity) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
+        boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
+                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+        if (displayNotifications) {
+            String lastNotificationKey = context.getString(R.string.pref_last_notification);
+            long lastSync = prefs.getLong(lastNotificationKey, 0);
+
+            if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+            //if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
+                String title = context.getString(R.string.app_name);
+
+                String contentText = String.format(context.getString(R.string.format_notification),
+                        cityName, intensity);
+
+                int notifyID = 1;
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.ic_notification_icon)
+                                .setContentTitle(title)
+                                .setAutoCancel(true)
+                                .setContentText(contentText);
+
+                Intent resultIntent = new Intent(context, MainActivity.class);
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                stackBuilder.addParentStack(MainActivity.class);
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(notifyID, mBuilder.build());
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putLong(lastNotificationKey, System.currentTimeMillis());
+                editor.apply();
+            }
+        }
     }
 }

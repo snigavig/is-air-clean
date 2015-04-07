@@ -62,6 +62,7 @@ public class Util {
         } catch (IOException e) {
             Log.e("tag", e.getMessage());
         }
+        if (result.toString().equals("Kyiv")) {return "Kiev";}//carma city database problem...need this at least for testing.
         return result.toString();
     }
 }
