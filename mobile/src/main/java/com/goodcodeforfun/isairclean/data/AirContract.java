@@ -19,15 +19,23 @@ public class AirContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_CITY).build();
 
-        public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CITY;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_CITY;
 
         public static final String TABLE_NAME = "city";
 
         public static final String COLUMN_CITY_NAME = "city_name";
 
-        public static Uri buildCityUri(long id) {
+        public static Uri buildCityUriId(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildCityUri(String name) {
+            return CONTENT_URI.buildUpon().appendPath(name).build();
+        }
+
+        public static String getNameFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
         }
     }
 

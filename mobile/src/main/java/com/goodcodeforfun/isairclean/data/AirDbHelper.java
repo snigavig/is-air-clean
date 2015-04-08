@@ -1,21 +1,35 @@
 package com.goodcodeforfun.isairclean.data;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.goodcodeforfun.isairclean.data.AirContract.CityEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.LocationEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.ObjectEntry;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Vector;
+
 public class AirDbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-
+    private static Context mContext;
     static final String DATABASE_NAME = "air.db";
 
     public AirDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
+
     }
 
     @Override
@@ -67,37 +81,12 @@ public class AirDbHelper extends SQLiteOpenHelper {
                 CityEntry.COLUMN_CITY_NAME + " TEXT NOT NULL " +
                 " );";
 
-//        FileReader fr = null;
-//        try {
-//            fr = new FileReader("file:///android_asset/CARMA-org-city-locations.csv");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        BufferedReader br = null;
-//        if (fr != null) {
-//            br = new BufferedReader(fr);
-//        }
-//        String data;
-//        String InsertString1 = "INSERT INTO " + CityEntry.TABLE_NAME + " (" + CityEntry.COLUMN_CITY_NAME + ") values(";
-//        String InsertString2 = ");";
-//
-//        sqLiteDatabase.beginTransaction();
-//        try {
-//            if (br != null) {
-//                while ((data = br.readLine()) != null) {
-//                    sqLiteDatabase.execSQL(InsertString1 + "'" + data + "'" + InsertString2);
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        sqLiteDatabase.setTransactionSuccessful();
-//        sqLiteDatabase.endTransaction();
-
         sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_OBJECT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CITY_TABLE);
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {

@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 public class LocationChangedReceiver extends BroadcastReceiver {
 
+    private static final int INDEX_CITY_NAME = 0;
+
     public LocationChangedReceiver() {
     }
 
@@ -29,7 +31,9 @@ public class LocationChangedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final LocationInfo locationInfo = (LocationInfo) intent.getSerializableExtra(LocationLibraryConstants.LOCATION_BROADCAST_EXTRA_LOCATIONINFO);
-
+        final String[] CITY_PROJECTION = new String[] {
+                AirContract.CityEntry.COLUMN_CITY_NAME
+        };
         String locationQuery = Util.getPreferredLocation(context);
         String geocodedCityName = Util.getCityName(context, (double) locationInfo.lastLat, (double) locationInfo.lastLong);
 
@@ -40,12 +44,18 @@ public class LocationChangedReceiver extends BroadcastReceiver {
 
         Log.d("LittleFluffy", geocodedCityName);
         if (!geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
-            editor.putString(context.getString(R.string.pref_location_key), geocodedCityName);
-            editor.commit();
-            editor.putFloat(latKey, locationInfo.lastLat);
-            editor.putFloat(lonKey, locationInfo.lastLong);
-            editor.apply();
-            AirSyncAdapter.syncImmediately(context);
+            Uri cityUri = AirContract.CityEntry.buildCityUri(geocodedCityName);
+            Cursor cursor = context.getContentResolver().query(cityUri, CITY_PROJECTION, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                editor.putString(context.getString(R.string.pref_location_key), geocodedCityName);
+                editor.commit();
+                editor.putFloat(latKey, locationInfo.lastLat);
+                editor.putFloat(lonKey, locationInfo.lastLong);
+                editor.apply();
+                AirSyncAdapter.syncImmediately(context);
+            }
+            cursor.close();
         }
     }
 }
