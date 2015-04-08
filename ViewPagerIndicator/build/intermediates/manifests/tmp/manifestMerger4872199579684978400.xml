@@ -9,8 +9,6 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.viewpagerindicator.test"
-                     android:handleProfiling="false"
-                     android:functionalTest="false"
-                     android:label="Tests for com.viewpagerindicator.test"/>
+        android:functionalTest="false" android:handleProfiling="false"
+        android:label="Tests for com.viewpagerindicator.test" android:targetPackage="com.viewpagerindicator.test" />
 </manifest>

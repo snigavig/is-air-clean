@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/media/snigavig/sddrive/gdrive/projects/is-air-clean/ViewPagerIndicator/src/main/assets"/></dataSet><dataSet config="debug"><source path="/media/snigavig/sddrive/gdrive/projects/is-air-clean/ViewPagerIndicator/src/debug/assets"/></dataSet></merger>
+<merger version="3">
+    <dataSet config="main">
+        <source
+            path="/media/snigavig/sddrive/gdrive/projects/is-air-clean/ViewPagerIndicator/src/main/assets" />
+    </dataSet>
+    <dataSet config="debug">
+        <source
+            path="/media/snigavig/sddrive/gdrive/projects/is-air-clean/ViewPagerIndicator/src/debug/assets" />
+    </dataSet>
+</merger>

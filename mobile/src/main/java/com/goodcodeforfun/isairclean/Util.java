@@ -36,7 +36,7 @@ public class Util {
                 Float.parseFloat(context.getString(R.string.pref_lon_default)));
     }
 
-    public static int getPanelHeight(Context context, View view){
+    public static int getPanelHeight(Context context, View view) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         int panelHeight;
@@ -45,7 +45,7 @@ public class Util {
         return panelHeight;
     }
 
-    public static int getOrientation(Context context){
+    public static int getOrientation(Context context) {
         return context.getResources().getConfiguration().orientation;
     }
 
@@ -62,7 +62,9 @@ public class Util {
         } catch (IOException e) {
             Log.e("tag", e.getMessage());
         }
-        if (result.toString().equals("Kyiv")) {return "Kiev";}//carma city database problem...need this at least for testing.
+        if (result.toString().equals("Kyiv")) {
+            return "Kiev";
+        }//carma city database problem...need this at least for testing.
         return result.toString();
     }
 }

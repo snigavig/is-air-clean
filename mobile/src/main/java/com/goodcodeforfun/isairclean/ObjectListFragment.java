@@ -15,7 +15,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,8 +39,13 @@ import java.util.ArrayList;
  */
 public class ObjectListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    static final int COL_OBJECT_ID = 0;
+    static final int COL_OBJECT_NAME = 1;
+    static final int COL_OBJECT_INTENSITY_CURRENT = 2;
+    static final int COL_OBJECT_COORD_LAT = 3;
+    static final int COL_OBJECT_COORD_LONG = 4;
+    static final int MIN_DISTANCE = 100;
     private static final int LOADER_ID = 0;
-
     private static final String[] OBJECT_COLUMNS = {
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry._ID,
             AirContract.ObjectEntry.COLUMN_NAME,
@@ -49,29 +53,25 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
             AirContract.ObjectEntry.COLUMN_COORD_LAT,
             AirContract.ObjectEntry.COLUMN_COORD_LONG
     };
-
-    static final int COL_OBJECT_ID = 0;
-    static final int COL_OBJECT_NAME = 1;
-    static final int COL_OBJECT_INTENSITY_CURRENT = 2;
-    static final int COL_OBJECT_COORD_LAT = 3;
-    static final int COL_OBJECT_COORD_LONG = 4;
-
-    static final int MIN_DISTANCE = 100;
+    public Boolean isClickable = false;
+    public ObjectsAdapter arrayAdapterObjects;
+    public ArrayList<String> arrayListObjects;
+    public SharedPreferences prefs;
+    public DisplayMetrics displayMetrics;
     private float downX, downY, upX, upY;
     private TextView mTextView;
     private LinearLayout mLinearLayout;
     private SlidingUpPanelLayout mLayout;
     private ActionBar mActionBar;
-    private OnFragmentInteractionListener mListener;
     private final SlidingUpPanelLayout.PanelSlideListener inactiveSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
         @Override
         public void onPanelSlide(View panel, float slideOffset) {
-            mActionBar.setElevation(displayMetrics.density * (8 - (slideOffset*8)));
+            mActionBar.setElevation(displayMetrics.density * (8 - (slideOffset * 8)));
 
-            if(slideOffset == 1){
+            if (slideOffset == 1) {
                 isClickable = true;
                 mLayout.setDragView(mTextView);
-            } else if (slideOffset == 0){
+            } else if (slideOffset == 0) {
                 isClickable = false;
                 mLayout.setDragView(mLinearLayout);
             }
@@ -101,13 +101,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         public void onPanelHidden(View panel) {
         }
     };
-
-    public Boolean isClickable = false;
-
-    public ObjectsAdapter arrayAdapterObjects;
-    public ArrayList<String> arrayListObjects;
-    public SharedPreferences prefs;
-    public DisplayMetrics displayMetrics;
+    private OnFragmentInteractionListener mListener;
 
 
     public ObjectListFragment() {
@@ -120,14 +114,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         arrayListObjects = new ArrayList<>();
         displayMetrics = getActivity().getResources().getDisplayMetrics();
-        mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-    }
-
-    public interface Callback {
-        /**
-         * DetailFragmentCallback for when an item has been selected.
-         */
-        public void onItemSelected(Uri objectUri);
+        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
     @Override
@@ -158,7 +145,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         mListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         downX = event.getX();
                         downY = event.getY();
@@ -168,15 +155,19 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
 
                         float deltaY = downY - upY;
 
-                        if(Math.abs(deltaY) > MIN_DISTANCE){
-                            if(deltaY < 0) { return !isClickable; }
-                            if(deltaY > 0) { return !isClickable; }
+                        if (Math.abs(deltaY) > MIN_DISTANCE) {
+                            if (deltaY < 0) {
+                                return !isClickable;
+                            }
+                            if (deltaY > 0) {
+                                return !isClickable;
+                            }
                         } else {
                             return false;
                         }
                     }
                 }
-               return !isClickable;
+                return !isClickable;
             }
         });
 
@@ -259,12 +250,23 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         arrayAdapterObjects.swapCursor(data);
         mTextView.setText(Util.getPreferredLocation(getActivity()));
-        mActionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         arrayAdapterObjects.swapCursor(null);
+    }
+
+    void onLocationChanged() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri objectUri);
     }
 
     /**
@@ -280,9 +282,5 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-
-    void onLocationChanged() {
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 }

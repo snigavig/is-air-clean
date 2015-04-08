@@ -1,27 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.goodcodeforfun.isairclean.ObjectListFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listViewWrapLinearLayout"
-    android:orientation="vertical"
+    style="@style/ObjectListStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center_vertical|center|center_horizontal"
-    style="@style/ObjectListStyle">
+    android:orientation="vertical"
+    tools:context="com.goodcodeforfun.isairclean.ObjectListFragment">
 
     <TextView
+        android:id="@+id/cityNameTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="48sp"
-        android:fontFamily="sans-serif-condensed"
-        android:id="@+id/cityNameTextView"
         android:layout_gravity="center"
-        android:gravity="center_vertical|center|center_horizontal" />
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_vertical|center|center_horizontal"
+        android:textSize="48sp" />
 
     <ListView
         android:id="@+id/objectListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="end"
         android:divider="@android:drawable/divider_horizontal_bright"
-        android:requiresFadingEdge="horizontal"
         android:fadingEdgeLength="50dp"
-        android:layout_gravity="end" />
+        android:requiresFadingEdge="horizontal" />
 </LinearLayout>

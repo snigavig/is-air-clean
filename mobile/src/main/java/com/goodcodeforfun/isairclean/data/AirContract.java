@@ -117,15 +117,15 @@ public class AirContract {
 
         public static final String COLUMN_CARBON_CURRENT = "carbon_current";
 
-        public static final String COLUMN_CARBON_FUTURE  = "carbon_future";
+        public static final String COLUMN_CARBON_FUTURE = "carbon_future";
 
-        public static final String COLUMN_ENERGY_CURRENT  = "energy_current";
+        public static final String COLUMN_ENERGY_CURRENT = "energy_current";
 
-        public static final String COLUMN_ENERGY_FUTURE  = "energy_future";
+        public static final String COLUMN_ENERGY_FUTURE = "energy_future";
 
-        public static final String COLUMN_INTENSITY_CURRENT  = "intensity_current";
+        public static final String COLUMN_INTENSITY_CURRENT = "intensity_current";
 
-        public static final String COLUMN_INTENSITY_FUTURE  = "intensity_future";
+        public static final String COLUMN_INTENSITY_FUTURE = "intensity_future";
 
         public static Uri buildObjectUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

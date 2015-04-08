@@ -15,12 +15,10 @@ import android.widget.TextView;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 
-public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = 1;
     static final String DETAIL_URI = "URI";
-    private Uri mUri;
-
+    private static final int LOADER_ID = 1;
     private static final String[] OBJECT_COLUMNS = {
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry._ID,
             AirContract.ObjectEntry.COLUMN_NAME,
@@ -31,20 +29,19 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_ENERGY_FUTURE,
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_INTENSITY_FUTURE
     };
-
     private static final int COL_OBJECT_CARBON_CURRENT = 2;
     private static final int COL_OBJECT_ENERGY_CURRENT = 3;
     private static final int COL_OBJECT_INTENSITY_CURRENT = 4;
     private static final int COL_OBJECT_CARBON_FUTURE = 5;
     private static final int COL_OBJECT_ENERGY_FUTURE = 6;
     private static final int COL_OBJECT_INTENSITY_FUTURE = 7;
-
     public TextView carbonCurrentView;
     public TextView energyCurrentView;
     public TextView intensityCurrentView;
     public TextView carbonFutureView;
     public TextView energyFutureView;
     public TextView intensityFutureView;
+    private Uri mUri;
 
 
     public DetailFragment() {
@@ -94,7 +91,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if ( mUri != null ) {
+        if (mUri != null) {
             return new CursorLoader(
                     getActivity(),
                     mUri,
@@ -109,7 +106,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (!data.moveToFirst()) { return; }
+        if (!data.moveToFirst()) {
+            return;
+        }
 
         String carbonCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_CARBON_CURRENT))));
         String energyCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_OBJECT_ENERGY_CURRENT))));

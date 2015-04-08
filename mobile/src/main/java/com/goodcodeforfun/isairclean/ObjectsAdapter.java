@@ -26,6 +26,7 @@ public class ObjectsAdapter extends CursorAdapter {
     public ObjectsAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
+
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         int layoutId;

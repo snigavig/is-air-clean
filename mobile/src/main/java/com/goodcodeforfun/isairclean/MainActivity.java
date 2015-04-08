@@ -1,10 +1,7 @@
 package com.goodcodeforfun.isairclean;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,15 +13,10 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.goodcodeforfun.isairclean.data.AirContract;
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
@@ -32,15 +24,15 @@ import java.util.Vector;
 public class MainActivity extends
         ActionBarActivity implements
         ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback,
-        ShareActionProvider.OnShareTargetSelectedListener{
+        ShareActionProvider.OnShareTargetSelectedListener {
 
     private static final String OBJECTLISTFRAGMENT_TAG = "DFTAG";
-    private SlidingUpPanelLayout mLayout;
-    private PagerAdapter mPagerAdapter;
-    public SharedPreferences prefs;
     public static ShareActionProvider mShareActionProvider;
     public static String mShareString;
     public static String mLocationString;
+    public SharedPreferences prefs;
+    private SlidingUpPanelLayout mLayout;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onPause() {
@@ -100,8 +92,8 @@ public class MainActivity extends
         super.onResume();
         String location = Util.getPreferredLocation(this);
         if (location != null && !location.equals(mLocationString)) {
-            ObjectListFragment olf = (ObjectListFragment)getSupportFragmentManager().findFragmentByTag(OBJECTLISTFRAGMENT_TAG);
-            if ( null != olf ) {
+            ObjectListFragment olf = (ObjectListFragment) getSupportFragmentManager().findFragmentByTag(OBJECTLISTFRAGMENT_TAG);
+            if (null != olf) {
                 olf.onLocationChanged();
             }
             mPagerAdapter.notifyDataSetChanged();
@@ -112,7 +104,7 @@ public class MainActivity extends
     @Override
     public void onItemSelected(Uri contentUri) {
         Intent intent = new Intent(this, DetailActivity.class)
-            .setData(contentUri);
+                .setData(contentUri);
         startActivity(intent);
     }
 
@@ -134,7 +126,7 @@ public class MainActivity extends
         fragments.add(Fragment.instantiate(this, SummaryFragmentCurrent.class.getName()));
         fragments.add(Fragment.instantiate(this, SummaryFragmentFuture.class.getName()));
         this.mPagerAdapter = new PagerAdapter(super.getSupportFragmentManager(), fragments);
-        ViewPager pager = (ViewPager)super.findViewById(R.id.viewPager);
+        ViewPager pager = (ViewPager) super.findViewById(R.id.viewPager);
         pager.setAdapter(this.mPagerAdapter);
         CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(pager);

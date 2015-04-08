@@ -1,7 +1,6 @@
 package com.goodcodeforfun.isairclean;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +23,7 @@ import com.goodcodeforfun.isairclean.data.AirContract;
 
 public class SummaryFragmentFuture extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private WebView mWebView;
-
-    public TextView carbonFutureView;
-    public TextView energyFutureView;
-    public TextView intensityFutureView;
-    public static String initChartString;
-
     private static final int LOADER_ID = 3;
-
-    private Uri mUri;
-
     private static final String[] SUMMARY_COLUMNS = {
             AirContract.LocationEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_CARBON_FUTURE,
             AirContract.LocationEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_ENERGY_FUTURE,
@@ -46,7 +34,6 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
             AirContract.LocationEntry.COLUMN_RENEWABLE_FUTURE
 
     };
-
     private static final int COL_LOCATION_CARBON_FUTURE = 0;
     private static final int COL_LOCATION_ENERGY_FUTURE = 1;
     private static final int COL_LOCATION_INTENSITY_FUTURE = 2;
@@ -54,6 +41,12 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
     private static final int COL_SUMMARY_NUCLEAR_FUTURE = 4;
     private static final int COL_SUMMARY_HYDRO_FUTURE = 5;
     private static final int COL_SUMMARY_RENEWABLE_FUTURE = 6;
+    public static String initChartString;
+    public TextView carbonFutureView;
+    public TextView energyFutureView;
+    public TextView intensityFutureView;
+    private WebView mWebView;
+    private Uri mUri;
 
     public SummaryFragmentFuture() {
         // Required empty public constructor
@@ -109,7 +102,7 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if ( mUri != null ) {
+        if (mUri != null) {
             return new CursorLoader(
                     getActivity(),
                     mUri,
@@ -124,7 +117,9 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (!data.moveToFirst()) { return; }
+        if (!data.moveToFirst()) {
+            return;
+        }
 
         String carbonFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_CARBON_FUTURE))));
         String energyFutureString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_ENERGY_FUTURE))));
@@ -133,10 +128,10 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
         energyFutureView.setText(energyFutureString);
         intensityFutureView.setText(intensityFutureString);
         initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
-                data.getFloat(COL_SUMMARY_FOSSIL_FUTURE)*100,
-                data.getFloat(COL_SUMMARY_NUCLEAR_FUTURE)*100,
-                data.getFloat(COL_SUMMARY_HYDRO_FUTURE)*100,
-                data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE)*100);
+                data.getFloat(COL_SUMMARY_FOSSIL_FUTURE) * 100,
+                data.getFloat(COL_SUMMARY_NUCLEAR_FUTURE) * 100,
+                data.getFloat(COL_SUMMARY_HYDRO_FUTURE) * 100,
+                data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE) * 100);
 
 
         mWebView.loadUrl(initChartString);

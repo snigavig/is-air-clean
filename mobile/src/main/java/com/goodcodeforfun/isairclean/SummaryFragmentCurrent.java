@@ -12,12 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -29,17 +26,7 @@ import com.goodcodeforfun.isairclean.data.AirContract;
 
 public class SummaryFragmentCurrent extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private WebView mWebView;
-
-    public TextView carbonCurrentView;
-    public TextView energyCurrentView;
-    public TextView intensityCurrentView;
-    public static String initChartString;
-
     private static final int LOADER_ID = 2;
-
-    private Uri mUri;
-
     private static final String[] SUMMARY_COLUMNS = {
             AirContract.LocationEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_CARBON_CURRENT,
             AirContract.LocationEntry.TABLE_NAME + "." + AirContract.ObjectEntry.COLUMN_ENERGY_CURRENT,
@@ -50,7 +37,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
             AirContract.LocationEntry.COLUMN_RENEWABLE_CURRENT
 
     };
-
     private static final int COL_LOCATION_CARBON_CURRENT = 0;
     private static final int COL_LOCATION_ENERGY_CURRENT = 1;
     private static final int COL_LOCATION_INTENSITY_CURRENT = 2;
@@ -58,6 +44,12 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     private static final int COL_SUMMARY_NUCLEAR_CURRENT = 4;
     private static final int COL_SUMMARY_HYDRO_CURRENT = 5;
     private static final int COL_SUMMARY_RENEWABLE_CURRENT = 6;
+    public static String initChartString;
+    public TextView carbonCurrentView;
+    public TextView energyCurrentView;
+    public TextView intensityCurrentView;
+    private WebView mWebView;
+    private Uri mUri;
 
     public SummaryFragmentCurrent() {
         // Required empty public constructor
@@ -119,7 +111,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if ( mUri != null ) {
+        if (mUri != null) {
             return new CursorLoader(
                     getActivity(),
                     mUri,
@@ -134,7 +126,9 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (!data.moveToFirst()) { return; }
+        if (!data.moveToFirst()) {
+            return;
+        }
 
         String carbonCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_CARBON_CURRENT))));
         String energyCurrentString = String.format("%,d", Long.parseLong(String.valueOf(data.getInt(COL_LOCATION_ENERGY_CURRENT))));
@@ -145,10 +139,10 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         MainActivity.mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
         MainActivity.mShareActionProvider.setShareIntent(getShareIntent());
         initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
-                data.getFloat(COL_SUMMARY_FOSSIL_CURRENT)*100,
-                data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT)*100,
-                data.getFloat(COL_SUMMARY_HYDRO_CURRENT)*100,
-                data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT)*100);
+                data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100,
+                data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100,
+                data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100,
+                data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
 
         mWebView.loadUrl(initChartString);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -164,7 +158,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
     }
 
-    private Intent getShareIntent(){
+    private Intent getShareIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         String shareString = MainActivity.mShareString + " #IsAirClean in " + MainActivity.mLocationString + "?";

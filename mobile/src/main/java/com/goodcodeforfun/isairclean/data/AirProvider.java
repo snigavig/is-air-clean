@@ -11,9 +11,6 @@ import android.net.Uri;
 
 public class AirProvider extends ContentProvider {
 
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private AirDbHelper mOpenHelper;
-
     static final int OBJECTS = 100;
     static final int OBJECTS_WITH_LOCATION = 101;
     static final int OBJECTS_WITH_LOCATION_AND_ID = 102;
@@ -21,13 +18,22 @@ public class AirProvider extends ContentProvider {
     static final int LOCATION_BY_SETTING = 301;
     static final int CITY = 500;
     static final int CITYID = 501;
-
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final SQLiteQueryBuilder sObjectsByLocationSettingQueryBuilder;
     private static final SQLiteQueryBuilder sObjectsByLocationSettingAndIdQueryBuilder;
     private static final SQLiteQueryBuilder sLocationByLocationSettingQueryBuilder;
     private static final SQLiteQueryBuilder sCityByNameQueryBuilder;
+    private static final String sLocationSettingSelection =
+            AirContract.LocationEntry.TABLE_NAME +
+                    "." + AirContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
+    private static final String sCitySelection =
+            AirContract.CityEntry.TABLE_NAME +
+                    "." + AirContract.CityEntry.COLUMN_CITY_NAME + " = ? ";
+    private static final String sLocationSettingAndIdSelection =
+            AirContract.ObjectEntry.TABLE_NAME +
+                    "." + AirContract.ObjectEntry._ID + " = ? ";
 
-    static{
+    static {
         sObjectsByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
         sObjectsByLocationSettingQueryBuilder.setTables(
                 AirContract.ObjectEntry.TABLE_NAME + " INNER JOIN " +
@@ -50,18 +56,29 @@ public class AirProvider extends ContentProvider {
                 AirContract.CityEntry.TABLE_NAME);
     }
 
-    private static final String sLocationSettingSelection =
-            AirContract.LocationEntry.TABLE_NAME+
-                    "." + AirContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
+    private AirDbHelper mOpenHelper;
+
+    static UriMatcher buildUriMatcher() {
+        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        final String authority = AirContract.CONTENT_AUTHORITY;
 
 
-    private static final String sCitySelection =
-            AirContract.CityEntry.TABLE_NAME+
-                    "." + AirContract.CityEntry.COLUMN_CITY_NAME + " = ? ";
+        matcher.addURI(authority, AirContract.PATH_OBJECT, OBJECTS);
 
-    private static final String sLocationSettingAndIdSelection =
-                    AirContract.ObjectEntry.TABLE_NAME +
-                    "." + AirContract.ObjectEntry._ID + " = ? ";
+        matcher.addURI(authority, AirContract.PATH_OBJECT + "/*", OBJECTS_WITH_LOCATION);
+
+        matcher.addURI(authority, AirContract.PATH_OBJECT + "/*/*", OBJECTS_WITH_LOCATION_AND_ID);
+
+        matcher.addURI(authority, AirContract.PATH_LOCATION, LOCATION);
+
+        matcher.addURI(authority, AirContract.PATH_LOCATION + "/*", LOCATION_BY_SETTING);
+
+        matcher.addURI(authority, AirContract.PATH_CITY, CITYID);
+
+        matcher.addURI(authority, AirContract.PATH_CITY + "/*", CITY);
+
+        return matcher;
+    }
 
     private Cursor getObjectsByLocationSetting(Uri uri, String[] projection, String sortOrder) {
         String locationSetting = AirContract.ObjectEntry.getLocationSettingFromUri(uri);
@@ -71,7 +88,6 @@ public class AirProvider extends ContentProvider {
 
         selection = sLocationSettingSelection;
         selectionArgs = new String[]{locationSetting};
-
 
 
         return sObjectsByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -124,28 +140,6 @@ public class AirProvider extends ContentProvider {
                 null,
                 null
         );
-    }
-
-    static UriMatcher buildUriMatcher() {
-        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = AirContract.CONTENT_AUTHORITY;
-
-
-        matcher.addURI(authority, AirContract.PATH_OBJECT, OBJECTS);
-
-        matcher.addURI(authority, AirContract.PATH_OBJECT + "/*", OBJECTS_WITH_LOCATION);
-
-        matcher.addURI(authority, AirContract.PATH_OBJECT + "/*/*", OBJECTS_WITH_LOCATION_AND_ID);
-
-        matcher.addURI(authority, AirContract.PATH_LOCATION, LOCATION);
-
-        matcher.addURI(authority, AirContract.PATH_LOCATION + "/*", LOCATION_BY_SETTING);
-
-        matcher.addURI(authority, AirContract.PATH_CITY, CITYID);
-
-        matcher.addURI(authority, AirContract.PATH_CITY + "/*", CITY);
-
-        return matcher;
     }
 
     @Override
@@ -247,7 +241,7 @@ public class AirProvider extends ContentProvider {
         switch (match) {
             case OBJECTS: {
                 long _id = db.insert(AirContract.ObjectEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if (_id > 0)
                     returnUri = AirContract.ObjectEntry.buildObjectUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -255,7 +249,7 @@ public class AirProvider extends ContentProvider {
             }
             case LOCATION: {
                 long _id = db.insert(AirContract.LocationEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if (_id > 0)
                     returnUri = AirContract.LocationEntry.buildLocationUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -263,7 +257,7 @@ public class AirProvider extends ContentProvider {
             }
             case CITYID: {
                 long _id = db.insert(AirContract.CityEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if (_id > 0)
                     returnUri = AirContract.CityEntry.buildCityUriId(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -282,7 +276,7 @@ public class AirProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
         // this makes delete all rows return the number of rows deleted
-        if ( null == selection ) selection = "1";
+        if (null == selection) selection = "1";
         switch (match) {
             case OBJECTS:
                 rowsDeleted = db.delete(

@@ -1,18 +1,18 @@
 <html style="height:91%">
-    <head>
-        <script src="./highcharts-custom.js"></script>
-        <style>
-            .highcharts-legend-item rect {
-                stroke-width: 0.5;
-                stroke: rgb(255,255,255);
-            }
-        </style>
-    </head>
-    <body style="height:100%">
-        <div id="container" style="background: transparent;height:100%"></div>
-    </body>
+<head>
+    <script src="./highcharts-custom.js"></script>
+    <style>
+        .highcharts-legend-item rect {
+        stroke-width: 0.5;
+        stroke: rgb(255,255,255);
+        }
+    </style>
+</head>
+<body style="height:100%">
+<div id="container" style="background: transparent;height:100%"></div>
+</body>
 
-    <script>
+<script>
         window.initChart = function (fossil, nuclear, hydro, renewable) {
             var data = [];
             var colors = [];
@@ -83,5 +83,6 @@
                 }]
             });
         };
-    </script>
+
+</script>
 </html>

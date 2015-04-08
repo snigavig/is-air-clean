@@ -1,97 +1,97 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.goodcodeforfun.isairclean.SummaryFragmentFuture"
     android:orientation="horizontal"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    tools:context="com.goodcodeforfun.isairclean.SummaryFragmentFuture">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/summaryFutureWrapLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingLeft="10dp">
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp">
 
         <TextView
+            android:id="@+id/summaryFutureLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/future_label"
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/summaryFutureLabelTextView"
+            android:text="@string/future_label"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_data"
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureCarbonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/no_data"
             android:textColor="@color/white"
             android:textSize="34sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tonns_co2"
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureCarbonLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/tonns_co2"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_data"
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/summaryFutureEnergyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/no_data"
             android:textColor="@color/white"
             android:textSize="34sp" />
 
         <TextView
+            android:id="@+id/summaryFutureEnergyLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mwh_energy"
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/summaryFutureEnergyLabelTextView"
+            android:text="@string/mwh_energy"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/summaryFutureIntensityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_data"
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/summaryFutureIntensityTextView"
+            android:text="@string/no_data"
             android:textColor="@color/white"
             android:textSize="34sp" />
 
         <TextView
+            android:id="@+id/summaryFutureIntensityLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/kg_co2_per_mwh"
             android:fontFamily="sans-serif-condensed"
-            android:id="@+id/summaryFutureIntensityLabelTextView"
+            android:text="@string/kg_co2_per_mwh"
             android:textColor="@color/white" />
 
     </LinearLayout>
 
     <WebView
+        android:id="@+id/pieChartFutureWebView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/pieChartFutureWebView"
         android:layout_alignBottom="@+id/summaryFutureWrapLinearLayout"
         android:layout_toEndOf="@+id/summaryFutureWrapLinearLayout"
         android:layout_toRightOf="@+id/summaryFutureWrapLinearLayout" />
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/summaryFutureWrapLinearLayout"
-        android:layout_alignRight="@+id/pieChartFutureWebView"
         android:layout_alignEnd="@+id/pieChartFutureWebView"
-        android:id="@+id/frameLayout">
-    </FrameLayout>
+        android:layout_alignRight="@+id/pieChartFutureWebView"
+        android:layout_below="@+id/summaryFutureWrapLinearLayout"></FrameLayout>
 
 </RelativeLayout>

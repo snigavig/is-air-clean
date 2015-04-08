@@ -41,8 +41,7 @@ public class IsAirCleanApplication extends Application {
             try {
                 LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
                 //LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
-            }
-            catch (UnsupportedOperationException ex) {
+            } catch (UnsupportedOperationException ex) {
                 Log.d("IsAirClean", "UnsupportedOperationException thrown - the device doesn't have any location providers");
             }
         }
@@ -54,6 +53,7 @@ public class IsAirCleanApplication extends Application {
             task.execute();
         }
     }
+
     private class InitCitiesTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -93,6 +93,7 @@ public class IsAirCleanApplication extends Application {
                 cVVector.toArray(cvArray);
                 mContentResolver.bulkInsert(AirContract.CityEntry.CONTENT_URI, cvArray);
             }
-        return null;        }
+            return null;
+        }
     }
 }

@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -43,15 +42,129 @@ import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
-    public final String LOG_TAG = AirSyncAdapter.class.getSimpleName();
     // 60 seconds (1 minute) * 180 = 3 hours
     public static final int SYNC_INTERVAL = 4 * 60 * 180; //12 hours
-    public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+    public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
+    public final String LOG_TAG = AirSyncAdapter.class.getSimpleName();
     private ContentResolver mContentResolver;
 
     public AirSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         mContentResolver = context.getContentResolver();
+    }
+
+    /**
+     * Helper method to have the sync adapter sync immediately
+     *
+     * @param context The context used to access the account service
+     */
+    public static void syncImmediately(Context context) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        ContentResolver.requestSync(getSyncAccount(context),
+                context.getString(R.string.content_authority), bundle);
+    }
+
+    /**
+     * Helper method to get the fake account to be used with SyncAdapter, or make a new one
+     * if the fake account doesn't exist yet.  If we make a new account, we call the
+     * onAccountCreated method so we can initialize things.
+     *
+     * @param context The context used to access the account service
+     * @return a fake account.
+     */
+    public static Account getSyncAccount(Context context) {
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+
+        Account newAccount = new Account(
+                context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
+
+        if (null == accountManager.getPassword(newAccount)) {
+
+            if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
+                return null;
+            }
+            onAccountCreated(newAccount, context);
+        }
+        return newAccount;
+    }
+
+    /**
+     * Helper method to schedule the sync adapter periodic execution
+     */
+    public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
+        Account account = getSyncAccount(context);
+        String authority = context.getString(R.string.content_authority);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // we can enable inexact timers in our periodic sync
+            SyncRequest request = new SyncRequest.Builder().
+                    syncPeriodic(syncInterval, flexTime).
+                    setSyncAdapter(account, authority).
+                    setExtras(new Bundle()).build();
+            ContentResolver.requestSync(request);
+        } else {
+            ContentResolver.addPeriodicSync(account,
+                    authority, new Bundle(), syncInterval);
+        }
+    }
+
+    private static void onAccountCreated(Account newAccount, Context context) {
+        AirSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
+        ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
+        syncImmediately(context);
+    }
+
+    public static void initializeSyncAdapter(Context context) {
+        getSyncAccount(context);
+    }
+
+    public static void showNotification(Context context, String cityName, double intensity) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
+        boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
+                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+        if (displayNotifications) {
+            String lastNotificationKey = context.getString(R.string.pref_last_notification);
+            long lastSync = prefs.getLong(lastNotificationKey, 0);
+
+            if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+                //if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
+                String title = context.getString(R.string.app_name);
+
+                String contentText = String.format(context.getString(R.string.format_notification),
+                        cityName, intensity);
+
+                int notifyID = 1;
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.ic_notification_icon)
+                                .setContentTitle(title)
+                                .setAutoCancel(true)
+                                .setContentText(contentText);
+
+                Intent resultIntent = new Intent(context, MainActivity.class);
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                stackBuilder.addParentStack(MainActivity.class);
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.notify(notifyID, mBuilder.build());
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putLong(lastNotificationKey, System.currentTimeMillis());
+                editor.apply();
+            }
+        }
     }
 
     @Override
@@ -154,7 +267,7 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private void getObjectsDataFromJson(String objectsJsonStr, int locationId){
+    private void getObjectsDataFromJson(String objectsJsonStr, int locationId) {
         // Location information
         final String CARMA_OBJECT_NAME = "name";
 
@@ -190,7 +303,7 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         if (objectsArray != null) {
-            for(int i = 0; i < objectsArray.length(); i++) {
+            for (int i = 0; i < objectsArray.length(); i++) {
                 JSONObject objectJson;
                 try {
                     objectJson = objectsArray.getJSONObject(i);
@@ -233,7 +346,7 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         //int inserted;
-        if ( cVVector != null && cVVector.size() > 0 ) {
+        if (cVVector != null && cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
             mContentResolver.bulkInsert(AirContract.ObjectEntry.CONTENT_URI, cvArray);
@@ -246,7 +359,7 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private int[] getLocationDataFromJson(String locationJsonStr,
-                                         String locationSetting)
+                                          String locationSetting)
             throws JSONException {
 
 
@@ -298,7 +411,7 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
 
 
             String cityName = locationJson.getString(CARMA_CITY_NAME);
-            
+
             JSONObject area = locationJson.getJSONObject(CARMA_AREA);
             int areaId = area.getInt(CARMA_AREA_ID);
 
@@ -383,119 +496,5 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         return new int[]{locationId, locationDbId};
-    }
-
-    /**
-     * Helper method to have the sync adapter sync immediately
-     * @param context The context used to access the account service
-     */
-    public static void syncImmediately(Context context) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        ContentResolver.requestSync(getSyncAccount(context),
-                context.getString(R.string.content_authority), bundle);
-    }
-
-    /**
-     * Helper method to get the fake account to be used with SyncAdapter, or make a new one
-     * if the fake account doesn't exist yet.  If we make a new account, we call the
-     * onAccountCreated method so we can initialize things.
-     *
-     * @param context The context used to access the account service
-     * @return a fake account.
-     */
-    public static Account getSyncAccount(Context context) {
-        AccountManager accountManager =
-                (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
-
-        Account newAccount = new Account(
-                context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
-
-        if ( null == accountManager.getPassword(newAccount) ) {
-
-            if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
-                return null;
-            }
-            onAccountCreated(newAccount, context);
-        }
-        return newAccount;
-    }
-
-    /**
-     * Helper method to schedule the sync adapter periodic execution
-     */
-    public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
-        Account account = getSyncAccount(context);
-        String authority = context.getString(R.string.content_authority);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // we can enable inexact timers in our periodic sync
-            SyncRequest request = new SyncRequest.Builder().
-                    syncPeriodic(syncInterval, flexTime).
-                    setSyncAdapter(account, authority).
-                    setExtras(new Bundle()).build();
-            ContentResolver.requestSync(request);
-        } else {
-            ContentResolver.addPeriodicSync(account,
-                    authority, new Bundle(), syncInterval);
-        }
-    }
-
-
-    private static void onAccountCreated(Account newAccount, Context context) {
-        AirSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
-        ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
-        syncImmediately(context);
-    }
-
-    public static void initializeSyncAdapter(Context context) {
-        getSyncAccount(context);
-    }
-
-    public static void showNotification (Context context, String cityName, double intensity) {
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
-        boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
-                Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
-        if (displayNotifications) {
-            String lastNotificationKey = context.getString(R.string.pref_last_notification);
-            long lastSync = prefs.getLong(lastNotificationKey, 0);
-
-            if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
-            //if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
-                String title = context.getString(R.string.app_name);
-
-                String contentText = String.format(context.getString(R.string.format_notification),
-                        cityName, intensity);
-
-                int notifyID = 1;
-                NotificationCompat.Builder mBuilder =
-                        new NotificationCompat.Builder(context)
-                                .setSmallIcon(R.drawable.ic_notification_icon)
-                                .setContentTitle(title)
-                                .setAutoCancel(true)
-                                .setContentText(contentText);
-
-                Intent resultIntent = new Intent(context, MainActivity.class);
-
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                stackBuilder.addParentStack(MainActivity.class);
-                stackBuilder.addNextIntent(resultIntent);
-                PendingIntent resultPendingIntent =
-                        stackBuilder.getPendingIntent(
-                                0,
-                                PendingIntent.FLAG_UPDATE_CURRENT
-                        );
-                mBuilder.setContentIntent(resultPendingIntent);
-                NotificationManager mNotificationManager =
-                        (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.notify(notifyID, mBuilder.build());
-
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putLong(lastNotificationKey, System.currentTimeMillis());
-                editor.apply();
-            }
-        }
     }
 }

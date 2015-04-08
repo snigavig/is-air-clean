@@ -1,30 +1,18 @@
 package com.goodcodeforfun.isairclean.data;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.goodcodeforfun.isairclean.data.AirContract.CityEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.LocationEntry;
 import com.goodcodeforfun.isairclean.data.AirContract.ObjectEntry;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Vector;
-
 public class AirDbHelper extends SQLiteOpenHelper {
 
+    static final String DATABASE_NAME = "air.db";
     private static final int DATABASE_VERSION = 1;
     private static Context mContext;
-    static final String DATABASE_NAME = "air.db";
 
     public AirDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,7 +73,6 @@ public class AirDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_OBJECT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CITY_TABLE);
     }
-
 
 
     @Override

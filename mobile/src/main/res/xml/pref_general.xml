@@ -4,24 +4,24 @@
     android:layout_height="match_parent">
 
     <EditTextPreference
-        android:title="@string/pref_location_label"
-        android:key="@string/pref_location_key"
         android:defaultValue="@string/pref_location_default"
         android:inputType="text"
-        android:singleLine="true" />
+        android:key="@string/pref_location_key"
+        android:singleLine="true"
+        android:title="@string/pref_location_label" />
 
     <CheckBoxPreference
-        android:title="@string/pref_enable_location_updates_label"
+        android:defaultValue="@string/pref_enable_location_updates_default"
         android:key="@string/pref_enable_location_updates_key"
         android:summaryOff="@string/pref_enable_location_updates_false"
         android:summaryOn="@string/pref_enable_location_updates_true"
-        android:defaultValue="@string/pref_enable_location_updates_default" />
+        android:title="@string/pref_enable_location_updates_label" />
 
     <CheckBoxPreference
-        android:title="@string/pref_enable_notifications_label"
+        android:defaultValue="@string/pref_enable_notifications_default"
         android:key="@string/pref_enable_notifications_key"
         android:summaryOff="@string/pref_enable_notifications_false"
         android:summaryOn="@string/pref_enable_notifications_true"
-        android:defaultValue="@string/pref_enable_notifications_default" />
+        android:title="@string/pref_enable_notifications_label" />
 
 </PreferenceScreen>
