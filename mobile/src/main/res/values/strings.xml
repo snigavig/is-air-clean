@@ -36,4 +36,10 @@
     <string name="future_label">Future:</string>
     <string name="no_data">…</string>
     <string name="kg_co2_short">&#160;kg CO2/MWh</string>
+    <string-array name="citiesDummyList">
+        <item>Mountain View</item>
+        <item>Kiev</item>
+        <item>Gotham</item>
+        <item>Minsk</item>
+    </string-array>
 </resources>
