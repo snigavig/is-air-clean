@@ -16,8 +16,8 @@ public class AirProvider extends ContentProvider {
     static final int OBJECTS_WITH_LOCATION_AND_ID = 102;
     static final int LOCATION = 300;
     static final int LOCATION_BY_SETTING = 301;
-    static final int CITY = 500;
-    static final int CITYID = 501;
+    static final int CITIES = 500;
+    static final int CITY_BY_NAME = 501;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final SQLiteQueryBuilder sObjectsByLocationSettingQueryBuilder;
     private static final SQLiteQueryBuilder sObjectsByLocationSettingAndIdQueryBuilder;
@@ -73,9 +73,9 @@ public class AirProvider extends ContentProvider {
 
         matcher.addURI(authority, AirContract.PATH_LOCATION + "/*", LOCATION_BY_SETTING);
 
-        matcher.addURI(authority, AirContract.PATH_CITY, CITYID);
+        matcher.addURI(authority, AirContract.PATH_CITY, CITIES);
 
-        matcher.addURI(authority, AirContract.PATH_CITY + "/*", CITY);
+        matcher.addURI(authority, AirContract.PATH_CITY + "/*", CITY_BY_NAME);
 
         return matcher;
     }
@@ -164,9 +164,9 @@ public class AirProvider extends ContentProvider {
                 return AirContract.LocationEntry.CONTENT_TYPE;
             case LOCATION_BY_SETTING:
                 return AirContract.LocationEntry.CONTENT_ITEM_TYPE;
-            case CITYID:
-                return AirContract.CityEntry.CONTENT_ITEM_TYPE;
-            case CITY:
+            case CITIES:
+                return AirContract.CityEntry.CONTENT_TYPE;
+            case CITY_BY_NAME:
                 return AirContract.CityEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -220,8 +220,21 @@ public class AirProvider extends ContentProvider {
                 );
                 break;
             }
+            // "cities"
+            case CITIES: {
+                retCursor = mOpenHelper.getReadableDatabase().query(
+                        AirContract.CityEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            }
             // "city/*"
-            case CITY: {
+            case CITY_BY_NAME: {
                 retCursor = getCityByName(uri, projection);
                 break;
             }
@@ -251,14 +264,6 @@ public class AirProvider extends ContentProvider {
                 long _id = db.insert(AirContract.LocationEntry.TABLE_NAME, null, values);
                 if (_id > 0)
                     returnUri = AirContract.LocationEntry.buildLocationUri(_id);
-                else
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
-                break;
-            }
-            case CITYID: {
-                long _id = db.insert(AirContract.CityEntry.TABLE_NAME, null, values);
-                if (_id > 0)
-                    returnUri = AirContract.CityEntry.buildCityUriId(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -342,7 +347,7 @@ public class AirProvider extends ContentProvider {
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
                 return returnCount;
-            case CITY:
+            case CITIES:
                 db.beginTransaction();
                 int returnCityCount = 0;
                 try {
