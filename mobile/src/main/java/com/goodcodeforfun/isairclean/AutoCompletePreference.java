@@ -1,6 +1,7 @@
 package com.goodcodeforfun.isairclean;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.EditTextPreference;
@@ -76,5 +77,14 @@ public class AutoCompletePreference extends EditTextPreference {
             editor.putString(mContext.getString(R.string.pref_location_key), String.valueOf(mEditText.getText()));
             editor.commit();
         }
+        if (SettingsActivity.isSplashFlag) {
+            SettingsActivity.isSplashFlag = false;
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            getContext().startActivity(intent);
+        }
+    }
+
+    public void show() {
+        showDialog(null);
     }
 }

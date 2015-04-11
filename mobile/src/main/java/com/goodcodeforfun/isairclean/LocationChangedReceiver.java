@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;

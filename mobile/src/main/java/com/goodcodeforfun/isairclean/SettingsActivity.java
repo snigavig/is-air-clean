@@ -25,9 +25,16 @@ import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
 
+    public static final String IS_SPLASH_FLAG = "IS_FROM_SPLASH";
+    public static Boolean isSplashFlag = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isSplashFlag = extras.getBoolean(IS_SPLASH_FLAG);
+        }
         // Add 'general' preferences, defined in the XML file
         addPreferencesFromResource(R.xml.pref_general);
 
@@ -51,6 +58,10 @@ public class SettingsActivity extends PreferenceActivity
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+
+        if (isSplashFlag && preference.getKey().equals(getString(R.string.pref_location_key))) {
+            ((AutoCompletePreference) preference).show();
+        }
     }
 
     @Override

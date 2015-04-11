@@ -15,10 +15,10 @@
     <string name="pref_lon_key" translatable="false">lon</string>
     <string name="pref_lon_default" translatable="false">-147.353</string>
     <string name="pref_prev_location_key" translatable="false">prevLocation</string>
-    <string name="pref_prev_location_default" translatable="false"/>
+    <string name="pref_prev_location_default" translatable="false" />
     <string name="pref_location_label">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
-    <string name="pref_location_default" translatable="false"/>
+    <string name="pref_location_default" translatable="false" />
     <string name="pref_last_notification">last_notification</string>
     <string name="pref_enable_notifications_key" translatable="false">enable_notifications</string>
     <string name="pref_enable_notifications_label">Location Change Notifications</string>
@@ -45,5 +45,7 @@
         <item>Minsk</item>
     </string-array>
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="splash_text">Is air clean app is a location based client for CARMA.org database. Carbon Monitoring for Action (CARMA) contains information about the carbon emissions of over 60,000 power plants and 20,000 power companies worldwide.</string>
+    <string name="logo_content_description">logo</string>
+    <string name="splash_button_label">Choose location</string>
 </resources>

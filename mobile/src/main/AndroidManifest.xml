@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.goodcodeforfun.isairclean" >
+    package="com.goodcodeforfun.isairclean">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
@@ -20,12 +20,12 @@
         android:name=".IsAirCleanApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/AirTheme" >
+        android:theme="@style/AirTheme">
         <service android:name="com.littlefluffytoys.littlefluffylocationlibrary.LocationBroadcastService" />
 
         <receiver
             android:name="com.littlefluffytoys.littlefluffylocationlibrary.StartupBroadcastReceiver"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -33,7 +33,7 @@
         <receiver
             android:name="com.littlefluffytoys.littlefluffylocationlibrary.PassiveLocationChangedReceiver"
             android:exported="true" />
-        <receiver android:name=".LocationChangedReceiver" >
+        <receiver android:name=".LocationChangedReceiver">
             <intent-filter>
                 <action
                     android:name="com.goodcodeforfun.isairclean.littlefluffylocationlibrary.LOCATION_CHANGED"
@@ -53,7 +53,7 @@
         <!-- SyncAdapter's dummy authentication service -->
         <service
             android:name=".sync.AirAuthenticatorService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -64,7 +64,7 @@
         </service>
         <service
             android:name=".sync.AirSyncService"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -76,7 +76,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,7 +86,7 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goodcodeforfun.isairclean.MainActivity" />
@@ -95,15 +95,15 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/SettingsTheme" >
+            android:theme="@style/SettingsTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goodcodeforfun.isairclean.MainActivity" />
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_splash" >
-        </activity>
+            android:label="@string/title_activity_splash"
+            android:theme="@style/SplashTheme"></activity>
     </application>
 
 </manifest>
