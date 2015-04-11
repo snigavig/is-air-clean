@@ -46,8 +46,8 @@ public class Util {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         int panelHeight;
-        int height = (int) (view.getBottom() / displayMetrics.density);
-        panelHeight = (int) (dpHeight - height - 80);//maaaagic...(
+        int height = (int) (view.getHeight() / displayMetrics.density);
+        panelHeight = (int) (dpHeight - height - (250 / displayMetrics.density));//maaaagic...(
         return panelHeight;
     }
 
