@@ -28,20 +28,19 @@ public class LocationChangedReceiver extends BroadcastReceiver {
         final String[] CITY_PROJECTION = new String[]{
                 AirContract.CityEntry.COLUMN_CITY_NAME
         };
-        String locationQuery = Util.getPreferredLocation(context);
+        String location = Util.getPreferredLocation(context);
         String geocodedCityName = Util.getCityName(context, (double) locationInfo.lastLat, (double) locationInfo.lastLong);
 
         String latKey = context.getString(R.string.pref_lat_key);
         String lonKey = context.getString(R.string.pref_lon_key);
 
         SharedPreferences.Editor editor = prefs.edit();
-
-        Log.d("LittleFluffy", geocodedCityName);
-        if (!geocodedCityName.equals("null") && !geocodedCityName.equals(locationQuery)) {
+        if (!geocodedCityName.equals("null") && !geocodedCityName.equals(location)) {
             Uri cityUri = AirContract.CityEntry.buildCityUri(geocodedCityName);
             Cursor cursor = context.getContentResolver().query(cityUri, CITY_PROJECTION, null, null, null);
 
-            if (cursor.moveToFirst()) {
+            if (cursor.moveToFirst() && !location.equals(geocodedCityName)) {
+                editor.putString(context.getString(R.string.pref_prev_location_key), location);
                 editor.putString(context.getString(R.string.pref_location_key), geocodedCityName);
                 editor.commit();
                 editor.putFloat(latKey, locationInfo.lastLat);

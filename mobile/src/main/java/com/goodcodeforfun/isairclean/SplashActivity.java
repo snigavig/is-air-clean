@@ -36,4 +36,16 @@ public class SplashActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IsAirCleanApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        IsAirCleanApplication.activityPaused();
+    }
 }

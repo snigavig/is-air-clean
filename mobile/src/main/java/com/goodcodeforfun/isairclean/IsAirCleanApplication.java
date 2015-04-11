@@ -24,6 +24,19 @@ import java.util.Vector;
 public class IsAirCleanApplication extends Application {
 
     private static final String PREFERENCE_FIRST_RUN = "first_run";
+    private static boolean activityVisible;
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+
+    public static void activityResumed() {
+        activityVisible = true;
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+    }
 
     @Override
     public void onCreate() {
@@ -39,8 +52,8 @@ public class IsAirCleanApplication extends Application {
             //LocationLibrary.showDebugOutput(true);
 
             try {
-                LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
-                //LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
+                //LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
+                LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
             } catch (UnsupportedOperationException ex) {
                 Log.d("IsAirClean", "UnsupportedOperationException thrown - the device doesn't have any location providers");
             }

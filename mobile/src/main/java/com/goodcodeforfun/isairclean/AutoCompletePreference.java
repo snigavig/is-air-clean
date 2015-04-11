@@ -72,6 +72,7 @@ public class AutoCompletePreference extends EditTextPreference {
         if (callChangeListener(String.valueOf(mEditText.getText()))) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(mContext.getString(R.string.pref_prev_location_key), Util.getPreferredLocation(mContext));
             editor.putString(mContext.getString(R.string.pref_location_key), String.valueOf(mEditText.getText()));
             editor.commit();
         }

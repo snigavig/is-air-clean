@@ -37,7 +37,7 @@ public class MainActivity extends
     @Override
     protected void onPause() {
         super.onPause();
-
+        IsAirCleanApplication.activityPaused();
     }
 
     @Override
@@ -90,6 +90,7 @@ public class MainActivity extends
     @Override
     protected void onResume() {
         super.onResume();
+        IsAirCleanApplication.activityResumed();
         String location = Util.getPreferredLocation(this);
         if (location != null && !location.equals(mLocationString)) {
             ObjectListFragment olf = (ObjectListFragment) getSupportFragmentManager().findFragmentByTag(OBJECTLISTFRAGMENT_TAG);

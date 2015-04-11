@@ -78,4 +78,16 @@ public class SettingsActivity extends PreferenceActivity
     public Intent getParentActivityIntent() {
         return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IsAirCleanApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        IsAirCleanApplication.activityPaused();
+    }
 }

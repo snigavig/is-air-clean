@@ -24,6 +24,12 @@ public class Util {
                 context.getString(R.string.pref_location_default));
     }
 
+    public static String getPrevPreferredLocation(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_prev_location_key),
+                context.getString(R.string.pref_prev_location_default));
+    }
+
     public static float getLat(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getFloat(context.getString(R.string.pref_lat_key),

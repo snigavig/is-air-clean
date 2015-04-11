@@ -50,4 +50,15 @@ public class DetailActivity extends
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        IsAirCleanApplication.activityPaused();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IsAirCleanApplication.activityResumed();
+    }
 }

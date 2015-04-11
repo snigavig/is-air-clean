@@ -23,6 +23,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.goodcodeforfun.isairclean.IsAirCleanApplication;
 import com.goodcodeforfun.isairclean.MainActivity;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
@@ -120,6 +121,28 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         getSyncAccount(context);
     }
 
+    public static void updateNotification(Context context, String cityName, double intensity) {
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        int notifyID = 1;
+        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(context);
+        String title = context.getString(R.string.app_name);
+
+        String contentText = String.format(context.getString(R.string.format_notification),
+                cityName, intensity);
+
+        mNotifyBuilder
+                .setSmallIcon(R.drawable.ic_notification_icon)
+                .setContentTitle(title)
+                .setAutoCancel(true)
+                .setContentText(contentText);
+        // Because the ID remains unchanged, the existing notification is
+        // updated.
+        mNotificationManager.notify(
+                notifyID,
+                mNotifyBuilder.build());
+    }
+
     public static void showNotification(Context context, String cityName, double intensity) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -130,8 +153,8 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             String lastNotificationKey = context.getString(R.string.pref_last_notification);
             long lastSync = prefs.getLong(lastNotificationKey, 0);
 
-            if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
-                //if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
+            //if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+            if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
                 String title = context.getString(R.string.app_name);
 
                 String contentText = String.format(context.getString(R.string.format_notification),
@@ -177,91 +200,93 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
         String locationJsonStr;
         String objectsJsonStr;
 
-        //http://carma.org/api/1.1/searchLocations?name=Kiev
-        try {
-            final String CARMA_BASE_LOCATION_URL =
-                    "http://carma.org/api/1.1/searchLocations?";
-            final String CARMA_BASE_OBJECTS_URL =
-                    "http://carma.org/api/1.1/searchPlants?";
-            final String QUERY_PARAM = "name";
-            final String LOCATION_QUERY_PARAM = "location";
-            final String REGION_TYPE_PARAM = "region_type";
-            final String REGION_TYPE_CITY = "7";
-            final String QUERY_LIMIT = "limit";
-            final String QUERY_LIMIT_VALUE = "1";
+        if (!locationQuery.isEmpty()) {
+            //http://carma.org/api/1.1/searchLocations?name=Kiev
+            try {
+                final String CARMA_BASE_LOCATION_URL =
+                        "http://carma.org/api/1.1/searchLocations?";
+                final String CARMA_BASE_OBJECTS_URL =
+                        "http://carma.org/api/1.1/searchPlants?";
+                final String QUERY_PARAM = "name";
+                final String LOCATION_QUERY_PARAM = "location";
+                final String REGION_TYPE_PARAM = "region_type";
+                final String REGION_TYPE_CITY = "7";
+                final String QUERY_LIMIT = "limit";
+                final String QUERY_LIMIT_VALUE = "1";
 
-            Uri builtLocationUri = Uri.parse(CARMA_BASE_LOCATION_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, locationQuery)
-                    .appendQueryParameter(REGION_TYPE_PARAM, REGION_TYPE_CITY)
-                    .appendQueryParameter(QUERY_LIMIT, QUERY_LIMIT_VALUE)
-                    .build();
-
-            URL locationUrl = new URL(builtLocationUri.toString());
-
-            locationUrlConnection = (HttpURLConnection) locationUrl.openConnection();
-            locationUrlConnection.setRequestMethod("GET");
-            locationUrlConnection.connect();
-
-            InputStream inputStream = locationUrlConnection.getInputStream();
-            StringBuilder buffer = new StringBuilder();
-            locationReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = locationReader.readLine()) != null) {
-                buffer.append(line).append("\n");
-            }
-
-            locationJsonStr = buffer.toString();
-
-            int[] locationIds = getLocationDataFromJson(locationJsonStr, locationQuery);
-            if (locationIds[1] != 0) {
-                Uri builtObjectsUrl = Uri.parse(CARMA_BASE_OBJECTS_URL).buildUpon()
-                        .appendQueryParameter(LOCATION_QUERY_PARAM, String.valueOf(locationIds[0]))
+                Uri builtLocationUri = Uri.parse(CARMA_BASE_LOCATION_URL).buildUpon()
+                        .appendQueryParameter(QUERY_PARAM, locationQuery)
+                        .appendQueryParameter(REGION_TYPE_PARAM, REGION_TYPE_CITY)
+                        .appendQueryParameter(QUERY_LIMIT, QUERY_LIMIT_VALUE)
                         .build();
 
-                URL objectsUrl = new URL(builtObjectsUrl.toString());
+                URL locationUrl = new URL(builtLocationUri.toString());
 
+                locationUrlConnection = (HttpURLConnection) locationUrl.openConnection();
+                locationUrlConnection.setRequestMethod("GET");
+                locationUrlConnection.connect();
 
-                objectsUrlConnection = (HttpURLConnection) objectsUrl.openConnection();
-                objectsUrlConnection.setRequestMethod("GET");
-                objectsUrlConnection.connect();
+                InputStream inputStream = locationUrlConnection.getInputStream();
+                StringBuilder buffer = new StringBuilder();
+                locationReader = new BufferedReader(new InputStreamReader(inputStream));
 
-                inputStream = objectsUrlConnection.getInputStream();
-                buffer = new StringBuilder();
-                objectsReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                while ((line = objectsReader.readLine()) != null) {
+                String line;
+                while ((line = locationReader.readLine()) != null) {
                     buffer.append(line).append("\n");
                 }
 
-                objectsJsonStr = buffer.toString();
+                locationJsonStr = buffer.toString();
 
-                getObjectsDataFromJson(objectsJsonStr, locationIds[1]);
-            }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error ", e);
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage(), e);
-            e.printStackTrace();
-        } finally {
-            if (locationUrlConnection != null) {
-                locationUrlConnection.disconnect();
-            }
-            if (locationReader != null) {
-                try {
-                    locationReader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
+                int[] locationIds = getLocationDataFromJson(locationJsonStr, locationQuery);
+                if (locationIds[1] != 0) {
+                    Uri builtObjectsUrl = Uri.parse(CARMA_BASE_OBJECTS_URL).buildUpon()
+                            .appendQueryParameter(LOCATION_QUERY_PARAM, String.valueOf(locationIds[0]))
+                            .build();
+
+                    URL objectsUrl = new URL(builtObjectsUrl.toString());
+
+
+                    objectsUrlConnection = (HttpURLConnection) objectsUrl.openConnection();
+                    objectsUrlConnection.setRequestMethod("GET");
+                    objectsUrlConnection.connect();
+
+                    inputStream = objectsUrlConnection.getInputStream();
+                    buffer = new StringBuilder();
+                    objectsReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while ((line = objectsReader.readLine()) != null) {
+                        buffer.append(line).append("\n");
+                    }
+
+                    objectsJsonStr = buffer.toString();
+
+                    getObjectsDataFromJson(objectsJsonStr, locationIds[1]);
                 }
-            }
-            if (objectsUrlConnection != null) {
-                objectsUrlConnection.disconnect();
-            }
-            if (objectsReader != null) {
-                try {
-                    objectsReader.close();
-                } catch (final IOException e) {
-                    Log.e(LOG_TAG, "Error closing stream", e);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            } finally {
+                if (locationUrlConnection != null) {
+                    locationUrlConnection.disconnect();
+                }
+                if (locationReader != null) {
+                    try {
+                        locationReader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+                if (objectsUrlConnection != null) {
+                    objectsUrlConnection.disconnect();
+                }
+                if (objectsReader != null) {
+                    try {
+                        objectsReader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
                 }
             }
         }
@@ -456,7 +481,6 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
                 if (locationIdIndex != -1) {
                     locationId = locationCursor.getInt(locationIdIndex);
                 }
-
             } else {
                 ContentValues locationValues = new ContentValues();
 
@@ -483,9 +507,12 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
                         locationValues
                 );
 
-                showNotification(getContext(), cityName, intensityPresent);
                 locationId = areaId;
                 locationDbId = (int) ContentUris.parseId(insertedUri);
+            }
+
+            if (!Util.getPrevPreferredLocation(getContext()).equals(cityName) && !IsAirCleanApplication.isActivityVisible()) {
+                showNotification(getContext(), cityName, intensityPresent);
             }
 
             locationCursor.close();
