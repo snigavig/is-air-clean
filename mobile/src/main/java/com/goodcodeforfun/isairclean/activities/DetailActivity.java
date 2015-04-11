@@ -51,6 +51,12 @@ public class DetailActivity extends
             return true;
         }
 
+        if (id == R.id.action_about) {
+            Intent startAboutActivityIntent = new Intent(this, AboutActivity.class);
+            startActivity(startAboutActivityIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,10 +1,11 @@
 # is-air-clean
-Carbon monitoring by location. Powered by CARMA.org
 
 Data from CARMA (www.carma.org).
 <br>
 <a href="http://www.carma.org/" title="Go to CARMA"><img src="http://carma.org/blog/wp-content/uploads/2007/11/carma_web.png" /></a>
-
+<br>
+Carbon Monitoring for Action (CARMA) contains information about the carbon emissions of over 60,000 power plants and 20,000 power companies worldwide.
+<br>
 Uses:
 <br>
 	HighchartsJS (www.highcharts.com)

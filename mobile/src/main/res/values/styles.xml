@@ -14,8 +14,11 @@
     <!-- Settings activity theme. -->
     <style name="SettingsTheme" parent="AppTheme" />
 
-    <!-- Settings activity theme. -->
+    <!-- Splash activity theme. -->
     <style name="SplashTheme" parent="AppTheme" />
+
+    <!-- About activity theme. -->
+    <style name="AboutTheme" parent="AirTheme" />
 
     <!-- main activity action bar styles -->
     <style name="ActionBar.Solid.Air.NoTitle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">

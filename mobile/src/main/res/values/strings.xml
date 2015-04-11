@@ -48,4 +48,7 @@
     <string name="splash_text">Is air clean app is a location based client for CARMA.org database. Carbon Monitoring for Action (CARMA) contains information about the carbon emissions of over 60,000 power plants and 20,000 power companies worldwide.</string>
     <string name="logo_content_description">logo</string>
     <string name="splash_button_label">Choose location</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="about">Answering the question - no, the air is not clean. In fact it\'s not clean for like 60 years already. But the real problem is that it\'s not getting better! Unfortunately, not much can practically be done about it right now, but we should be constantly thinking on the related topics, be it the global warming or the rainforests extermination. Whatever the outcome will be, the cause of the tragedy is We, The Humanity. So be mindful and we will save the planet! Or extinct…</string>
+    <string name="action_about">Why bother?</string>
 </resources>
