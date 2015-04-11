@@ -14,6 +14,8 @@ import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.goodcodeforfun.isairclean.activities.MainActivity;
+import com.goodcodeforfun.isairclean.activities.SettingsActivity;
 import com.goodcodeforfun.isairclean.data.AirContract;
 
 import java.util.ArrayList;

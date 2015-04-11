@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.fragments;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -25,6 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.goodcodeforfun.isairclean.R;
+import com.goodcodeforfun.isairclean.Util;
+import com.goodcodeforfun.isairclean.adapters.ObjectsAdapter;
 import com.goodcodeforfun.isairclean.data.AirContract;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -39,9 +42,9 @@ import java.util.ArrayList;
  */
 public class ObjectListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public static final int COL_OBJECT_NAME = 1;
+    public static final int COL_OBJECT_INTENSITY_CURRENT = 2;
     static final int COL_OBJECT_ID = 0;
-    static final int COL_OBJECT_NAME = 1;
-    static final int COL_OBJECT_INTENSITY_CURRENT = 2;
     static final int COL_OBJECT_COORD_LAT = 3;
     static final int COL_OBJECT_COORD_LONG = 4;
     static final int MIN_DISTANCE = 100;
@@ -258,7 +261,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         arrayAdapterObjects.swapCursor(null);
     }
 
-    void onLocationChanged() {
+    public void onLocationChanged() {
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 

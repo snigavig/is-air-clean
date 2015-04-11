@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.fragments;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.data.AirContract;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    static final String DETAIL_URI = "URI";
+    public static final String DETAIL_URI = "URI";
     private static final int LOADER_ID = 1;
     private static final String[] OBJECT_COLUMNS = {
             AirContract.ObjectEntry.TABLE_NAME + "." + AirContract.ObjectEntry._ID,

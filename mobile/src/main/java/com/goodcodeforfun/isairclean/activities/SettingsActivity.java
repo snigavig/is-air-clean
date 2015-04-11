@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.activities;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.goodcodeforfun.isairclean.AutoCompletePreference;
+import com.goodcodeforfun.isairclean.IsAirCleanApplication;
+import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 
 /**

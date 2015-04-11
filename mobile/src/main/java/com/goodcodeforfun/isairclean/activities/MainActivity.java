@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +12,13 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.goodcodeforfun.isairclean.IsAirCleanApplication;
+import com.goodcodeforfun.isairclean.R;
+import com.goodcodeforfun.isairclean.Util;
+import com.goodcodeforfun.isairclean.adapters.PagerAdapter;
+import com.goodcodeforfun.isairclean.fragments.ObjectListFragment;
+import com.goodcodeforfun.isairclean.fragments.SummaryFragmentCurrent;
+import com.goodcodeforfun.isairclean.fragments.SummaryFragmentFuture;
 import com.goodcodeforfun.isairclean.sync.AirSyncAdapter;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.viewpagerindicator.CirclePageIndicator;

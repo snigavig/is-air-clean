@@ -1,10 +1,14 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.goodcodeforfun.isairclean.IsAirCleanApplication;
+import com.goodcodeforfun.isairclean.R;
+import com.goodcodeforfun.isairclean.fragments.DetailFragment;
 
 
 public class DetailActivity extends

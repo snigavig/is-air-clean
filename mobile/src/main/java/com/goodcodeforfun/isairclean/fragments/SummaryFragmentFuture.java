@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.fragments;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -19,6 +19,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.goodcodeforfun.isairclean.R;
+import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.data.AirContract;
 
 public class SummaryFragmentFuture extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {

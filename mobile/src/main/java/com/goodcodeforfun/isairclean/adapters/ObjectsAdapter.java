@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.adapters;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.data.AirContract;
+import com.goodcodeforfun.isairclean.fragments.ObjectListFragment;
 
 import at.markushi.ui.CircleButton;
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:paddingTop="10dp"
-    tools:context="com.goodcodeforfun.isairclean.SummaryFragmentCurrent">
+    tools:context="com.goodcodeforfun.isairclean.fragments.SummaryFragmentCurrent">
 
     <LinearLayout
         android:id="@+id/summaryCurrentWrapLinearLayout"

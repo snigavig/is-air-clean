@@ -24,9 +24,9 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.goodcodeforfun.isairclean.IsAirCleanApplication;
-import com.goodcodeforfun.isairclean.MainActivity;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
+import com.goodcodeforfun.isairclean.activities.MainActivity;
 import com.goodcodeforfun.isairclean.data.AirContract;
 
 import org.json.JSONArray;

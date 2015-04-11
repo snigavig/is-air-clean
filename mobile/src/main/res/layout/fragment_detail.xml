@@ -11,7 +11,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.goodcodeforfun.isairclean.DetailActivity$PlaceholderFragment">
+        tools:context="com.goodcodeforfun.isairclean.activities.DetailActivity$PlaceholderFragment">
 
         <TextView
             android:id="@+id/detailCurrentLabelTextView"

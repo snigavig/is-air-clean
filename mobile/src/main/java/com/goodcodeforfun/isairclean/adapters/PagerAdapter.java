@@ -1,4 +1,4 @@
-package com.goodcodeforfun.isairclean;
+package com.goodcodeforfun.isairclean.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
