@@ -8,4 +8,12 @@
     <color name="air_light_blue">#40c4ff</color>
     <color name="air_dark_blue">#0079ed</color>
     <color name="air_light_grey">#EEEEEE</color>
+
+    <color name="seafoam">#ffc6f9e5</color>
+    <color name="chartreuse">#ffb6e9b5</color>
+    <color name="emerald">#ffa6d9b5</color>
+    <color name="bluegrass">#ff96c9b5</color>
+    <color name="turquoise">#ff86b9b5</color>
+    <color name="slate">#ff76a9b5</color>
+
 </resources>

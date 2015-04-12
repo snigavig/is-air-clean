@@ -3,6 +3,7 @@ package com.goodcodeforfun.isairclean.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -17,11 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.goodcodeforfun.isairclean.PieChart;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.activities.MainActivity;
@@ -51,7 +50,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public TextView carbonCurrentView;
     public TextView energyCurrentView;
     public TextView intensityCurrentView;
-    private WebView mWebView;
+    private PieChart mWebView;
     private Uri mUri;
 
     public SummaryFragmentCurrent() {
@@ -72,18 +71,18 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        mWebView = (WebView) getActivity().findViewById(R.id.pieChartCurrentWebView);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        mWebView = (PieChart) getActivity().findViewById(R.id.pieChartCurrentView);
+        //WebSettings webSettings = mWebView.getSettings();
+        //webSettings.setJavaScriptEnabled(true);
 
         if (!getResources().getBoolean(R.bool.is_tablet)) {
             if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
-                mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+                //        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
             } else if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE) {
-                mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+                //        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
             }
         } else {
-            mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+            //    mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
         }
         mWebView.setBackgroundColor(Color.TRANSPARENT);
     }
@@ -99,6 +98,15 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         carbonCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentCarbonTextView);
         energyCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentEnergyTextView);
         intensityCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentIntensityTextView);
+
+
+        Resources res = getResources();
+        mWebView = (PieChart) rootView.findViewById(R.id.pieChartCurrentView);
+        mWebView.addItem("Agamemnon", 2, res.getColor(R.color.seafoam));
+        mWebView.addItem("Daedalus", 3, res.getColor(R.color.bluegrass));
+        mWebView.addItem("Euripides", 1, res.getColor(R.color.turquoise));
+        mWebView.addItem("Ganymede", 3, res.getColor(R.color.slate));
+
         return rootView;
     }
 
@@ -147,13 +155,13 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
                 data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100,
                 data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
 
-        mWebView.loadUrl(initChartString);
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            public void onPageFinished(WebView view, String url) {
-                mWebView.loadUrl(initChartString); //
-            }
-        });
+//        mWebView.loadUrl(initChartString);
+//        mWebView.setWebViewClient(new WebViewClient() {
+//
+//            public void onPageFinished(WebView view, String url) {
+//                //mWebView.loadUrl(initChartString); //
+//            }
+//        });
     }
 
     @Override

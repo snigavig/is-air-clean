@@ -98,7 +98,7 @@
     </LinearLayout>
 
     <WebView
-        android:id="@+id/pieChartCurrentWebView"
+        android:id="@+id/pieChartCurrentView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/summaryCurrentWrapLinearLayout"
@@ -109,8 +109,8 @@
         android:id="@+id/frameLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/pieChartCurrentWebView"
-        android:layout_alignRight="@+id/pieChartCurrentWebView"
+        android:layout_alignEnd="@+id/pieChartCurrentView"
+        android:layout_alignRight="@+id/pieChartCurrentView"
         android:layout_below="@+id/summaryCurrentWrapLinearLayout"></FrameLayout>
 
 </RelativeLayout>
