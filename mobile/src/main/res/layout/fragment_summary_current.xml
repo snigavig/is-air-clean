@@ -81,25 +81,13 @@
 
     </LinearLayout>
 
-    <com.goodcodeforfun.isairclean.PieChart
-        android:id="@+id/pieChartCurrentView"
-        android:layout_alignBottom="@+id/summaryCurrentWrapLinearLayout"
-        android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout"
+    <com.echo.holographlibrary.PieGraph
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/graph"
+        android:layout_alignBottom="@+id/frameLayout"
         android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        custom:showTextLabels="true"
-        custom:labelHeight="20dp"
-        custom:labelWidth="110dp"
-        custom:labelY="85dp"
-        custom:labelPosition="left"
-        custom:highlightStrength="1.12"
-        android:background="@android:color/white"
-        custom:pieRotation="0"
-        custom:labelColor="@android:color/black"
-        custom:autoCenterPointerInSlice="true"
-        custom:pointerRadius="4dp" />
+        android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout" />
 
     <FrameLayout
         android:id="@+id/frameLayout"

@@ -20,7 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.goodcodeforfun.isairclean.PieChart;
+import com.echo.holographlibrary.PieGraph;
+import com.echo.holographlibrary.PieSlice;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.activities.MainActivity;
@@ -50,7 +51,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public TextView carbonCurrentView;
     public TextView energyCurrentView;
     public TextView intensityCurrentView;
-    private PieChart mWebView;
+    private PieGraph mWebView;
     private Uri mUri;
 
     public SummaryFragmentCurrent() {
@@ -71,7 +72,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        mWebView = (PieChart) getActivity().findViewById(R.id.pieChartCurrentView);
         //WebSettings webSettings = mWebView.getSettings();
         //webSettings.setJavaScriptEnabled(true);
 
@@ -101,12 +101,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
 
         Resources res = getResources();
-        mWebView = (PieChart) rootView.findViewById(R.id.pieChartCurrentView);
-        mWebView.addItem("Agamemnon", 2, res.getColor(R.color.seafoam));
-        mWebView.addItem("Daedalus", 3, res.getColor(R.color.bluegrass));
-        mWebView.addItem("Euripides", 1, res.getColor(R.color.turquoise));
-        mWebView.addItem("Ganymede", 3, res.getColor(R.color.slate));
-
+        mWebView = (PieGraph) rootView.findViewById(R.id.graph);
         return rootView;
     }
 
@@ -162,6 +157,27 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 //                //mWebView.loadUrl(initChartString); //
 //            }
 //        });
+        PieSlice slice = new PieSlice();
+        slice.setColor(Color.parseColor("#99CC00"));
+        slice.setValue(2);
+        slice.setTitle("20%");
+        mWebView.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(Color.parseColor("#FFBB33"));
+        slice.setValue(3);
+        slice.setTitle("30%");
+        mWebView.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(Color.parseColor("#AA66CC"));
+        slice.setValue(8);
+        slice.setTitle("50%");
+        mWebView.addSlice(slice);
+//        for (PieSlice s : mWebView.getSlices())
+//            s.setGoalValue((float)Math.random() * 10);
+//        mWebView.setDuration(1000);//default if unspecified is 300 ms
+//        mWebView.setInterpolator(new AccelerateDecelerateInterpolator());//default if unspecified is linear; constant speed
+//        mWebView.setAnimationListener(getAnimationListener());//optional
+//        mWebView.animateToGoalValues();
     }
 
     @Override
