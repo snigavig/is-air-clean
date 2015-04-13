@@ -132,6 +132,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
             mRectF.set(midX - radius, midY - radius, midX + radius, midY + radius);
             createArc(p, mRectF, currentSweep,
                     currentAngle + mPadding, currentSweep - mPadding);
+
             mRectF.set(midX - innerRadius, midY - innerRadius,
                     midX + innerRadius, midY + innerRadius);
             createArc(p, mRectF, currentSweep,

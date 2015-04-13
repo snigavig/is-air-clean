@@ -51,6 +51,11 @@ public class Util {
         return panelHeight;
     }
 
+    public static int toDp(Context context, int pixels) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (int) (pixels / displayMetrics.density);
+    }
+
     public static int getOrientation(Context context) {
         return context.getResources().getConfiguration().orientation;
     }

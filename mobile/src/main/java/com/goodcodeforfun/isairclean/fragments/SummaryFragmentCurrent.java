@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 
 import com.echo.holographlibrary.PieGraph;
@@ -51,7 +52,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public TextView carbonCurrentView;
     public TextView energyCurrentView;
     public TextView intensityCurrentView;
-    private PieGraph mWebView;
+    private PieGraph mPieChart;
     private Uri mUri;
 
     public SummaryFragmentCurrent() {
@@ -72,19 +73,17 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        //WebSettings webSettings = mWebView.getSettings();
-        //webSettings.setJavaScriptEnabled(true);
 
         if (!getResources().getBoolean(R.bool.is_tablet)) {
             if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
-                //        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+                //        mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
             } else if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE) {
-                //        mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+                //        mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
             }
         } else {
-            //    mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+            //    mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
         }
-        mWebView.setBackgroundColor(Color.TRANSPARENT);
+        //mPieChart.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
 
         Resources res = getResources();
-        mWebView = (PieGraph) rootView.findViewById(R.id.graph);
+        mPieChart = (PieGraph) rootView.findViewById(R.id.graph);
         return rootView;
     }
 
@@ -144,40 +143,35 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         intensityCurrentView.setText(intensityCurrentString);
         MainActivity.mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
         MainActivity.mShareActionProvider.setShareIntent(getShareIntent());
-        initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
-                data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100,
-                data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100,
-                data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100,
-                data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
 
-//        mWebView.loadUrl(initChartString);
-//        mWebView.setWebViewClient(new WebViewClient() {
-//
-//            public void onPageFinished(WebView view, String url) {
-//                //mWebView.loadUrl(initChartString); //
-//            }
-//        });
         PieSlice slice = new PieSlice();
-        slice.setColor(Color.parseColor("#99CC00"));
-        slice.setValue(2);
-        slice.setTitle("20%");
-        mWebView.addSlice(slice);
+        slice.setColor(getResources().getColor(R.color.fossil));
+        slice.setValue(data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100));
+        mPieChart.addSlice(slice);
         slice = new PieSlice();
-        slice.setColor(Color.parseColor("#FFBB33"));
-        slice.setValue(3);
-        slice.setTitle("30%");
-        mWebView.addSlice(slice);
+        slice.setColor(getResources().getColor(R.color.nuclear));
+        slice.setValue(data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100));
+        mPieChart.addSlice(slice);
         slice = new PieSlice();
-        slice.setColor(Color.parseColor("#AA66CC"));
-        slice.setValue(8);
-        slice.setTitle("50%");
-        mWebView.addSlice(slice);
-//        for (PieSlice s : mWebView.getSlices())
-//            s.setGoalValue((float)Math.random() * 10);
-//        mWebView.setDuration(1000);//default if unspecified is 300 ms
-//        mWebView.setInterpolator(new AccelerateDecelerateInterpolator());//default if unspecified is linear; constant speed
-//        mWebView.setAnimationListener(getAnimationListener());//optional
-//        mWebView.animateToGoalValues();
+        slice.setColor(getResources().getColor(R.color.hydro));
+        slice.setValue(data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100));
+        mPieChart.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.renewable));
+        slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100));
+        mPieChart.addSlice(slice);
+
+        mPieChart.setPadding(2);
+        mPieChart.setInnerCircleRatio(Util.toDp(getActivity(), 250));
+        for (PieSlice s : mPieChart.getSlices())
+            s.setGoalValue(s.getValue() * 10);
+        mPieChart.setDuration(1000);
+        mPieChart.setInterpolator(new BounceInterpolator());
+        mPieChart.animateToGoalValues();
     }
 
     @Override
