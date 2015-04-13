@@ -8,7 +8,7 @@ Carbon Monitoring for Action (CARMA) contains information about the carbon emiss
 <br>
 Uses:
 <br>
-	HighchartsJS (www.highcharts.com)
+	HoloGraphLibrary (https://bitbucket.org/danielnadeau/holographlibrary)
 <br>
 	AndroidSlidingUpPanel (www.github.com/umano/AndroidSlidingUpPanel)
 <br>
