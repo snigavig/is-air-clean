@@ -88,7 +88,8 @@
         android:layout_alignBottom="@+id/frameLayout"
         android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout"
         android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        custom:pieOuterBorder="5dp" />
 
     <FrameLayout
         android:id="@+id/frameLayout"

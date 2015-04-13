@@ -101,6 +101,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
         Resources res = getResources();
         mPieChart = (PieGraph) rootView.findViewById(R.id.graph);
+        mPieChart.setStrokeWidth(Util.toDp(getActivity(), 25));
         return rootView;
     }
 
@@ -164,8 +165,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100));
         mPieChart.addSlice(slice);
-
-        mPieChart.setPadding(2);
         mPieChart.setInnerCircleRatio(Util.toDp(getActivity(), 250));
         for (PieSlice s : mPieChart.getSlices())
             s.setGoalValue(s.getValue() * 10);

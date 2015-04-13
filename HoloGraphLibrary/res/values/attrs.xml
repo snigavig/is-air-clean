@@ -3,6 +3,7 @@
 
     <declare-styleable name="PieGraph">
         <attr name="pieInnerCircleRatio" format="integer"/>
+        <attr name="pieOuterBorder" format="dimension"/>
         <attr name="pieSlicePadding" format="dimension"/>
     </declare-styleable>
 

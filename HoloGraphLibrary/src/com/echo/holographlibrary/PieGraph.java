@@ -49,9 +49,12 @@ import java.util.ArrayList;
 public class PieGraph extends View implements  HoloGraphAnimate {
 
     private int mPadding;
+    private int mOuterBorder;
     private int mInnerCircleRatio;
+    private int mStrokeWidth;
     private ArrayList<PieSlice> mSlices = new ArrayList<PieSlice>();
     private Paint mPaint = new Paint();
+    private Paint mBorderPaint = new Paint();
     private int mSelectedIndex = -1;
     private OnSliceClickedListener mListener;
     private boolean mDrawCompleted = false;
@@ -81,6 +84,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PieGraph, 0, 0);
         mInnerCircleRatio = a.getInt(R.styleable.PieGraph_pieInnerCircleRatio, 0);
         mPadding = a.getDimensionPixelSize(R.styleable.PieGraph_pieSlicePadding, 0);
+        mOuterBorder = a.getDimensionPixelSize(R.styleable.PieGraph_pieOuterBorder, 0);
     }
 
     public void onDraw(Canvas canvas) {
@@ -89,6 +93,8 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         canvas.drawColor(Color.TRANSPARENT);
         mPaint.reset();
         mPaint.setAntiAlias(true);
+        mBorderPaint.reset();
+        mBorderPaint.setAntiAlias(true);
 
         if(mBackgroundImage != null) {
             if(mBackgroundImageCenter)
@@ -110,8 +116,17 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         } else {
             radius = midY;
         }
+
         radius -= mPadding;
+        radius -= mOuterBorder;
         innerRadius = radius * mInnerCircleRatio / 255;
+
+
+        //Background circle to imitate border
+        mBorderPaint.setColor(Color.WHITE);
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderPaint.setStrokeWidth(mStrokeWidth);
+        canvas.drawCircle(midX, midY, radius, mBorderPaint);
 
         for (PieSlice slice : mSlices) {
             totalValue += slice.getValue();
@@ -225,6 +240,16 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         postInvalidate();
     }
 
+
+    /**
+     * sets padding
+     * @param strokeWidth
+     */
+    public void setStrokeWidth(int strokeWidth) {
+        mStrokeWidth = strokeWidth;
+        postInvalidate();
+    }
+
     /**
      * sets padding
      * @param padding
@@ -309,7 +334,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
     @Override
     public void animateToGoalValues() {
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1){
-            Log.e("HoloGraphLibrary compatibility error", "Animation not supported on api level 12 and below. Returning without animating.");
+            Log.e("HoloGraphLibrary", "Animation not supported on api level 12 and below. Returning without animating.");
             return;
         }
         if (mValueAnimator != null)
