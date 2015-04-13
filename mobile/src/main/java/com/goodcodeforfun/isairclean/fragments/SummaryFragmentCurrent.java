@@ -165,7 +165,6 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100));
         mPieChart.addSlice(slice);
-        mPieChart.setInnerCircleRatio(Util.toDp(getActivity(), 250));
         for (PieSlice s : mPieChart.getSlices())
             s.setGoalValue(s.getValue() * 10);
         mPieChart.setDuration(1000);

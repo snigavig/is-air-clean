@@ -53,8 +53,10 @@ public class PieGraph extends View implements  HoloGraphAnimate {
     private int mInnerCircleRatio;
     private int mStrokeWidth;
     private ArrayList<PieSlice> mSlices = new ArrayList<PieSlice>();
+    private ArrayList<String> mLegend = new ArrayList<String>();
     private Paint mPaint = new Paint();
     private Paint mBorderPaint = new Paint();
+    private Paint mLegendPaint = new Paint();
     private int mSelectedIndex = -1;
     private OnSliceClickedListener mListener;
     private boolean mDrawCompleted = false;
@@ -119,7 +121,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
 
         radius -= mPadding;
         radius -= mOuterBorder;
-        innerRadius = radius * mInnerCircleRatio / 255;
+        innerRadius = radius * (int)(radius/1.5) / 255;
 
 
         //Background circle to imitate border

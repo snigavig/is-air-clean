@@ -81,15 +81,130 @@
 
     </LinearLayout>
 
-    <com.echo.holographlibrary.PieGraph
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/graph"
         android:layout_alignBottom="@+id/frameLayout"
         android:layout_toRightOf="@+id/summaryCurrentWrapLinearLayout"
         android:layout_toEndOf="@+id/summaryCurrentWrapLinearLayout"
-        android:layout_margin="10dp"
-        custom:pieOuterBorder="5dp" />
+        android:weightSum="5">
+
+        <com.echo.holographlibrary.PieGraph
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/graph"
+            custom:pieOuterBorder="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.5"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView2"
+                android:src="@drawable/legend_rect_hydro"
+                android:layout_margin="2dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:id="@+id/textView3"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView3"
+                android:src="@drawable/legend_rect_fossil"
+                android:layout_margin="2dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:id="@+id/textView2"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView4"
+                android:src="@drawable/legend_rect_nuclear"
+                android:layout_margin="2dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:id="@+id/textView5"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.15"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView5"
+                android:src="@drawable/legend_rect_renewable"
+                android:layout_margin="2dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Text"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:id="@+id/textView"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout"
