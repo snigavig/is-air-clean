@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,12 +75,12 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
         if (!getResources().getBoolean(R.bool.is_tablet)) {
             if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
-                //        mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+                //        mPieChart.loadUrl("file:///android_asset/www/view");
             } else if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE) {
-                //        mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+                //        mPieChart.loadUrl("file:///android_asset/www/view_wide");
             }
         } else {
-            //    mPieChart.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+            //    mPieChart.loadUrl("file:///android_asset/www/view_wide");
         }
         //mPieChart.setBackgroundColor(Color.TRANSPARENT);
     }
@@ -145,29 +144,30 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
         MainActivity.mShareString = "Intensity: " + intensityCurrentString + " kg CO2 per MWh";
         MainActivity.mShareActionProvider.setShareIntent(getShareIntent());
 
+        mPieChart.removeSlices();
         PieSlice slice = new PieSlice();
         slice.setColor(getResources().getColor(R.color.fossil));
-        slice.setValue(data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100);
+        slice.setValue(data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
         slice.setColor(getResources().getColor(R.color.nuclear));
-        slice.setValue(data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100);
+        slice.setValue(data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
         slice.setColor(getResources().getColor(R.color.hydro));
-        slice.setValue(data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100);
+        slice.setValue(data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
         slice.setColor(getResources().getColor(R.color.renewable));
-        slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100);
+        slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100));
         mPieChart.addSlice(slice);
         for (PieSlice s : mPieChart.getSlices())
             s.setGoalValue(s.getValue() * 10);
-        mPieChart.setDuration(1000);
+        mPieChart.setDuration(1500);
         mPieChart.setInterpolator(new BounceInterpolator());
         mPieChart.animateToGoalValues();
     }

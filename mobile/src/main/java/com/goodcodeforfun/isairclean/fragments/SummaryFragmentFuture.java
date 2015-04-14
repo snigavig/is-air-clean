@@ -3,7 +3,6 @@ package com.goodcodeforfun.isairclean.fragments;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,11 +13,11 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 
+import com.echo.holographlibrary.PieGraph;
+import com.echo.holographlibrary.PieSlice;
 import com.goodcodeforfun.isairclean.R;
 import com.goodcodeforfun.isairclean.Util;
 import com.goodcodeforfun.isairclean.data.AirContract;
@@ -47,7 +46,7 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
     public TextView carbonFutureView;
     public TextView energyFutureView;
     public TextView intensityFutureView;
-    private WebView mWebView;
+    private PieGraph mPieChart;
     private Uri mUri;
 
     public SummaryFragmentFuture() {
@@ -70,6 +69,9 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
         carbonFutureView = (TextView) rootView.findViewById(R.id.summaryFutureCarbonTextView);
         energyFutureView = (TextView) rootView.findViewById(R.id.summaryFutureEnergyTextView);
         intensityFutureView = (TextView) rootView.findViewById(R.id.summaryFutureIntensityTextView);
+
+        mPieChart = (PieGraph) rootView.findViewById(R.id.graph);
+        mPieChart.setStrokeWidth(Util.toDp(getActivity(), 25));
         return rootView;
     }
 
@@ -77,19 +79,17 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        mWebView = (WebView) getActivity().findViewById(R.id.pieChartFutureWebView);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+
         if (!getResources().getBoolean(R.bool.is_tablet)) {
             if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
-                mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view.html");
+                //mWebView.loadUrl("file:///android_asset/www/view");
             } else if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_LANDSCAPE) {
-                mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+                //mWebView.loadUrl("file:///android_asset/www/view_wide");
             }
         } else {
-            mWebView.loadUrl("file:///android_asset/www/pie_chart_web_view_wide.html");
+            //mWebView.loadUrl("file:///android_asset/www/view_wide");
         }
-        mWebView.setBackgroundColor(Color.TRANSPARENT);
+        //mWebView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -129,19 +129,33 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
         carbonFutureView.setText(carbonFutureString);
         energyFutureView.setText(energyFutureString);
         intensityFutureView.setText(intensityFutureString);
-        initChartString = String.format("javascript: window.initChart(%f, %f, %f, %f);",
-                data.getFloat(COL_SUMMARY_FOSSIL_FUTURE) * 100,
-                data.getFloat(COL_SUMMARY_NUCLEAR_FUTURE) * 100,
-                data.getFloat(COL_SUMMARY_HYDRO_FUTURE) * 100,
-                data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE) * 100);
 
-
-        mWebView.loadUrl(initChartString);
-        mWebView.setWebViewClient(new WebViewClient() {
-            public void onPageFinished(WebView view, String url) {
-                mWebView.loadUrl(initChartString); //
-            }
-        });
+        mPieChart.removeSlices();
+        PieSlice slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.fossil));
+        slice.setValue(data.getFloat(COL_SUMMARY_FOSSIL_FUTURE) * 10);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_FOSSIL_FUTURE) * 100));
+        mPieChart.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.nuclear));
+        slice.setValue(data.getFloat(COL_SUMMARY_NUCLEAR_FUTURE) * 10);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_NUCLEAR_FUTURE) * 100));
+        mPieChart.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.hydro));
+        slice.setValue(data.getFloat(COL_SUMMARY_HYDRO_FUTURE) * 10);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_HYDRO_FUTURE) * 100));
+        mPieChart.addSlice(slice);
+        slice = new PieSlice();
+        slice.setColor(getResources().getColor(R.color.renewable));
+        slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE) * 10);
+        slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_FUTURE) * 100));
+        mPieChart.addSlice(slice);
+        for (PieSlice s : mPieChart.getSlices())
+            s.setGoalValue(s.getValue() * 10);
+        mPieChart.setDuration(1500);
+        mPieChart.setInterpolator(new BounceInterpolator());
+        mPieChart.animateToGoalValues();
     }
 
     @Override

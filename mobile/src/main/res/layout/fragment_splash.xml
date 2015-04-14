@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/splashTextView"
         android:layout_centerHorizontal="true"
+        android:layout_margin="25dp"
         android:contentDescription="@string/logo_content_description"
-        android:src="@drawable/ic_logo"
-        android:layout_margin="25dp" />
+        android:src="@drawable/ic_logo" />
 
     <Button
         android:id="@+id/splashButton"
