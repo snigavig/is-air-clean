@@ -1,7 +1,10 @@
 package com.goodcodeforfun.isairclean.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.IsAirCleanApplication;
 import com.goodcodeforfun.isairclean.R;
@@ -25,6 +29,8 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;
 import java.util.Vector;
+
+import static android.widget.Toast.makeText;
 
 
 public class MainActivity extends
@@ -48,11 +54,12 @@ public class MainActivity extends
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (Util.getPreferredLocation(this).isEmpty()) {
-            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-            startActivity(intent);
-            finish();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
+            makeText(this, "Sorry, there is no internet connection", Toast.LENGTH_LONG).show();
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.initialisePaging();
@@ -115,6 +122,11 @@ public class MainActivity extends
             }
             mPagerAdapter.notifyDataSetChanged();
             mLocationString = location;
+        }
+        if (Util.getPreferredLocation(this).isEmpty()) {
+            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
