@@ -2,7 +2,6 @@ package com.goodcodeforfun.isairclean.fragments;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -61,10 +60,10 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public ArrayList<String> arrayListObjects;
     public SharedPreferences prefs;
     public DisplayMetrics displayMetrics;
+    public SlidingUpPanelLayout mLayout;
     private float downX, downY, upX, upY;
     private TextView mTextView;
     private LinearLayout mLinearLayout;
-    private SlidingUpPanelLayout mLayout;
     private ActionBar mActionBar;
     private final SlidingUpPanelLayout.PanelSlideListener inactiveSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
         @Override
@@ -104,7 +103,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         public void onPanelHidden(View panel) {
         }
     };
-    private OnFragmentInteractionListener mListener;
 
 
     public ObjectListFragment() {
@@ -117,7 +115,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         arrayListObjects = new ArrayList<>();
         displayMetrics = getActivity().getResources().getDisplayMetrics();
-        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
     @Override
@@ -193,13 +191,13 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         mLayout = (SlidingUpPanelLayout) getActivity().findViewById(R.id.sliding_layout);
         mLayout.setPanelSlideListener(inactiveSlideListener);
         mLayout.setDragView(mLinearLayout);
-        if (!getResources().getBoolean(R.bool.is_tablet)) {
-            if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
-                mLayout.setPanelHeight(Util.getPanelHeight(getActivity(), getActivity().findViewById(R.id.indicator)));
-            }
-        } else {
-            mLayout.setPanelHeight(Util.getPanelHeight(getActivity(), getActivity().findViewById(R.id.indicator)));
-        }
+//        if (!getResources().getBoolean(R.bool.is_tablet)) {
+//            if (Util.getOrientation(getActivity()) == Configuration.ORIENTATION_PORTRAIT) {
+//                mLayout.setPanelHeight(Util.setPanelHeight(getActivity(), getActivity().findViewById(R.id.graphWrap)));
+//            }
+//        } else {
+//            mLayout.setPanelHeight(Util.setPanelHeight(getActivity(), getActivity().findViewById(R.id.graphWrap)));
+//        }
 
         return rootView;
     }
@@ -210,18 +208,10 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         super.onActivityCreated(savedInstanceState);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -231,7 +221,6 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -253,7 +242,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         arrayAdapterObjects.swapCursor(data);
         mTextView.setText(Util.getPreferredLocation(getActivity()));
-        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
     @Override
@@ -269,7 +258,7 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri objectUri);
+        void onItemSelected(Uri objectUri);
     }
 
     /**
@@ -283,7 +272,5 @@ public class ObjectListFragment extends Fragment implements LoaderManager.Loader
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 }

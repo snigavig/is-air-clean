@@ -2,7 +2,6 @@ package com.goodcodeforfun.isairclean.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -10,7 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,7 @@ import static android.widget.Toast.makeText;
 
 
 public class MainActivity extends
-        ActionBarActivity implements
+        AppCompatActivity implements
         ObjectListFragment.OnFragmentInteractionListener, ObjectListFragment.Callback,
         ShareActionProvider.OnShareTargetSelectedListener {
 
@@ -42,8 +41,8 @@ public class MainActivity extends
     public static ShareActionProvider mShareActionProvider;
     public static String mShareString;
     public static String mLocationString;
-    public SharedPreferences prefs;
-    private SlidingUpPanelLayout mLayout;
+    public ObjectListFragment olf;
+    public SlidingUpPanelLayout mLayout;
     private PagerAdapter mPagerAdapter;
 
     @Override
@@ -62,6 +61,7 @@ public class MainActivity extends
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         this.initialisePaging();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -72,7 +72,6 @@ public class MainActivity extends
         AirSyncAdapter.initializeSyncAdapter(this);
         AirSyncAdapter.syncImmediately(this);
 
-        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         mLocationString = Util.getPreferredLocation(this);
     }
 
@@ -116,7 +115,7 @@ public class MainActivity extends
         IsAirCleanApplication.activityResumed();
         String location = Util.getPreferredLocation(this);
         if (location != null && !location.equals(mLocationString)) {
-            ObjectListFragment olf = (ObjectListFragment) getSupportFragmentManager().findFragmentByTag(OBJECTLISTFRAGMENT_TAG);
+            olf = (ObjectListFragment) getSupportFragmentManager().findFragmentByTag(OBJECTLISTFRAGMENT_TAG);
             if (null != olf) {
                 olf.onLocationChanged();
             }
@@ -135,11 +134,6 @@ public class MainActivity extends
         Intent intent = new Intent(this, DetailActivity.class)
                 .setData(contentUri);
         startActivity(intent);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        //fragment interaction stab,  not needed at this point
     }
 
 

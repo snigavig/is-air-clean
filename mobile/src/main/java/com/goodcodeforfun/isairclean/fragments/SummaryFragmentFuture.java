@@ -69,7 +69,7 @@ public class SummaryFragmentFuture extends Fragment implements LoaderManager.Loa
         intensityFutureView = (TextView) rootView.findViewById(R.id.summaryFutureIntensityTextView);
 
         mPieChart = (PieGraph) rootView.findViewById(R.id.graph);
-        mPieChart.setStrokeWidth(Util.toDp(getActivity(), 25));
+        mPieChart.setStrokeWidth((int) Util.toPx(getActivity(), 5));
         return rootView;
     }
 

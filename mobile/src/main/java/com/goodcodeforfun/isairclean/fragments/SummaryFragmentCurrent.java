@@ -93,15 +93,14 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
         String locationSetting = Util.getPreferredLocation(getActivity());
         mUri = AirContract.LocationEntry.buildLocationBySetting(locationSetting);
-        //nameView = (TextView) rootView.findViewById(R.id.deta);//TODO: implement name
         carbonCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentCarbonTextView);
         energyCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentEnergyTextView);
         intensityCurrentView = (TextView) rootView.findViewById(R.id.summaryCurrentIntensityTextView);
-
-
+        MainActivity activity = (MainActivity) getActivity();
+        Util.setPanelHeight(getActivity(), rootView.findViewById(R.id.summaryWrapLinearLayout), activity.mLayout);
         Resources res = getResources();
         mPieChart = (PieGraph) rootView.findViewById(R.id.graph);
-        mPieChart.setStrokeWidth(Util.toDp(getActivity(), 25));
+        mPieChart.setStrokeWidth((int) Util.toPx(getActivity(), 5));
         return rootView;
     }
 
@@ -133,7 +132,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) {
-            Toast.makeText(getActivity(), "Sorry, something went wrong, please try again later...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Getting data...", Toast.LENGTH_SHORT).show();
             return;
         }
 

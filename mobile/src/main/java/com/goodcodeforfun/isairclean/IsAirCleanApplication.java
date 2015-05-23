@@ -51,9 +51,9 @@ public class IsAirCleanApplication extends Application {
                 Boolean.parseBoolean(this.getString(R.string.pref_enable_location_updates_default)));
         if (locationUpdates) {
             try {
-                LocationLibrary.showDebugOutput(true);
-                //LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
-                LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
+                //LocationLibrary.showDebugOutput(true);
+                LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
+                //LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
             } catch (UnsupportedOperationException ex) {
                 prefs.edit().putBoolean(locationUpdatesKey, false).apply();
                 Toast.makeText(getBaseContext(), "Sorry, there are no location providers, location updates are disabled", Toast.LENGTH_LONG).show();

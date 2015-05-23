@@ -50,7 +50,7 @@
     <string name="splash_button_label">Choose location</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="about">Answering the question - no, the air is not clean. In fact it\'s not clean for like 60 years already. But the real problem is that it\'s not getting better! Unfortunately, not much can practically be done about it right now, but we should be constantly thinking on the related topics, be it the global warming or the rainforests extermination. Whatever the outcome will be, the cause of the tragedy is We, The Humanity. So be mindful and we will save the planet! Or extinct…</string>
-    <string name="action_about">Why bother?</string>
+    <string name="action_about">Is air clean?</string>
     <string name="other_renewable_label">Other renewable</string>
     <string name="nuclear_label">Nuclear</string>
     <string name="fossil_label">Fossil</string>

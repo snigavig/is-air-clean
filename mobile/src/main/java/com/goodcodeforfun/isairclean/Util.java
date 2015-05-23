@@ -2,12 +2,16 @@ package com.goodcodeforfun.isairclean;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +21,9 @@ import java.util.Locale;
  * Created by snigavig on 24.03.15.
  */
 public class Util {
+
+    private static float TOOLBAR_HEIGHT = 56f;
+    private static float INDICATOR_HEIGHT = 35f;
 
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -42,18 +49,38 @@ public class Util {
                 Float.parseFloat(context.getString(R.string.pref_lon_default)));
     }
 
-    public static int getPanelHeight(Context context, View view) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        int panelHeight;
-        int height = (int) (view.getHeight() / displayMetrics.density);
-        panelHeight = (int) (dpHeight - height - (250 / displayMetrics.density));//maaaagic...(
-        return panelHeight;
+    public static void setPanelHeight(final Context context, final View view, final SlidingUpPanelLayout panel) {
+        final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+
+
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                int panelHeight = displayMetrics.heightPixels - view.getHeight() - (int) toPx(context, TOOLBAR_HEIGHT) - (int) toPx(context, INDICATOR_HEIGHT) - getStatusBarHeight(context);
+                panel.setPanelHeight(panelHeight);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
+                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                else
+                    view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
+        });
+    }
+
+    public static float toPx(Context context, float dp) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return px;
     }
 
     public static int toDp(Context context, int pixels) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return (int) (pixels / displayMetrics.density);
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = pixels / (metrics.densityDpi / 160f);
+        return (int) dp;
     }
 
     public static int getOrientation(Context context) {
@@ -61,6 +88,16 @@ public class Util {
     }
 
     //from stackoverflow
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
     public static String getCityName(Context context, double latitude, double longitude) {
         StringBuilder result = new StringBuilder();
         try {

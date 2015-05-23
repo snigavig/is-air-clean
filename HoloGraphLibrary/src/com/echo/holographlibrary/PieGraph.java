@@ -121,7 +121,7 @@ public class PieGraph extends View implements  HoloGraphAnimate {
 
         radius -= mPadding;
         radius -= mOuterBorder;
-        innerRadius = radius * (int)(radius/1.5) / 255;
+        innerRadius = radius * (int) (radius / 1.5) / Utils.toPx(100);
 
 
         //Background circle to imitate border
@@ -230,18 +230,17 @@ public class PieGraph extends View implements  HoloGraphAnimate {
         return mBackgroundImage;
     }
 
-    public void setBackgroundBitmap(Bitmap backgroundBitmap, int pos_x, int pos_y) {
-        mBackgroundImage = backgroundBitmap;
-        mBackgroundImageAnchor.set(pos_x, pos_y);
-        postInvalidate();
-    }
-
     public void setBackgroundBitmap(Bitmap backgroundBitmap) {
         mBackgroundImageCenter = true;
         mBackgroundImage = backgroundBitmap;
         postInvalidate();
     }
 
+    public void setBackgroundBitmap(Bitmap backgroundBitmap, int pos_x, int pos_y) {
+        mBackgroundImage = backgroundBitmap;
+        mBackgroundImageAnchor.set(pos_x, pos_y);
+        postInvalidate();
+    }
 
     /**
      * sets padding

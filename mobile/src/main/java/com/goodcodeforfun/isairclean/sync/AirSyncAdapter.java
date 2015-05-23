@@ -153,8 +153,8 @@ public class AirSyncAdapter extends AbstractThreadedSyncAdapter {
             String lastNotificationKey = context.getString(R.string.pref_last_notification);
             long lastSync = prefs.getLong(lastNotificationKey, 0);
 
-            //if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
-            if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
+            if (System.currentTimeMillis() - lastSync >= TimeUnit.HOURS.toMillis(6)) {
+                //if (System.currentTimeMillis() - lastSync >= TimeUnit.MINUTES.toMillis(2)) {
                 String title = context.getString(R.string.app_name);
 
                 String contentText = String.format(context.getString(R.string.format_notification),
