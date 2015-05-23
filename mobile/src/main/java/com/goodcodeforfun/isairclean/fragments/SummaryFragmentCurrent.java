@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
@@ -132,6 +133,7 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (!data.moveToFirst()) {
+            Toast.makeText(getActivity(), "Sorry, something went wrong, please try again later...", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -146,22 +148,22 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
         mPieChart.removeSlices();
         PieSlice slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.fossil));
+        slice.setColor(getResources().getColor(R.color.pie_fossil));
         slice.setValue(data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_FOSSIL_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.nuclear));
+        slice.setColor(getResources().getColor(R.color.pie_nuclear));
         slice.setValue(data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_NUCLEAR_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.hydro));
+        slice.setColor(getResources().getColor(R.color.pie_hydro));
         slice.setValue(data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_HYDRO_CURRENT) * 100));
         mPieChart.addSlice(slice);
         slice = new PieSlice();
-        slice.setColor(getResources().getColor(R.color.renewable));
+        slice.setColor(getResources().getColor(R.color.pie_renewable));
         slice.setValue(data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 10);
         slice.setTitle(String.valueOf((int) data.getFloat(COL_SUMMARY_RENEWABLE_CURRENT) * 100));
         mPieChart.addSlice(slice);
@@ -174,7 +176,13 @@ public class SummaryFragmentCurrent extends Fragment implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        String ellipsis = "...";
+        carbonCurrentView.setText(ellipsis);
+        energyCurrentView.setText(ellipsis);
+        intensityCurrentView.setText(ellipsis);
+        MainActivity.mShareString = "Intensity: " + ellipsis + " kg CO2 per MWh";
+        MainActivity.mShareActionProvider.setShareIntent(getShareIntent());
+        mPieChart.removeSlices();
     }
 
     private Intent getShareIntent() {

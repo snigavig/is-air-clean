@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/air_light_blue</item>
-        <item name="colorPrimaryDark">@color/air_dark_blue</item>
+        <item name="colorPrimary">@color/air_primary</item>
+        <item name="colorPrimaryDark">@color/air_primary_dark</item>
     </style>
 
     <!-- Main theme. -->
@@ -29,12 +29,12 @@
 
     <!-- Style for object list  -->
     <style name="ObjectListStyle">
-        <item name="android:background">@color/air_light_grey</item>
+        <item name="android:background">@color/air_primary_dark</item>
     </style>
 
     <!-- Style for summary list  -->
     <style name="SummaryStyle">
-        <item name="android:background">@color/air_light_blue</item>
+        <item name="android:background">@color/air_primary</item>
     </style>
 
     <style name="StyledIndicators" parent="@android:style/Theme.Light">

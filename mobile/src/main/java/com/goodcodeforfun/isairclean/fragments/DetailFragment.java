@@ -127,6 +127,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        String ellipsis = "...";
+        carbonCurrentView.setText(ellipsis);
+        energyCurrentView.setText(ellipsis);
+        intensityCurrentView.setText(ellipsis);
+        carbonFutureView.setText(ellipsis);
+        energyFutureView.setText(ellipsis);
+        intensityFutureView.setText(ellipsis);
     }
 }

@@ -3,8 +3,8 @@
     android:shape="rectangle">
 
     <gradient
-        android:endColor="@color/nuclear"
-        android:startColor="@color/nuclear" />
+        android:endColor="@color/pie_nuclear"
+        android:startColor="@color/pie_nuclear" />
 
     <corners
         android:bottomLeftRadius="3dp"

@@ -3,8 +3,8 @@
     android:shape="rectangle">
 
     <gradient
-        android:endColor="@color/hydro"
-        android:startColor="@color/hydro" />
+        android:endColor="@color/pie_hydro"
+        android:startColor="@color/pie_hydro" />
 
     <corners
         android:bottomLeftRadius="3dp"

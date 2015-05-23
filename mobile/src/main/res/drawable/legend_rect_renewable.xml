@@ -3,8 +3,8 @@
     android:shape="rectangle">
 
     <gradient
-        android:endColor="@color/renewable"
-        android:startColor="@color/renewable" />
+        android:endColor="@color/pie_renewable"
+        android:startColor="@color/pie_renewable" />
 
     <corners
         android:bottomLeftRadius="3dp"

@@ -1,5 +1,6 @@
 package com.goodcodeforfun.isairclean;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -7,7 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.goodcodeforfun.isairclean.data.AirContract;
 import com.littlefluffytoys.littlefluffylocationlibrary.LocationLibrary;
@@ -38,6 +39,7 @@ public class IsAirCleanApplication extends Application {
         activityVisible = false;
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,14 +50,13 @@ public class IsAirCleanApplication extends Application {
         boolean locationUpdates = prefs.getBoolean(locationUpdatesKey,
                 Boolean.parseBoolean(this.getString(R.string.pref_enable_location_updates_default)));
         if (locationUpdates) {
-            // output debug to LogCat, with tag LittleFluffyLocationLibrary
-            //LocationLibrary.showDebugOutput(true);
-
             try {
+                LocationLibrary.showDebugOutput(true);
                 //LocationLibrary.initialiseLibrary(getBaseContext(), "com.goodcodeforfun.isairclean");
                 LocationLibrary.initialiseLibrary(getBaseContext(), 60 * 1000, 2 * 60 * 1000, "com.goodcodeforfun.isairclean");
             } catch (UnsupportedOperationException ex) {
-                Log.d("IsAirClean", "UnsupportedOperationException thrown - the device doesn't have any location providers");
+                prefs.edit().putBoolean(locationUpdatesKey, false).apply();
+                Toast.makeText(getBaseContext(), "Sorry, there are no location providers, location updates are disabled", Toast.LENGTH_LONG).show();
             }
         }
 
